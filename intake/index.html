@@ -3,14 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>New Website Intake</title>
+<title>Konnect AI Website Intake</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap">
 <style>
-:root { --bg:#F4F5F7; --surface:#fff; --ink:#14171A; --ink-2:#565C64; --line:#DDE0E4; --accent:#0A6AE0; color-scheme: light; }
-@media (prefers-color-scheme: dark) { :root { --bg:#0E1013; --surface:#16191D; --ink:#EDEFF2; --ink-2:#A2A8B0; --line:#2A2F36; --accent:#5AA2FF; color-scheme: dark; } }
+:root { --bg:#F4F5F7; --surface:#fff; --ink:#14171A; --ink-2:#565C64; --line:#DDE0E4; --accent:#0A6AE0; --red:#CC0A0A; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0E1013; --surface:#16191D; --ink:#EDEFF2; --ink-2:#A2A8B0; --line:#2A2F36; --accent:#5AA2FF; --red:#FF4D4D; color-scheme: dark; } }
+.brand { display: flex; align-items: center; gap: 12px; margin: 0 0 36px; padding-bottom: 20px; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; font: 700 22px/1 Sora, system-ui, sans-serif; letter-spacing: -0.01em; }
+.brand svg { width: 40px; height: 40px; flex-shrink: 0; }
 * { box-sizing: border-box; }
 body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.6 "DM Sans", system-ui, sans-serif; }
 .wrap { max-width: 760px; margin: 0 auto; padding: 48px max(18px, env(safe-area-inset-right)) 80px max(18px, env(safe-area-inset-left)); }
@@ -38,6 +40,20 @@ button { font: 700 17px/1 "DM Sans", sans-serif; background: var(--accent); colo
 </head>
 <body>
 <main class="wrap">
+  <a class="brand" href="https://konnectai.org" aria-label="Konnect AI">
+    <svg viewBox="-2 -2 104 104" aria-hidden="true">
+      <rect style="fill:currentColor" x="0" y="0" width="14.7" height="100"/>
+      <polygon style="fill:currentColor" points="14.7,43 58.6,0 97.6,0 54.4,42 47.5,35 71,11.6 64.8,11.6 14.7,61"/>
+      <polygon style="fill:currentColor" points="14.7,71 28.7,57 33,71 4,100 0,100 0,95"/>
+      <polygon style="fill:currentColor" points="42.6,76 51.4,74 66.6,89 73,89 80,84 96,100 66.4,100"/>
+      <line style="stroke:var(--accent)" x1="50" y1="58" x2="80" y2="45.5" stroke-width="7"/>
+      <circle style="fill:var(--accent)" cx="85.5" cy="43" r="11"/>
+      <line style="stroke:var(--red)" x1="44" y1="60" x2="77" y2="87" stroke-width="9"/>
+      <circle style="fill:none;stroke:var(--bg);stroke-width:5" cx="44" cy="60" r="13"/>
+      <circle style="fill:var(--red)" cx="44" cy="60" r="10.6"/>
+    </svg>
+    Konnect AI
+  </a>
   <h1>Let's build your website</h1>
   <p class="lede">This takes about 10 minutes. Answer what you can and skip anything you're unsure about. We'll fill the gaps on a quick call.</p>
 
