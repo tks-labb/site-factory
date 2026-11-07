@@ -1,0 +1,45 @@
+{
+  "_note": "DEMO built from public listings (Yelp, Angi, BuildZoom, directories). Hours conflict across sources; confirm with the owner before launch.",
+  "demo": true,
+  "schemaType": "Plumber",
+  "business": {
+    "name": "Precision Plumbing",
+    "tagline": "Family-owned plumbing in Troy since 1995",
+    "description": "Family-owned and operated plumbing company in Troy, Michigan since 1995. Repairs, water heaters, leak detection, sump pumps and emergency service.",
+    "phone": "(248) 616-0623",
+    "address": { "street": "360 E Maple Rd", "city": "Troy", "state": "MI", "zip": "48083" },
+    "city": "Troy",
+    "serviceArea": ["Troy", "Birmingham", "Royal Oak", "Clawson", "Rochester Hills", "Sterling Heights"],
+    "hours": [["Mon–Fri", "8am – 4pm"], ["Saturday", "Closed"], ["Sunday", "Closed"]]
+  },
+  "brand": { "primary": "#0A5BAA", "accent": "#16A1C7", "font": "modern" },
+  "hero": {
+    "eyebrow": "Family owned since 1995 · Troy, MI",
+    "headline": "Plumbing done right the first time.",
+    "subheadline": "Nearly 30 years of fixing leaks, water heaters and drains for Troy-area homes and businesses.",
+    "primaryCta": "Get a free estimate",
+    "secondaryCta": "Get a free estimate"
+  },
+  "trust": ["Family owned since 1995", "Homes and businesses", "Emergency service"],
+  "servicesTitle": "Plumbing services",
+  "services": [
+    { "name": "Plumbing repair", "description": "Leaky faucets, running toilets, broken pipes and everything in between.", "icon": "wrench" },
+    { "name": "Water heaters", "description": "Repair, replacement and new installations.", "icon": "bolt" },
+    { "name": "Leak detection", "description": "Find hidden leaks before they turn into water damage.", "icon": "drop" },
+    { "name": "Sump pumps", "description": "Installation and repair to keep your basement dry.", "icon": "home" },
+    { "name": "Installations and replacements", "description": "New fixtures, lines and replacement of aging plumbing.", "icon": "hammer" },
+    { "name": "Emergency plumbing", "description": "Burst pipe or major leak? Call right away.", "icon": "clock" }
+  ],
+  "why": [
+    { "title": "Family owned since 1995", "text": "A local family business that has served Troy for nearly three decades.", "icon": "heart" },
+    { "title": "Done right the first time", "text": "Careful work that fixes the problem properly, so you aren't calling back next week.", "icon": "check" },
+    { "title": "Right here in Troy", "text": "Based on Maple Rd and close to Birmingham, Royal Oak and Clawson.", "icon": "pin" }
+  ],
+  "faq": [
+    { "q": "Do you work on homes and businesses?", "a": "Yes. We handle residential and commercial plumbing." },
+    { "q": "Do you handle emergencies?", "a": "Call (248) 616-0623 for burst pipes, major leaks or no hot water." },
+    { "q": "Can I get an estimate first?", "a": "Yes. Send a request below or call, and we'll give you a price before starting." }
+  ],
+  "contactTitle": "Get a free estimate",
+  "contactIntro": "Tell us what's going on and we'll call you back with next steps."
+}

@@ -1,0 +1,48 @@
+{
+  "_note": "DEMO built from public listings (Yelp, MapQuest, Birdeye, Chamber of Commerce). Confirm hours and services with the owner before launch.",
+  "demo": true,
+  "schemaType": "AutoRepair",
+  "business": {
+    "name": "Veterans Auto Repair Center",
+    "tagline": "Veteran-owned auto repair in Madison Heights",
+    "description": "Veteran-owned auto repair shop on 11 Mile Rd in Madison Heights. Brakes, engines, transmissions, diagnostics, A/C and more for all makes and models.",
+    "phone": "(248) 439-0036",
+    "email": "veteransautorepair@outlook.com",
+    "address": { "street": "1222 E 11 Mile Rd", "city": "Madison Heights", "state": "MI", "zip": "48071" },
+    "city": "Madison Heights",
+    "serviceArea": ["Madison Heights", "Royal Oak", "Hazel Park", "Troy", "Warren", "Ferndale"],
+    "hours": [["Mon–Fri", "8am – 6pm"], ["Saturday", "Closed"], ["Sunday", "Closed"]]
+  },
+  "brand": { "primary": "#1C3A6E", "accent": "#B3202A", "font": "bold" },
+  "hero": {
+    "eyebrow": "Veteran-owned · Madison Heights",
+    "headline": "Straight answers and solid repairs, from veterans who do it right.",
+    "subheadline": "Brakes, engines, transmissions and everything in between. Call or send a request and we'll get your car back on the road.",
+    "primaryCta": "Request service",
+    "secondaryCta": "Request service"
+  },
+  "trust": ["Veteran-owned", "All makes and models", "On 11 Mile near John R"],
+  "rating": { "value": "4.6", "count": "178", "source": "Birdeye" },
+  "servicesTitle": "Repairs we handle every day",
+  "services": [
+    { "name": "Brakes and suspension", "description": "Pads, rotors, struts and shocks inspected and repaired so you stop and steer with confidence.", "icon": "shield" },
+    { "name": "Engine and transmission", "description": "From check-engine lights to major engine and transmission work.", "icon": "wrench" },
+    { "name": "Diagnostics", "description": "We find the real problem before replacing parts, and explain it in plain English.", "icon": "spark" },
+    { "name": "A/C and heating", "description": "Stay cool in summer and warm in Michigan winters.", "icon": "snow" },
+    { "name": "Starters, alternators and water pumps", "description": "Electrical and cooling system repairs that keep you from getting stranded.", "icon": "bolt" },
+    { "name": "Oil changes, tires and alignment", "description": "Routine maintenance, tire service and alignments.", "icon": "car" }
+  ],
+  "why": [
+    { "title": "Veteran-owned", "text": "Run by veterans who bring the same discipline and integrity to every repair.", "icon": "star" },
+    { "title": "Plain-English explanations", "text": "We show you what's wrong and what it costs before we start.", "icon": "chat" },
+    { "title": "Local and easy to reach", "text": "Right on 11 Mile Rd in Madison Heights, close to Royal Oak, Hazel Park and Troy.", "icon": "pin" }
+  ],
+  "faq": [
+    { "q": "Do I need an appointment?", "a": "Calling ahead at (248) 439-0036 or sending a request below is the fastest way to get your car in." },
+    { "q": "What kinds of vehicles do you work on?", "a": "Most cars, trucks and SUVs. Call us with your make and model if you're unsure." },
+    { "q": "Will you call before doing extra work?", "a": "Yes. We explain the problem and the cost, and only start once you approve." }
+  ],
+  "contactTitle": "Request service",
+  "contactIntro": "Tell us your vehicle and what's going on, and we'll call you back to set up a time.",
+  "mobileQuoteLabel": "Request service"
+}

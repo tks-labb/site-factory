@@ -1,0 +1,47 @@
+{
+  "_note": "DEMO built from public listings (Yelp, Yellow Pages, Manta, the shop's current site). Confirm details with the owner before launch.",
+  "demo": true,
+  "schemaType": "AutoRepair",
+  "business": {
+    "name": "Madison Muffler & Auto Repair",
+    "tagline": "Brakes, exhaust and auto repair on John R",
+    "description": "Brake, muffler, exhaust and auto repair shop on John R between 12 and 13 Mile in Madison Heights, Michigan. Custom exhaust, struts and alignments.",
+    "phone": "(248) 588-5900",
+    "address": { "street": "30407 John R Rd", "city": "Madison Heights", "state": "MI", "zip": "48071" },
+    "city": "Madison Heights",
+    "serviceArea": ["Madison Heights", "Troy", "Royal Oak", "Warren", "Clawson", "Hazel Park"],
+    "hours": [["Mon–Fri", "8am – 5pm"], ["Saturday", "Closed"], ["Sunday", "Closed"]]
+  },
+  "brand": { "primary": "#B71C1C", "accent": "#2B2B2B", "font": "bold" },
+  "hero": {
+    "eyebrow": "John R between 12 & 13 Mile",
+    "headline": "Brakes, mufflers and custom exhaust, done right.",
+    "subheadline": "Madison Heights' brake and exhaust specialists. Call or send a request and we'll get you in.",
+    "primaryCta": "Request service",
+    "secondaryCta": "Request service"
+  },
+  "trust": ["Brake specialists", "Custom exhaust", "All makes and models"],
+  "rating": { "value": "4.7", "count": "34", "source": "Yelp" },
+  "servicesTitle": "What we fix",
+  "services": [
+    { "name": "Brake service", "description": "Pads, rotors, calipers and brake lines. Our specialty.", "icon": "shield" },
+    { "name": "Mufflers and exhaust", "description": "Muffler repair, exhaust leaks and full exhaust replacement.", "icon": "wrench" },
+    { "name": "Custom exhaust systems", "description": "Custom-built exhaust for the sound and performance you want.", "icon": "spark" },
+    { "name": "Struts and suspension", "description": "Smooth out the ride with new struts and suspension parts.", "icon": "car" },
+    { "name": "Alignment", "description": "Keep your car driving straight and your tires wearing evenly.", "icon": "check" },
+    { "name": "General auto repair", "description": "Everyday repairs and maintenance for most makes and models.", "icon": "hammer" }
+  ],
+  "why": [
+    { "title": "Brake and exhaust specialists", "text": "This is our focus, so the job gets done right.", "icon": "shield" },
+    { "title": "Custom work", "text": "From a quiet daily driver to a custom exhaust setup.", "icon": "spark" },
+    { "title": "Easy to find", "text": "On John R between 12 and 13 Mile in Madison Heights.", "icon": "pin" }
+  ],
+  "faq": [
+    { "q": "Do I need an appointment?", "a": "Call (248) 588-5900 or send a request below and we'll set up a time." },
+    { "q": "Can you build a custom exhaust?", "a": "Yes. Tell us your vehicle and what you're looking for and we'll go over options." },
+    { "q": "How do I know if I need brakes?", "a": "Squealing, grinding, a soft pedal or pulling to one side are all signs. Bring it in and we'll check." }
+  ],
+  "contactTitle": "Request service",
+  "contactIntro": "Tell us your vehicle and what you need, and we'll call you back.",
+  "mobileQuoteLabel": "Request service"
+}

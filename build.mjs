@@ -114,7 +114,7 @@ function render(c) {
     : `<div class="hero-card" aria-label="${esc(b.name)} at a glance">
         ${c.rating ? `<div class="hc-rating"><span class="stars" aria-hidden="true">${icon("star", "st")}${icon("star", "st")}${icon("star", "st")}${icon("star", "st")}${icon("star", "st")}</span><strong>${esc(c.rating.value)}</strong><span>${esc(c.rating.count)} reviews on ${esc(c.rating.source || "Google")}</span></div>` : ""}
         ${has(b.hours) ? `<div class="hc-block"><span class="hc-label">${icon("clock")}Hours</span><ul class="hours">${b.hours.map(([d, t]) => `<li><span>${esc(d)}</span><span>${esc(t)}</span></li>`).join("")}</ul></div>` : ""}
-        <a class="hc-call" href="${telHref(b.phone)}">${icon("phone")}<span><small>Call or text</small>${esc(b.phone)}</span></a>
+        <a class="hc-call" href="${telHref(b.phone)}">${icon("phone")}<span><small>${esc(c.callLabel || "Call us")}</small>${esc(b.phone)}</span></a>
       </div>`;
 
   return `<!doctype html>
@@ -126,7 +126,7 @@ function render(c) {
 <meta name="description" content="${esc(desc)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
-${c.domain ? `<link rel="canonical" href="https://${esc(c.domain)}/">` : ""}
+${c.demo ? `<meta name="robots" content="noindex, nofollow">` : c.domain ? `<link rel="canonical" href="https://${esc(c.domain)}/">` : ""}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${font.url}&display=swap">
