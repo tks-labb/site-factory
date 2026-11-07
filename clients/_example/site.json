@@ -1,0 +1,58 @@
+{
+  "_note": "EXAMPLE ONLY. Fictional business used to show every option. Copy this folder to start a new client.",
+  "domain": "northsideplumbing.example",
+  "schemaType": "Plumber",
+  "business": {
+    "name": "Northside Plumbing",
+    "tagline": "Fast, honest plumbing for Northside homes",
+    "description": "Family-owned plumbing company serving Northside and nearby towns. Repairs, water heaters, drains and remodels.",
+    "phone": "(555) 010-4477",
+    "email": "hello@northsideplumbing.example",
+    "address": { "street": "120 Main St", "city": "Northside", "state": "MI", "zip": "48000" },
+    "city": "Northside",
+    "serviceArea": ["Northside", "Lakeview", "Oak Park", "Fairfield", "Riverton"],
+    "hours": [["Mon–Fri", "7am – 6pm"], ["Saturday", "8am – 2pm"], ["Sunday", "Emergencies only"]],
+    "bookingUrl": "",
+    "license": "Licensed & insured · MI #0000000"
+  },
+  "brand": {
+    "primary": "#0B5CAD",
+    "accent": "#F2A900",
+    "font": "modern",
+    "logo": ""
+  },
+  "hero": {
+    "headline": "Leaks, clogs and water heaters fixed today.",
+    "subheadline": "Upfront prices before we start, and a technician at your door within hours, not days.",
+    "primaryCta": "Get a free quote",
+    "secondaryCta": "Get a free quote",
+    "image": ""
+  },
+  "trust": ["Licensed & insured", "Same-day service", "Upfront pricing"],
+  "rating": { "value": "4.9", "count": "120", "source": "Google" },
+  "servicesTitle": "Plumbing help for every room",
+  "servicesIntro": "From a dripping faucet to a full repipe, one call handles it.",
+  "services": [
+    { "name": "Emergency repairs", "description": "Burst pipes, leaks and backups handled fast, day or night.", "icon": "drop" },
+    { "name": "Water heaters", "description": "Repair and replacement for tank and tankless heaters.", "icon": "bolt" },
+    { "name": "Drain cleaning", "description": "Kitchen, bathroom and main line clogs cleared and camera-checked.", "icon": "wrench" },
+    { "name": "Bathroom remodels", "description": "New fixtures, showers and vanities installed cleanly.", "icon": "home" }
+  ],
+  "why": [
+    { "title": "Upfront pricing", "text": "You approve the price before any work starts. No surprises.", "icon": "dollar" },
+    { "title": "On time", "text": "We give you an arrival window and text when we're on the way.", "icon": "clock" },
+    { "title": "Work guaranteed", "text": "Every repair is backed by our workmanship guarantee.", "icon": "shield" }
+  ],
+  "reviews": [
+    { "quote": "Showed up within two hours, fixed the leak, and cleaned up after. Fair price.", "name": "Example Customer", "source": "Google" },
+    { "quote": "They explained everything and the new water heater was in the same day.", "name": "Example Customer", "source": "Google" },
+    { "quote": "Friendly, fast and honest. Our go-to plumber now.", "name": "Example Customer", "source": "Facebook" }
+  ],
+  "faq": [
+    { "q": "Do you charge for estimates?", "a": "No. Estimates are free, and you get the price before we start." },
+    { "q": "Do you handle emergencies?", "a": "Yes. Call any time for burst pipes, major leaks or sewer backups." },
+    { "q": "What areas do you serve?", "a": "Northside, Lakeview, Oak Park, Fairfield, Riverton and nearby." }
+  ],
+  "contactTitle": "Get a free quote",
+  "contactIntro": "Tell us what's going on and we'll call you back with a price."
+}

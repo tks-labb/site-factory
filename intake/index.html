@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>New Website Intake</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap">
+<style>
+:root { --bg:#F4F5F7; --surface:#fff; --ink:#14171A; --ink-2:#565C64; --line:#DDE0E4; --accent:#0A6AE0; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0E1013; --surface:#16191D; --ink:#EDEFF2; --ink-2:#A2A8B0; --line:#2A2F36; --accent:#5AA2FF; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.6 "DM Sans", system-ui, sans-serif; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 48px max(18px, env(safe-area-inset-right)) 80px max(18px, env(safe-area-inset-left)); }
+h1 { font: 700 clamp(30px, 5vw, 42px)/1.1 Sora, system-ui, sans-serif; margin: 0 0 12px; }
+.lede { color: var(--ink-2); margin: 0 0 32px; }
+fieldset { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 24px; margin: 0 0 20px; display: grid; gap: 16px; min-width: 0; }
+legend { font: 700 18px/1 Sora, system-ui, sans-serif; padding: 0 8px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 6px; min-width: 0; }
+label, .q { font-weight: 700; font-size: 15px; }
+.hint { color: var(--ink-2); font-size: 14px; font-weight: 400; }
+input, select, textarea { font: inherit; font-size: 16px; color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 13px; min-height: 48px; width: 100%; }
+input[type=file] { padding: 10px; }
+input[type=color] { padding: 4px; height: 48px; }
+textarea { min-height: 96px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+.choices { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+.choices label { font-weight: 500; display: flex; gap: 8px; align-items: center; }
+.choices input { width: 20px; min-height: 20px; height: 20px; }
+button { font: 700 17px/1 "DM Sans", sans-serif; background: var(--accent); color: #fff; border: 0; border-radius: 999px; min-height: 54px; padding: 0 30px; cursor: pointer; }
+@media (prefers-color-scheme: dark) { button { color: #0E1013; } }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Let's build your website</h1>
+  <p class="lede">This takes about 10 minutes. Answer what you can and skip anything you're unsure about. We'll fill the gaps on a quick call.</p>
+
+  <form name="intake" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="website-url" enctype="multipart/form-data">
+    <input type="hidden" name="form-name" value="intake">
+    <p hidden><label>Leave this empty <input name="website-url"></label></p>
+
+    <fieldset>
+      <legend>Your business</legend>
+      <div class="field"><label for="biz">Business name</label><input id="biz" name="business_name" required></div>
+      <div class="row">
+        <div class="field"><label for="type">Type of business</label><input id="type" name="business_type" placeholder="Plumber, salon, dentist…" required></div>
+        <div class="field"><label for="year">Year started <span class="hint">(optional)</span></label><input id="year" name="year_started" inputmode="numeric"></div>
+      </div>
+      <div class="field"><label for="desc">Describe your business in 2–3 sentences</label><textarea id="desc" name="description" required></textarea></div>
+      <div class="field"><label for="diff">What makes you different from competitors?</label><textarea id="diff" name="differentiators"></textarea></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Contact details for the website</legend>
+      <div class="row">
+        <div class="field"><label for="phone">Business phone</label><input id="phone" name="business_phone" type="tel" required></div>
+        <div class="field"><label for="email">Business email</label><input id="email" name="business_email" type="email" required></div>
+      </div>
+      <div class="field"><label for="addr">Address <span class="hint">(leave blank if you don't want it shown)</span></label><input id="addr" name="address"></div>
+      <div class="field"><label for="area">Cities or areas you serve</label><input id="area" name="service_area" placeholder="Troy, Royal Oak, Birmingham…"></div>
+      <div class="field"><label for="hours">Business hours</label><textarea id="hours" name="hours" placeholder="Mon–Fri 8–6, Sat 9–2, Sun closed"></textarea></div>
+      <div class="field"><label for="book">Online booking link <span class="hint">(Calendly, Google Calendar, Square, etc.)</span></label><input id="book" name="booking_link" type="url" placeholder="https://"></div>
+      <div class="field"><label for="leads">Where should website messages go? <span class="hint">(email address)</span></label><input id="leads" name="lead_email" type="email" required></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Services</legend>
+      <div class="field"><label for="svc">List your main services <span class="hint">(one per line, with prices if you want them shown)</span></label><textarea id="svc" name="services" required></textarea></div>
+      <div class="field"><label for="top">Which service do you most want more customers for?</label><input id="top" name="top_service"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Look and feel</legend>
+      <div class="field"><label for="logo">Logo <span class="hint">(PNG, SVG or JPG)</span></label><input id="logo" name="logo" type="file" accept="image/*"></div>
+      <div class="field"><label for="photo">Best photo of your work, team or storefront <span class="hint">(optional)</span></label><input id="photo" name="photo" type="file" accept="image/*"></div>
+      <div class="row">
+        <div class="field"><label for="c1">Main brand color</label><input id="c1" name="brand_color" type="color" value="#0A6AE0"></div>
+        <div class="field"><label for="c2">Second color <span class="hint">(optional)</span></label><input id="c2" name="brand_color_2" type="color" value="#F2A900"></div>
+      </div>
+      <div class="field"><span class="q">Style</span>
+        <div class="choices">
+          <label><input type="radio" name="style" value="modern" checked> Clean and modern</label>
+          <label><input type="radio" name="style" value="classic"> Classic and trusted</label>
+          <label><input type="radio" name="style" value="friendly"> Warm and friendly</label>
+          <label><input type="radio" name="style" value="bold"> Bold and loud</label>
+        </div>
+      </div>
+      <div class="field"><label for="like">Websites you like <span class="hint">(links, and what you like about them)</span></label><textarea id="like" name="sites_liked"></textarea></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Reviews and proof</legend>
+      <div class="field"><label for="g">Google Business Profile or Yelp link</label><input id="g" name="review_link" type="url" placeholder="https://"></div>
+      <div class="field"><label for="rev">2–3 favorite customer reviews <span class="hint">(copy and paste, with first name)</span></label><textarea id="rev" name="reviews"></textarea></div>
+      <div class="field"><label for="trust">Licenses, certifications, awards or guarantees</label><input id="trust" name="trust" placeholder="Licensed & insured, BBB A+, 1-year warranty…"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Domain (your web address)</legend>
+      <div class="field"><span class="q">Do you already own a domain?</span>
+        <div class="choices">
+          <label><input type="radio" name="has_domain" value="yes"> Yes</label>
+          <label><input type="radio" name="has_domain" value="no"> No, I need one</label>
+          <label><input type="radio" name="has_domain" value="not sure"> Not sure</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="dom">Domain name</label><input id="dom" name="domain" placeholder="mybusiness.com"></div>
+        <div class="field"><label for="reg">Where was it bought?</label><input id="reg" name="registrar" placeholder="GoDaddy, Wix, Squarespace…"></div>
+      </div>
+      <div class="field"><label for="cur">Current website <span class="hint">(if any)</span></label><input id="cur" name="current_site" type="url" placeholder="https://"></div>
+      <div class="field"><span class="q">Does your business email use this domain? <span class="hint">(like you@mybusiness.com)</span></span>
+        <div class="choices">
+          <label><input type="radio" name="email_on_domain" value="yes"> Yes</label>
+          <label><input type="radio" name="email_on_domain" value="no"> No</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>You</legend>
+      <div class="row">
+        <div class="field"><label for="you">Your name</label><input id="you" name="contact_name" required></div>
+        <div class="field"><label for="ycell">Best number to reach you</label><input id="ycell" name="contact_phone" type="tel" required></div>
+      </div>
+      <div class="field"><label for="notes">Anything else we should know?</label><textarea id="notes" name="notes"></textarea></div>
+    </fieldset>
+
+    <button type="submit">Send my answers</button>
+  </form>
+</main>
+</body>
+</html>
