@@ -6,6 +6,7 @@ Run: python3 clients/dentonx/pages.py
 import re, pathlib
 OUT = pathlib.Path(__file__).resolve().parents[2] / "sites" / "dentonx"
 PHONE, PHONE_TEL = "+1 (925) 220-2187", "+19252202187"
+BASE = "https://dentonx.konnectai.org"
 EDGAR = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=0002093375&amp;owner=include"
 
 NAV = [("platform.html", "Platform"), ("solutions.html", "Solutions"), ("index.html#market", "Market"), ("company.html", "Company"), ("investors.html", "Investors")]
@@ -29,7 +30,9 @@ def head(title, desc, page):
 <meta property="og:site_name" content="DentonX">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="assets/og.png">
+<meta property="og:url" content="{BASE}/{"" if page == "index.html" else page}">
+<meta property="og:image" content="{BASE}/assets/og.png">
+<meta name="twitter:image" content="{BASE}/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
