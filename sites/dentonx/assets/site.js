@@ -1,6 +1,6 @@
 (function () {
   document.documentElement.classList.add('js');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; // soften motion, never remove it
   var $ = function (id) { return document.getElementById(id); };
 
   // ----- header: solid on scroll, mobile menu -----
@@ -28,8 +28,7 @@
   function countUp(root) {
     root.querySelectorAll('[data-count]').forEach(function (el) {
       var end = +el.dataset.count, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
-      if (reduce) { el.textContent = pre + fmt(end) + suf; return; }
-      var t0 = null, dur = 1600;
+      var t0 = null, dur = reduce ? 1100 : 1600;
       function tick(t) { if (!t0) t0 = t; var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = pre + fmt(end * e) + suf; if (p < 1) requestAnimationFrame(tick); }
       el.textContent = pre + '0' + suf; requestAnimationFrame(tick);
     });
@@ -41,7 +40,7 @@
     });
     root.querySelectorAll('.fill').forEach(function (f) { f.style.width = f.dataset.w + '%'; });
     var share = root.querySelector('.share');
-    if (share) share.querySelectorAll('i').forEach(function (cell, i) { setTimeout(function () { if (i < +share.dataset.on) cell.classList.add('on'); }, reduce ? 0 : i * 18); });
+    if (share) share.querySelectorAll('i').forEach(function (cell, i) { setTimeout(function () { if (i < +share.dataset.on) cell.classList.add('on'); }, i * (reduce ? 10 : 18)); });
   }
   document.querySelectorAll('.share').forEach(function (g) { for (var i = 0; i < 100; i++) g.appendChild(document.createElement('i')); });
   document.querySelectorAll('.seg').forEach(function (s) { s.style.strokeDasharray = '0 ' + C; });
@@ -54,7 +53,7 @@
         if (e.target.querySelector('[data-count]') || e.target.hasAttribute('data-count')) countUp(e.target);
         if (e.target.classList.contains('chart')) drawChart(e.target);
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.01, rootMargin: '0px 0px -8% 0px' });
     document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
   } else {
     document.querySelectorAll('.rv').forEach(function (el) { el.classList.add('in'); countUp(el); if (el.classList.contains('chart')) drawChart(el); });
@@ -95,7 +94,7 @@
     var bez = function (p0, p1, p2, p3, t) { var u = 1 - t; return u*u*u*p0 + 3*u*u*t*p1 + 3*u*t*t*p2 + t*t*t*p3; };
     var spawn = function () {
       var side = Math.random() < 0.5 ? 0 : 1;
-      parts.push({ side: side, k: Math.floor(Math.random() * 4), t: 0, sp: 0.004 + Math.random() * 0.004, c: side ? '#FFC03D' : '#3AA6E0' });
+      parts.push({ side: side, k: Math.floor(Math.random() * 4), t: 0, sp: (0.004 + Math.random() * 0.004) * (reduce ? 0.55 : 1), c: side ? '#FFC03D' : '#3AA6E0' });
     };
     var draw = function (time) {
       var g = geom(), h = g.hub; ctx.clearRect(0, 0, W, H);
@@ -125,14 +124,14 @@
           else { ctx.textAlign = n[2] ? 'left' : 'right'; ctx.fillText(n[1], n[0] + (n[2] ? 14 : -14), y); }
         });
       });
-      if (!reduce && running) { if (Math.random() < 0.35) spawn(); requestAnimationFrame(draw); }
+      if (running) { if (Math.random() < (reduce ? 0.16 : 0.35)) spawn(); requestAnimationFrame(draw); }
     };
     size();
-    if (reduce) { for (var j = 0; j < 30; j++) { spawn(); parts[j].t = Math.random(); } draw(0); }
-    else requestAnimationFrame(draw);
-    window.addEventListener('resize', function () { size(); if (reduce) draw(0); });
+    for (var j = 0; j < 14; j++) { spawn(); parts[j].t = Math.random(); }
+    requestAnimationFrame(draw);
+    window.addEventListener('resize', size);
     // pause when off screen to save battery on phones
-    if ('IntersectionObserver' in window && !reduce) {
+    if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (e) { var vis = e[0].isIntersecting; if (vis && !running) { running = true; requestAnimationFrame(draw); } running = vis; }).observe(cv);
     }
   }

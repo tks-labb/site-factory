@@ -285,10 +285,13 @@ footer .wrap { display: grid; gap: 18px; }
 footer .fl { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 footer .disc { max-width: 90ch; line-height: 1.6; }
 
+/* Reduce Motion: soften, don't remove. Fades, counters and charts stay; sliding, bouncing and lifting stop. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  .js .rv { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
+  .js .rv { transform: none; transition: opacity .6s ease; }
+  .ticker .track { animation-duration: 90s; }
+  .pillar:hover, .aud:hover, .btn:hover, .btn-primary:hover, .tier:hover { transform: none; }
+  .layer::before { animation-duration: 9s; }
 }
 
 /* ===== mobile menu ===== */
