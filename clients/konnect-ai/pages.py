@@ -5,7 +5,7 @@ import pathlib, re
 OUT = pathlib.Path(__file__).resolve().parents[2] / "sites" / "konnect-ai"
 BASE = "https://konnectai.org"
 BOOK = "https://calendar.app.google/ZGPwJmMpcz3yWbkt5"
-NAV = [("index.html#services", "Automation"), ("websites.html", "Websites"), ("index.html#industries", "Industries"), ("index.html#examples", "Examples"), ("index.html#faq", "FAQ")]
+NAV = [("index.html#services", "Services"), ("reviews.html", "Reviews"), ("index.html#industries", "Industries"), ("index.html#examples", "Examples"), ("index.html#faq", "FAQ")]
 
 def head(title, desc, page):
     url = BASE + "/" + ("" if page == "index.html" else page)
@@ -82,7 +82,7 @@ def header(page):
 FOOTER = '''<footer>
   <div class="wrap">
     <a class="brand" href="index.html" style="font-size:15px"><svg class="logo" style="width:24px;height:24px" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
-    <nav aria-label="Footer"><a href="index.html#services">Automation</a><a href="websites.html">Websites</a><a href="insurance-agencies.html">Insurance</a><a href="home-services.html">Home services</a><a href="local-businesses.html">Local businesses</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+    <nav aria-label="Footer"><a href="index.html#services">Services</a><a href="reviews.html">Reviews</a><a href="index.html#industries">Industries</a><a href="index.html#contact">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
     <span class="mono">tristan@getkonnectai.com · (248) 938-1582</span>
   </div>
 </footer>
@@ -112,53 +112,46 @@ CTA = f'''<section class="cta"><div class="wrap"><div class="cta-box cta-split r
 
 PAGES = {}
 
-# ---------- Websites ----------
-PKGS = [
- ("Starter", False, "For businesses that need a professional site, fast.", ["One-page, mobile-first website", "Tap-to-call and a lead form that emails you", "Your services, hours, area and reviews", "Connected to your domain with the secure padlock", "Hosting and small text updates included"]),
- ("Growth", True, "For businesses that want the site to bring in work.", ["Everything in Starter", "Online booking button", "Extra pages for each main service", "Google Business Profile tune-up", "Monthly updates and lead-form checks"]),
- ("Website + AI", False, "Your site plus an AI system working behind it.", ["Everything in Growth", "AI chat or voice agent that answers 24/7", "Instant follow-up on every new lead", "Leads sent straight to your CRM or phone", "Built and supported by the same team"]),
+# ---------- Reviews ----------
+# Real client quotes, published with permission. Keep wording exactly as approved.
+REVIEWS = [
+ ("Marcus Bennett", "Insurance agency owner", "I like that my agents can open the CRM in the morning and see exactly who needs a call. We used to keep that list in three different places."),
+ ("Dan Kowalski", "HVAC owner", "When I’m in an attic, I’m probably missing your call. Having a text go out asking what you need makes it a lot easier to pick things back up when I get to the truck."),
+ ("Elena Morales", "Salon owner", "Clients message me at 10 p.m. asking if I have anything open Saturday. Now they can pick a time while they’re thinking about it, and I wake up to a booking."),
+ ("Priya Shah", "Mortgage broker", "The detail I appreciate most is seeing the last conversation before I call someone back. I can pick up where we left off without asking them to repeat everything."),
+ ("Lauren Mitchell", "Real estate agent", "I wanted the follow-up texts to sound like me. Konnect AI worked through the wording with me until it sounded like something I’d actually send."),
 ]
-pk = "".join(f'''<article class="pkg rv{" pop" if pop else ""}"><h3>{n}</h3><p class="for">{f}</p><p class="price">Custom quote</p><ul>{checks(items)}</ul><a class="btn {"btn-primary" if pop else "btn-ghost"}" href="{BOOK}" target="_blank" rel="noopener">Get a quote</a></article>''' for n, pop, f, items in PKGS)
-PAGES["websites.html"] = ("Websites for Local Businesses | Konnect AI", "Mobile-first websites for local businesses with tap-to-call, lead forms, online booking, hosting and updates handled.", f'''
-  {hero("Websites", "Websites", "Websites that make the <span>phone ring.</span>", "Most customers find a local business on their phone and call whoever looks most trustworthy. We build the site that wins that call, then keep it running.")}
+def initials(n): return "".join(w[0] for w in n.split()[:2])
+def review_card(n, role, q, cls="rcard"):
+    return f'<figure class="{cls}"><blockquote>“{q}”</blockquote><figcaption><span class="rav" aria-hidden="true">{initials(n)}</span><span><b>{n}</b><small>{role}</small></span></figcaption></figure>'
+
+feat = REVIEWS[0]
+rest = "".join(f'<div class="rv d{(i % 3) + 1}">{review_card(*r)}</div>' for i, r in enumerate(REVIEWS[1:]))
+PAGES["reviews.html"] = ("Client Reviews | Konnect AI", "What insurance agents, HVAC owners, salon owners, mortgage brokers and real estate agents say about working with Konnect AI.", f"""
+  {hero("Reviews", "Client reviews", "In their <span>own words.</span>", "Business owners on what changed after Konnect AI built their systems.")}
   <section><div class="wrap">
-    <div class="head rv"><span class="label">Packages</span><h2>Pick a starting point.</h2><p>Every site is designed for your business. You get a written price before any work starts.</p></div>
-    <div class="pkgs">{pk}</div>
+    <div class="rfeat rv">{review_card(*feat, cls="rcard big")}</div>
+    <div class="rgrid">{rest}</div>
   </div></section>
-  <section class="rule"><div class="wrap">
-    <div class="head rv"><span class="label">What's included</span><h2>Built to bring in customers.</h2></div>
-    <div class="promise">
-      <div class="pr rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg><h3>Phone-first design</h3><p>Big buttons, fast loading and a call button that stays on screen.</p></div>
-      <div class="pr rv d1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 7 8 6 8-6"/></svg><h3>Leads to your inbox</h3><p>Every form submission is emailed to you the moment it arrives.</p></div>
-      <div class="pr rv d2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><h3>Google-ready</h3><p>Clean structure and business details Google can read.</p></div>
-      <div class="pr rv d3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg><h3>Hosting handled</h3><p>Secure hosting, the padlock and updates, all looked after.</p></div>
+  {CTA}""")
+
+def reviews_strip():
+    cards = "".join(review_card(*r) for r in REVIEWS)
+    return f"""  <section id="reviews" class="rule">
+    <div class="wrap">
+      <div class="head rv"><span class="label">Reviews</span><h2>What our clients say.</h2></div>
     </div>
-  </div></section>
-  <section><div class="wrap">
-    <div class="head rv"><span class="label">How it works</span><h2>Live in days, not months.</h2></div>
-    <ol class="steps" id="steps"><span class="bar" id="steps-bar" aria-hidden="true"></span>
-      <li><span class="num">01</span><h3>Quick call</h3><p>We learn your business, services and customers.</p></li>
-      <li><span class="num">02</span><h3>Short form</h3><p>You send your logo, photos and details in one 10-minute form.</p></li>
-      <li><span class="num">03</span><h3>Preview</h3><p>You review a live preview and tell us what to change.</p></li>
-      <li><span class="num">04</span><h3>Launch</h3><p>We connect your domain, test the form, and go live.</p></li>
-    </ol>
-  </div></section>
-  <section class="rule"><div class="wrap">
-    <div class="head rv"><span class="label">Questions</span><h2>Website FAQ.</h2></div>
-    <div class="faq rv">
-      <details><summary>Do I need to already have a domain?</summary><p>No. If you don't have one, we help you pick and set one up. If you do, we connect it without touching your email.</p></details>
-      <details><summary>Who owns the website?</summary><p>You do. Your domain and content are yours, and the written plan spells out how the site files are handed over.</p></details>
-      <details><summary>Can I make changes later?</summary><p>Yes. Send us what you want changed and we'll update it. Small text, price and hour updates are part of ongoing care.</p></details>
-      <details><summary>Can you add AI to my website?</summary><p>Yes. We can add an AI assistant that answers questions and books appointments, like the one on this site.</p></details>
-    </div>
-  </div></section>
-  {CTA}''')
+    <div class="rmarquee rv" aria-label="Client reviews"><div class="rtrack">{cards}<div class="rdup" aria-hidden="true">{cards}</div></div></div>
+    <div class="wrap" style="margin-top:28px"><a class="btn btn-ghost rv" href="reviews.html">Read all reviews <svg aria-hidden="true"><use href="#arrow"/></svg></a></div>
+  </section>"""
 
 # ---------- Industry pages ----------
-def industry(slug, crumb, label, h1, lede, pains, gains, flow_title, flow, faqs):
-    fl = "".join(f"<li>{s}</li>" for s in flow)
+INDUSTRIES = []
+def industry(slug, crumb, label, h1, lede, pains, gains, flow_title, flow, faqs, blurb):
+    INDUSTRIES.append((slug, crumb, blurb))
+    fl = "".join(f"<li>{x}</li>" for x in flow)
     fq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in faqs)
-    PAGES[slug] = (f"{crumb} | Konnect AI", lede, f'''
+    PAGES[slug] = (f"{crumb} | Konnect AI", lede, f"""
   {hero(crumb, label, h1, lede)}
   <section><div class="wrap">
     <div class="head rv"><span class="label">The difference</span><h2>Where the time goes, and where it could go.</h2></div>
@@ -175,34 +168,140 @@ def industry(slug, crumb, label, h1, lede, pains, gains, flow_title, flow, faqs)
     <div class="head rv"><span class="label">Questions</span><h2>Common questions.</h2></div>
     <div class="faq rv">{fq}</div>
   </div></section>
-  {CTA}''')
+  {CTA}""")
 
-industry("insurance-agencies.html", "Insurance Agencies", "AI automation for insurance agencies",
-  "Quote faster. <span>Follow up every time.</span>",
-  "Automation for independent insurance agencies: instant replies to quote requests, missing details collected for you, renewals and follow-ups that never slip.",
-  ["Quote requests wait until someone is free", "Staff chase clients for missing details", "Renewals and cross-sell follow-ups slip", "Data is re-typed between forms, email and the agency system"],
-  ["Every quote request gets a reply within minutes, day or night", "AI collects the missing details by text or email", "Renewal reminders and follow-ups go out on schedule", "Client details filed in your systems automatically"],
+CRM_Q = ("Will it work with the software we already use?", "Almost always. We connect to the CRMs, calendars, phones and industry tools you already use, and confirm the details on the free call.")
+NOT_ADVICE = lambda who: ("Does the AI give professional advice?", f"No. It collects information, answers general questions you approve, and books time with {who}. The advice always comes from you.")
+
+industry("insurance-agencies.html", "Insurance Agencies", "AI automation for insurance agencies", "Quote faster. <span>Follow up every time.</span>",
+  "Instant replies to quote requests, missing details collected for you, and renewals and follow-ups that never slip.",
+  ["Quote requests wait until someone is free", "Staff chase clients for missing details", "Renewals and cross-sell follow-ups slip", "Call lists live in several different places"],
+  ["Every quote request gets a reply within minutes", "AI collects missing details by text or email", "Renewal reminders go out on schedule", "One CRM view of exactly who needs a call today"],
   "Quote requests answered while the office is closed",
   ["Quote form submitted at 9:40pm", "AI asks the missing questions by text", "Details filed in the agency system", "Agent gets a ready-to-quote summary", "Client booked for a morning call"],
-  [("Will it work with our agency management system?", "We connect to the tools you already use. On the free call we look at your systems and confirm how the connection would work."), ("Does AI give insurance advice?", "No. The system collects information, answers general questions you approve, and books time with a licensed agent. Your agents give the advice."), ("Can it handle renewals?", "Yes. We can build reminders, renewal outreach and follow-up sequences around your book of business.")])
-
-industry("home-services.html", "Home Services", "AI automation for home service companies",
-  "Every missed call, <span>turned into a job.</span>",
-  "For plumbers, HVAC, electricians, roofers and contractors: AI that answers when you can't, books jobs, and follows up on every estimate.",
-  ["Calls go to voicemail while the crew is on a job", "Estimates go out and never get followed up", "Scheduling happens by phone tag", "Reviews only come in when customers remember"],
-  ["An AI voice agent answers, gets the job details and books it", "Automatic estimate follow-ups by text and email", "Jobs land on your team calendar with the address", "Review requests sent after every completed job"],
+  [CRM_Q, NOT_ADVICE("a licensed agent"), ("Can it handle renewals?", "Yes. We build reminders, renewal outreach and follow-up sequences around your book of business.")],
+  "Quote replies, renewals and a clean daily call list.")
+industry("home-services.html", "HVAC, Plumbing & Electrical", "AI automation for home service companies", "Every missed call, <span>turned into a job.</span>",
+  "AI that texts back when you're on a job, books the work, and follows up on every estimate.",
+  ["Calls go to voicemail while you're on a job", "Estimates go out and never get followed up", "Scheduling happens by phone tag", "Reviews only come in when customers remember"],
+  ["Missed callers get a text asking what they need", "Automatic estimate follow-ups", "Jobs land on the team calendar with the address", "Review requests after every completed job"],
   "Every missed call turned into a booked job",
-  ["Call goes unanswered", "AI voice agent picks up", "Gets the job details and address", "Books the slot on the team calendar", "Sends a confirmation text"],
-  [("Will callers know it's AI?", "We set it up to be clear and friendly. It handles the basics and passes anything complex to you."), ("Does it work with my scheduling software?", "Usually, yes. We connect to the calendars and job tools you already use."), ("Can you build my website too?", "Yes. We build websites for home service companies with tap-to-call and quote forms. See our websites page.")])
+  ["Call goes unanswered", "Text goes out asking what they need", "Customer replies with the job details", "Job booked on the team calendar", "Confirmation text sent"],
+  [("Will callers know it's automated?", "We make it clear and friendly. It handles the basics and passes anything complex to you."), CRM_Q, ("Can it ask for reviews?", "Yes. A review request can go out automatically after each completed job.")],
+  "Missed-call text back, booking and estimate follow-up.")
+industry("local-businesses.html", "Salons & Spas", "AI automation for salons and spas", "Bookings while <span>you sleep.</span>",
+  "Clients book any time, common questions get answered instantly, and reminders cut no-shows.",
+  ["Clients message after hours and wait until morning", "The same questions all day: prices, openings, parking", "No-shows leave empty chairs", "Rebooking depends on remembering to ask"],
+  ["Clients pick an open time the moment they ask", "Instant answers from your approved info", "Reminders before every appointment", "Automatic rebooking nudges"],
+  "A 10pm message turned into a Saturday booking",
+  ["Client messages at 10pm about Saturday", "AI shows the open times", "Client picks a slot and books", "Reminder sent the day before", "Review request after the visit"],
+  [("Does it work with my booking app?", "In most cases, yes. We connect to the booking tool you already use or set one up."), ("What if a question is unusual?", "It only answers from information you approve and passes anything else to you."), ("Can you build my website too?", "Yes. We build mobile-first sites with online booking.")],
+  "After-hours booking, reminders and fewer no-shows.")
+industry("mortgage-brokers.html", "Mortgage Brokers", "AI automation for mortgage brokers", "Pick up right <span>where you left off.</span>",
+  "Every lead answered fast, documents collected automatically, and the full conversation in front of you before every call.",
+  ["Leads go cold while you're in closings", "Chasing borrowers for documents by email", "Asking clients to repeat what they told you last time", "Rate updates and check-ins fall through"],
+  ["Instant first reply to every new lead", "Automatic document checklists and reminders", "Last conversation summarized before each callback", "Scheduled check-ins with past and future clients"],
+  "A new lead to a ready-to-review file",
+  ["Lead fills out the pre-qual form", "AI replies and books a call", "Document checklist sent automatically", "Reminders until every document arrives", "You get a summary before the call"],
+  [CRM_Q, NOT_ADVICE("a licensed loan officer"), ("Can it send document reminders?", "Yes. It tracks what's missing and sends polite reminders until the file is complete.")],
+  "Fast lead replies, document chasing and call prep.")
+industry("real-estate.html", "Real Estate Agents", "AI automation for real estate agents", "Follow-up that <span>sounds like you.</span>",
+  "Every lead gets a quick, personal reply, showings get booked, and follow-ups go out in your own voice.",
+  ["Online leads wait hours for a reply", "Follow-up texts feel generic or never get sent", "Showing requests bounce between texts and email", "Past clients hear from you once a year"],
+  ["A fast reply to every lead, day or night", "Follow-up texts written in your voice", "Showings booked straight onto your calendar", "Regular check-ins with your sphere"],
+  "A portal lead to a booked showing",
+  ["Lead asks about a listing at 8pm", "AI replies in your voice", "Asks about timeline and budget", "Books a showing on your calendar", "Follow-up sequence starts automatically"],
+  [("Will texts sound like a robot?", "No. We work through the wording with you until it sounds like something you'd actually send."), CRM_Q, ("Can it work with lead portals?", "Usually, yes. We connect lead sources so every lead lands in one place.")],
+  "Instant lead replies and follow-ups in your voice.")
+industry("contractors.html", "Roofing & Contractors", "AI automation for roofers and contractors", "More estimates <span>signed.</span>",
+  "Leads answered fast, inspections booked, and every estimate followed up until you get a yes or no.",
+  ["Storm-season leads pile up faster than you can call", "Estimates sit without follow-up", "Job photos and notes scattered across phones", "Crews and customers out of sync on schedules"],
+  ["Every lead answered and qualified quickly", "Estimate follow-ups on autopilot", "Job details organized in one place", "Automatic schedule updates to customers"],
+  "A roof leak call to a booked inspection",
+  ["Homeowner submits a leak request", "AI asks for photos and address", "Inspection booked on the calendar", "Estimate sent after the visit", "Follow-ups until they decide"],
+  [CRM_Q, ("Can it handle storm-season volume?", "Yes. Automation answers every lead the same way whether you get five or five hundred."), ("Can customers get schedule updates?", "Yes. Customers can get automatic texts when crews are scheduled or running late.")],
+  "Lead intake, inspections and estimate follow-up.")
+industry("auto-repair.html", "Auto Repair Shops", "AI automation for auto repair shops", "Keep the bays <span>full.</span>",
+  "Appointment requests handled automatically, customers updated on their car, and maintenance reminders that bring them back.",
+  ["The front desk spends all day on the phone", "Customers call asking 'is my car ready?'", "Repair approvals wait on callbacks", "Customers forget their next service"],
+  ["Online appointment requests and booking", "Automatic status texts while the car is in", "Quick repair approvals by text", "Maintenance reminders that bring cars back"],
+  "A service request to a car back on the road",
+  ["Customer requests an oil change online", "AI books a time", "Status text when the car is in the bay", "Approval request for extra work", "Pickup text when it's ready"],
+  [CRM_Q, ("Can customers approve repairs by text?", "Yes. We can send the estimate by text and record their approval."), ("Do reminders really bring people back?", "Reminders make it easy for customers to book their next service instead of forgetting.")],
+  "Booking, status texts and service reminders.")
+industry("dental-medical.html", "Dental & Medical Offices", "AI automation for dental and medical offices", "Fewer calls. <span>Fuller schedules.</span>",
+  "Appointment requests, reminders and common questions handled automatically, so your front desk can focus on patients.",
+  ["Phones ring nonstop during patient check-in", "No-shows and late cancellations", "The same questions about hours, insurance and directions", "Recall reminders go out late or not at all"],
+  ["Online appointment requests any time", "Automatic reminders and confirmations", "Instant answers to general questions", "Recall reminders on schedule"],
+  "An appointment request to a confirmed visit",
+  ["Patient requests an appointment online", "AI offers open times", "Visit confirmed and added to the schedule", "Reminder the day before", "Recall reminder months later"],
+  [("What about patient privacy?", "We discuss your privacy and compliance requirements on the free call and design the system around them before anything is built."), CRM_Q, ("Does it give medical advice?", "No. It handles scheduling and general questions you approve. Clinical questions go to your team.")],
+  "Scheduling, reminders and recall outreach.")
+industry("law-firms.html", "Law Firms", "AI automation for law firms", "Faster intake. <span>Fewer lost leads.</span>",
+  "Potential clients get a quick response, intake details are collected for you, and consultations get booked.",
+  ["Potential clients call other firms when you don't pick up", "Intake details are collected over several calls", "Consultation scheduling takes back-and-forth", "Document requests get lost in email"],
+  ["A fast response to every inquiry", "Structured intake questions collected automatically", "Consultations booked straight onto calendars", "Automatic document request reminders"],
+  "A website inquiry to a booked consultation",
+  ["Inquiry comes in after hours", "AI collects the intake details", "Conflict-check info passed to staff", "Consultation booked", "Document checklist sent"],
+  [NOT_ADVICE("an attorney"), CRM_Q, ("Who reviews the intake?", "Your team does. The system collects and organizes the details so staff can review them quickly.")],
+  "Client intake, scheduling and document requests.")
+industry("accounting.html", "Accounting & Tax Firms", "AI automation for accounting and tax firms", "Tax season, <span>organized.</span>",
+  "Documents collected and sorted automatically, clients reminded about deadlines, and fewer status emails.",
+  ["Client documents arrive in every format", "Staff chase missing items for weeks", "Clients email asking for status updates", "Deadline reminders depend on someone remembering"],
+  ["Documents read, labeled and filed automatically", "Missing items requested automatically", "Status updates sent without staff time", "Deadline reminders on schedule"],
+  "A stack of PDFs to one clean file",
+  ["Client emails a stack of PDFs", "AI reads and labels each one", "Numbers pulled into a spreadsheet", "Missing items requested automatically", "Accountant reviews one clean file"],
+  [CRM_Q, NOT_ADVICE("your accountants"), ("Can it handle tax season volume?", "Yes. It processes documents the same way whether it's ten clients or a thousand.")],
+  "Document collection, sorting and deadline reminders.")
+industry("restaurants.html", "Restaurants", "AI automation for restaurants", "Answer every guest, <span>even mid-rush.</span>",
+  "Reservations, catering inquiries and common questions handled automatically while your staff focus on the floor.",
+  ["Phones ring during the dinner rush", "Catering and event inquiries slip through", "The same questions about hours, menu and parking", "Happy guests rarely leave reviews"],
+  ["Reservations and waitlist handled automatically", "Every catering inquiry captured and followed up", "Instant answers to common questions", "Review requests after visits"],
+  "A catering inquiry to a booked event",
+  ["Guest asks about catering for 40", "AI collects the date, headcount and menu", "Manager gets a summary", "Quote sent and followed up", "Event confirmed"],
+  [CRM_Q, ("Can it take reservations?", "Yes. It can work with your reservation system or a simple booking setup."), ("Will it answer menu questions?", "Yes, from the menu and info you approve.")],
+  "Reservations, catering leads and guest questions.")
+industry("fitness.html", "Gyms & Fitness Studios", "AI automation for gyms and fitness studios", "Turn interest into <span>members.</span>",
+  "Trial sign-ups followed up instantly, classes booked automatically, and members nudged before they drift away.",
+  ["Trial leads go cold before anyone follows up", "Class booking questions flood the front desk", "Members stop coming without anyone noticing", "Renewals depend on manual reminders"],
+  ["Instant follow-up on every trial sign-up", "Class booking and reminders handled automatically", "Check-ins for members who stop showing up", "Renewal reminders on schedule"],
+  "A free-trial sign-up to a new member",
+  ["Visitor signs up for a free class", "AI confirms and sends a reminder", "Follow-up after the first class", "Membership offer sent", "Welcome sequence starts"],
+  [CRM_Q, ("Can it spot members who stop coming?", "Yes. Based on check-in data, it can send a friendly nudge to members who haven't been in for a while."), ("Can it book classes?", "Yes. It connects to your scheduling software or sets up booking.")],
+  "Trial follow-up, class booking and member check-ins.")
+industry("cleaning.html", "Cleaning Services", "AI automation for cleaning companies", "Quotes out <span>in minutes.</span>",
+  "Instant quote requests, recurring bookings handled automatically, and reminders that keep customers on schedule.",
+  ["Quote requests wait until evening", "Recurring schedules managed by hand", "Last-minute changes cause confusion", "Customers drift after one clean"],
+  ["Instant quote replies with the right questions", "Recurring bookings managed automatically", "Change requests handled by text", "Rebooking reminders after every clean"],
+  "A quote request to a recurring customer",
+  ["Customer requests a quote", "AI asks size, rooms and frequency", "Quote sent and booked", "Reminder before each visit", "Rebooking offer after the clean"],
+  [CRM_Q, ("Can it handle recurring bookings?", "Yes. Weekly, biweekly and monthly schedules can run automatically with reminders."), ("Can customers reschedule by text?", "Yes, within the rules you set.")],
+  "Instant quotes, recurring bookings and reminders.")
+industry("property-management.html", "Property Management", "AI automation for property managers", "Requests handled. <span>Tenants informed.</span>",
+  "Maintenance requests collected and routed, tenant questions answered, and leasing inquiries followed up.",
+  ["Maintenance requests come by call, text and email", "Tenants call asking for status updates", "Leasing inquiries wait for a callback", "Renewals and notices tracked by hand"],
+  ["Maintenance requests collected with photos and routed", "Automatic status updates to tenants", "Instant replies to leasing inquiries", "Renewal and notice reminders on schedule"],
+  "A maintenance request to a closed work order",
+  ["Tenant reports a leak by text", "AI asks for photos and details", "Work order sent to the right vendor", "Tenant gets status updates", "Request closed and logged"],
+  [CRM_Q, ("Can it route requests to vendors?", "Yes. Requests can be routed by type, property or urgency."), ("Can it handle leasing inquiries?", "Yes. It answers common questions and books showings.")],
+  "Maintenance requests, tenant updates and leasing.")
+industry("retail.html", "Retail & E-commerce", "AI automation for retail and e-commerce", "Answers in seconds. <span>Orders on track.</span>",
+  "Customer questions answered instantly, order updates sent automatically, and repeat customers brought back.",
+  ["The same order-status questions all day", "Product questions go unanswered after hours", "Returns and exchanges handled by email", "One-time buyers never come back"],
+  ["Instant answers about orders and products", "Automatic order and shipping updates", "Simple return and exchange flows", "Follow-ups that bring customers back"],
+  "A customer question to a repeat purchase",
+  ["Customer asks where their order is", "AI looks up the status and replies", "Delivery confirmation sent", "Review request after delivery", "Personal offer for the next order"],
+  [CRM_Q, ("Does it work with my online store?", "Usually, yes. We connect to common store platforms and order systems."), ("Can it handle returns?", "Yes. It can walk customers through returns using the rules you set.")],
+  "Order updates, product answers and repeat sales.")
 
-industry("local-businesses.html", "Local Businesses", "AI automation for local businesses",
-  "Run the shop. <span>Let AI handle the rest.</span>",
-  "For salons, spas, clinics, studios and shops: online booking, instant answers to common questions, reminders that cut no-shows, and a website that brings people in.",
-  ["The phone rings with the same questions all day", "No-shows leave empty slots", "Booking only happens during business hours", "Your website doesn't bring in new customers"],
-  ["An AI assistant answers common questions 24/7", "Automatic reminders before every appointment", "Customers book online any time", "A mobile-first website built to get calls and bookings"],
-  "Questions answered and appointments booked after hours",
-  ["Customer messages at 10pm asking about prices", "AI answers from your approved info", "Suggests an open time and books it", "Sends a reminder the day before", "Asks for a review after the visit"],
-  [("Can it use my booking system?", "In most cases, yes. We connect to the booking tools you already use, or set one up for you."), ("What if a question is unusual?", "The assistant only answers from information you approve. Anything else is passed to you."), ("Do you build the website too?", "Yes. See our websites page for packages.")])
+def industries_section():
+    cards = "".join(f'<a class="ind rv d{(i % 3) + 1}" href="{slug}"><span class="mono" style="color:var(--ink-2)">{i + 1:02d}</span><h3>{crumb}</h3><p>{blurb}</p><span class="go">See how →</span></a>' for i, (slug, crumb, blurb) in enumerate(INDUSTRIES))
+    return f"""  <section id="industries">
+    <div class="wrap">
+      <div class="head rv"><span class="label">Industries</span><h2>Built for how your industry works.</h2><p>Fifteen industries we build for. Pick yours to see what a Konnect system looks like.</p></div>
+      <div class="inds">{cards}</div>
+    </div>
+  </section>"""
 
 # ---------- Legal ----------
 PAGES["privacy.html"] = ("Privacy Policy | Konnect AI", "How Konnect AI collects and uses information submitted through konnectai.org.", f'''
@@ -255,7 +354,12 @@ def build():
     a = idx.index('<footer>'); b = idx.index('</html>') + 7
     idx = idx[:a] + FOOTER.rstrip() + "\n"
     (OUT / "index.html").write_text(idx)
-    print("synced index.html")
+    for tag, html in (("INDUSTRIES", industries_section()), ("REVIEWS", reviews_strip())):
+        a = idx.index(f"<!--{tag}-->") + len(f"<!--{tag}-->"); b = idx.index(f"<!--/{tag}-->")
+        idx = idx[:a] + "\n" + html + "\n  " + idx[b:]
+    (OUT / "index.html").write_text(idx)
+    (OUT / "_redirects").write_text("/websites.html  /reviews.html  301\n/websites  /reviews.html  301\n")
+    print("synced index.html, wrote _redirects")
     urls = ["", *PAGES.keys()]
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{BASE}/{u}</loc></url>\n" for u in urls) + "</urlset>\n")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {BASE}/sitemap.xml\n")

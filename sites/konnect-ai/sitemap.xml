@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://konnectai.org/</loc></url>
-  <url><loc>https://konnectai.org/websites.html</loc></url>
+  <url><loc>https://konnectai.org/reviews.html</loc></url>
   <url><loc>https://konnectai.org/insurance-agencies.html</loc></url>
   <url><loc>https://konnectai.org/home-services.html</loc></url>
   <url><loc>https://konnectai.org/local-businesses.html</loc></url>
+  <url><loc>https://konnectai.org/mortgage-brokers.html</loc></url>
+  <url><loc>https://konnectai.org/real-estate.html</loc></url>
+  <url><loc>https://konnectai.org/contractors.html</loc></url>
+  <url><loc>https://konnectai.org/auto-repair.html</loc></url>
+  <url><loc>https://konnectai.org/dental-medical.html</loc></url>
+  <url><loc>https://konnectai.org/law-firms.html</loc></url>
+  <url><loc>https://konnectai.org/accounting.html</loc></url>
+  <url><loc>https://konnectai.org/restaurants.html</loc></url>
+  <url><loc>https://konnectai.org/fitness.html</loc></url>
+  <url><loc>https://konnectai.org/cleaning.html</loc></url>
+  <url><loc>https://konnectai.org/property-management.html</loc></url>
+  <url><loc>https://konnectai.org/retail.html</loc></url>
   <url><loc>https://konnectai.org/privacy.html</loc></url>
   <url><loc>https://konnectai.org/terms.html</loc></url>
 </urlset>
