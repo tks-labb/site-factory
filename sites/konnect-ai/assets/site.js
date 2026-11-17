@@ -4,7 +4,7 @@
   var $ = function (id) { return document.getElementById(id); };
 
   // hero headline word-in
-  requestAnimationFrame(function () { setTimeout(function () { $('hero').classList.add('go'); }, 60); });
+  if ($('hero')) requestAnimationFrame(function () { setTimeout(function () { $('hero').classList.add('go'); }, 60); });
 
   // mobile menu
   var menuBtn = $('menu-btn'), menu = $('menu');
@@ -35,8 +35,9 @@
   document.querySelectorAll('.rv').forEach(function (el) { if (io) io.observe(el); else { el.classList.add('in'); var f = el.querySelector('.flow'); if (f) runFlow(f); } });
 
   // process steps fill with scroll
-  var stepsEl = $('steps'), bar = $('steps-bar'), steps = stepsEl.querySelectorAll('li');
+  var stepsEl = $('steps'), bar = $('steps-bar'), steps = stepsEl ? stepsEl.querySelectorAll('li') : [];
   function stepProgress() {
+    if (!stepsEl) return;
     var r = stepsEl.getBoundingClientRect(), vh = window.innerHeight;
     var p = Math.max(0, Math.min(1, (vh * 0.75 - r.top) / (r.height + vh * 0.25)));
     if (window.innerWidth <= 860) { bar.style.height = 'calc((100% - 44px) * ' + p + ')'; bar.style.width = ''; }
@@ -49,6 +50,7 @@
 
   // example activity feed (clearly labelled demo)
   var feed = $('feed');
+  if (feed) {
   var events = [
     ['New lead from web form', 'AI replied in 40 sec'],
     ['Missed call', 'AI voice agent answered'],
@@ -72,9 +74,11 @@
   for (var k = 0; k < 3; k++) push();
   var feedTimer = setInterval(push, reduce ? 4200 : 2600);
   document.addEventListener('visibilitychange', function () { if (document.hidden) clearInterval(feedTimer); else feedTimer = setInterval(push, reduce ? 4200 : 2600); });
+  }
 
   // cost calculator with animated number
   var hrs = $('c-hours'), ppl = $('c-people'), rate = $('c-rate'), out = $('r-cost'), shown = 31200;
+  if (hrs) {
   function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
   function calc() {
     $('o-hours').textContent = hrs.value; $('o-people').textContent = ppl.value; $('o-rate').textContent = '$' + rate.value;
@@ -87,6 +91,19 @@
   }
   [hrs, ppl, rate].forEach(function (el) { el.addEventListener('input', calc); });
   calc();
+  // email the estimate (Netlify form "estimate")
+  var est = $('estimate');
+  if (est) est.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(est.email.value.trim());
+    $('e-est').hidden = ok; if (!ok) { est.email.focus(); return; }
+    est.hours.value = hrs.value; est.people.value = ppl.value; est.rate.value = rate.value; est.yearly_cost.value = out.textContent;
+    var b = est.querySelector('button'); b.disabled = true; b.textContent = 'Sending…';
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(est)).toString() })
+      .then(function (r) { if (!r.ok) throw 0; est.hidden = true; $('est-sent').hidden = false; })
+      .catch(function () { b.disabled = false; b.textContent = 'Send me the plan'; $('e-est').textContent = "That didn't send. Please try again."; $('e-est').hidden = false; });
+  });
+  }
 
   // copy buttons
   document.querySelectorAll('.copy').forEach(function (btn) {
@@ -98,7 +115,7 @@
 
   // contact form (Netlify)
   var form = $('lead'), sent = $('sent');
-  form.addEventListener('submit', function (e) {
+  if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();
     var okE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.value.trim()), okP = form.phone.value.replace(/\D/g, '').length >= 10;
     $('e-email').hidden = okE; $('e-phone').hidden = okP;
