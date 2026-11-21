@@ -133,6 +133,35 @@
     </div>
   </section>
 
+  <!--BUILDER-->
+  <section id="build-yours" class="sb-sec">
+    <div class="wrap">
+      <div class="head rv"><span class="label">Build your system</span><h2>Design your system in 10 seconds.</h2><p>Pick where work comes in and what should happen next. Watch the system wire itself up, then get a free plan for building it.</p></div>
+      <div class="sb rv" data-preset='{"in": ["form", "phone"], "ai": ["qualify"], "out": ["crm", "book"]}'>
+        <div class="sb-stage">
+          <svg class="sb-wires" aria-hidden="true"></svg>
+          <div class="sb-col in"><h3>Work comes in by</h3><button type="button" class="sb-chip" data-g="in" data-k="form" data-say="your web form" aria-pressed="false">Web form</button><button type="button" class="sb-chip" data-g="in" data-k="phone" data-say="phone" aria-pressed="false">Phone calls</button><button type="button" class="sb-chip" data-g="in" data-k="email" data-say="email" aria-pressed="false">Email</button><button type="button" class="sb-chip" data-g="in" data-k="text" data-say="text" aria-pressed="false">Text messages</button><button type="button" class="sb-chip" data-g="in" data-k="chat" data-say="website chat" aria-pressed="false">Website chat</button><button type="button" class="sb-chip" data-g="in" data-k="social" data-say="social media messages" aria-pressed="false">Social DMs</button></div>
+          <div class="sb-core"><b><i aria-hidden="true"></i>AI agent</b><button type="button" class="sb-chip" data-g="ai" data-k="qualify" data-say="qualifies the lead" aria-pressed="false">Qualify leads</button><button type="button" class="sb-chip" data-g="ai" data-k="answer" data-say="answers questions" aria-pressed="false">Answer questions</button><button type="button" class="sb-chip" data-g="ai" data-k="collect" data-say="collects the missing details" aria-pressed="false">Collect details</button><button type="button" class="sb-chip" data-g="ai" data-k="docs" data-say="reads the documents" aria-pressed="false">Read documents</button></div>
+          <div class="sb-col out"><h3>Then it</h3><button type="button" class="sb-chip" data-g="out" data-k="crm" data-say="updates your CRM" aria-pressed="false">Update CRM</button><button type="button" class="sb-chip" data-g="out" data-k="book" data-say="books a meeting" aria-pressed="false">Book meeting</button><button type="button" class="sb-chip" data-g="out" data-k="alert" data-say="alerts your team" aria-pressed="false">Alert team</button><button type="button" class="sb-chip" data-g="out" data-k="follow" data-say="sends a follow-up" aria-pressed="false">Send follow-up</button><button type="button" class="sb-chip" data-g="out" data-k="report" data-say="adds it to a daily report" aria-pressed="false">Daily report</button><button type="button" class="sb-chip" data-g="out" data-k="review" data-say="asks for a review" aria-pressed="false">Ask for review</button></div>
+        </div>
+        <div class="sb-out">
+          <div class="sb-summary-box" aria-live="polite"><span class="mono" style="color:var(--night-dim)">Your system</span><p class="sb-summary"></p></div>
+          <form class="sb-form" name="system-plan" method="POST" data-netlify="true" netlify-honeypot="sb-website" novalidate>
+            <input type="hidden" name="form-name" value="system-plan">
+            <p hidden><label>Leave this empty <input name="sb-website"></label></p>
+            <input type="hidden" name="system"><input type="hidden" name="inputs"><input type="hidden" name="ai_tasks"><input type="hidden" name="outcomes">
+            <label for="sb-email-140206546706944" style="font-weight:600">Get a free plan for this system</label>
+            <div class="r"><input name="name" placeholder="Your name" autocomplete="name" aria-label="Your name"><input id="sb-email-140206546706944" name="email" type="email" placeholder="you@company.com" autocomplete="email" required></div>
+            <button type="submit">Send me this plan</button>
+            <p class="sb-err" hidden></p>
+          </form>
+          <div class="sb-sent" hidden><strong class="mono">Plan requested</strong><p>Thanks. Tristan will email you a plan for this system.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--/BUILDER-->
+
   <section id="builds" class="rule">
     <div class="wrap">
       <div class="head rv"><span class="label">What we build</span><h2>One system, built for the job you actually have.</h2><p>These are the systems we build most. We regularly build things that fit none of them.</p></div>
@@ -242,7 +271,9 @@
         <div class="pr rv d2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><h3>You own it</h3><p>The system and website are yours, not rented from us.</p></div>
         <div class="pr rv d3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><h3>We stay on</h3><p>We monitor, fix and improve it after launch.</p></div>
       </div>
-      <div class="founder rv"><span class="av">TK</span><div><b>Tristan Karim, founder</b><p>Every Konnect AI project starts with a conversation with me. Book a call, tell me what's taking your team's time, and I'll show you how we'd automate it.</p></div></div>
+      <!--FOUNDER-->
+<div class="founder rv"><span class="av">TK</span><div><b>Tristan Karim, founder</b><p>Every Konnect AI project starts with a conversation with me. Book a call, tell me what's taking your team's time, and I'll show you how we'd automate it.</p></div></div>
+  <!--/FOUNDER-->
     </div>
   </section>
 
@@ -319,9 +350,11 @@
     <nav aria-label="Footer"><a href="index.html#services">Services</a><a href="reviews.html">Reviews</a><a href="index.html#industries">Industries</a><a href="index.html#contact">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
     <span class="mono">tristan@getkonnectai.com · (248) 938-1582</span>
   </div>
+  <div class="wrap areas"><span class="mono">Service areas:</span> <a href="ai-automation-troy-mi.html">Troy</a> · <a href="ai-automation-detroit-mi.html">Detroit</a> · <a href="ai-automation-ann-arbor-mi.html">Ann Arbor</a> · <a href="ai-automation-southfield-mi.html">Southfield</a> · <a href="ai-automation-royal-oak-mi.html">Royal Oak</a> · <a href="ai-automation-farmington-hills-mi.html">Farmington Hills</a> · <a href="ai-automation-sterling-heights-mi.html">Sterling Heights</a> · <a href="ai-automation-novi-mi.html">Novi</a></div>
 </footer>
 
 <script src="assets/site.js" defer></script>
 <script src="assets/chat.js" defer></script>
+<script src="assets/builder.js" defer></script>
 </body>
 </html>

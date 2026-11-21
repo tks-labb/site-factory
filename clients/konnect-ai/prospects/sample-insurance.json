@@ -1,0 +1,11 @@
+{
+  "_note": "SAMPLE prospect page (fictional business). Copy this file to make a page for a real prospect, then run: python3 clients/konnect-ai/pages.py",
+  "business": "Lakeside Insurance Group",
+  "first_name": "Sam",
+  "industry": "insurance-agencies.html",
+  "note": "We looked at how agencies like yours handle quote requests and renewals. Here's a starting point for a system that replies to every quote within minutes and keeps your daily call list in one place.",
+  "system": { "in": ["form", "phone", "email"], "ai": ["qualify", "collect"], "out": ["crm", "book", "follow"] },
+  "hours": 12,
+  "people": 3,
+  "rate": 35
+}

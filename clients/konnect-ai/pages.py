@@ -85,10 +85,12 @@ FOOTER = '''<footer>
     <nav aria-label="Footer"><a href="index.html#services">Services</a><a href="reviews.html">Reviews</a><a href="index.html#industries">Industries</a><a href="index.html#contact">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
     <span class="mono">tristan@getkonnectai.com · (248) 938-1582</span>
   </div>
+  <div class="wrap areas"><span class="mono">Service areas:</span> AREA_LINKS</div>
 </footer>
 
 <script src="assets/site.js" defer></script>
 <script src="assets/chat.js" defer></script>
+<script src="assets/builder.js" defer></script>
 </body>
 </html>
 '''
@@ -343,18 +345,147 @@ PAGES["terms.html"] = ("Terms of Use | Konnect AI", "Terms for using konnectai.o
     <p class="note-box">Template notice: these terms are a starting point. Have them reviewed for your business and location.</p>
   </div></section>''')
 
+
+# ---------- Build-your-system tool ----------
+SB_IN = [("form", "Web form", "your web form"), ("phone", "Phone calls", "phone"), ("email", "Email", "email"), ("text", "Text messages", "text"), ("chat", "Website chat", "website chat"), ("social", "Social DMs", "social media messages")]
+SB_AI = [("qualify", "Qualify leads", "qualifies the lead"), ("answer", "Answer questions", "answers questions"), ("collect", "Collect details", "collects the missing details"), ("docs", "Read documents", "reads the documents")]
+SB_OUT = [("crm", "Update CRM", "updates your CRM"), ("book", "Book meeting", "books a meeting"), ("alert", "Alert team", "alerts your team"), ("follow", "Send follow-up", "sends a follow-up"), ("report", "Daily report", "adds it to a daily report"), ("review", "Ask for review", "asks for a review")]
+
+def chips(group, items):
+    return "".join(f'<button type="button" class="sb-chip" data-g="{group}" data-k="{k}" data-say="{say}" aria-pressed="false">{label}</button>' for k, label, say in items)
+
+def builder_html(preset, title="Design your system in 10 seconds.", intro="Pick where work comes in and what should happen next. Watch the system wire itself up, then get a free plan for building it.", form_extra=""):
+    import json as _j
+    return f"""  <section id="build-yours" class="sb-sec">
+    <div class="wrap">
+      <div class="head rv"><span class="label">Build your system</span><h2>{title}</h2><p>{intro}</p></div>
+      <div class="sb rv" data-preset='{_j.dumps(preset)}'>
+        <div class="sb-stage">
+          <svg class="sb-wires" aria-hidden="true"></svg>
+          <div class="sb-col in"><h3>Work comes in by</h3>{chips("in", SB_IN)}</div>
+          <div class="sb-core"><b><i aria-hidden="true"></i>AI agent</b>{chips("ai", SB_AI)}</div>
+          <div class="sb-col out"><h3>Then it</h3>{chips("out", SB_OUT)}</div>
+        </div>
+        <div class="sb-out">
+          <div class="sb-summary-box" aria-live="polite"><span class="mono" style="color:var(--night-dim)">Your system</span><p class="sb-summary"></p></div>
+          <form class="sb-form" name="system-plan" method="POST" data-netlify="true" netlify-honeypot="sb-website" novalidate>
+            <input type="hidden" name="form-name" value="system-plan">
+            <p hidden><label>Leave this empty <input name="sb-website"></label></p>
+            <input type="hidden" name="system"><input type="hidden" name="inputs"><input type="hidden" name="ai_tasks"><input type="hidden" name="outcomes">{form_extra}
+            <label for="sb-email-{id(preset)}" style="font-weight:600">Get a free plan for this system</label>
+            <div class="r"><input name="name" placeholder="Your name" autocomplete="name" aria-label="Your name"><input id="sb-email-{id(preset)}" name="email" type="email" placeholder="you@company.com" autocomplete="email" required></div>
+            <button type="submit">Send me this plan</button>
+            <p class="sb-err" hidden></p>
+          </form>
+          <div class="sb-sent" hidden><strong class="mono">Plan requested</strong><p>Thanks. Tristan will email you a plan for this system.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>"""
+
+# ---------- Founder block (photo/video appear when files are added) ----------
+def founder_html():
+    assets = OUT / "assets"
+    photo = next((f for f in ("tristan.jpg", "tristan.jpeg", "tristan.png", "tristan.webp") if (assets / f).exists()), None)
+    video = "tristan.mp4" if (assets / "tristan.mp4").exists() else None
+    av = f'<img class="fphoto" src="assets/{photo}" alt="Tristan Karim, founder of Konnect AI" width="96" height="96">' if photo else '<span class="av">TK</span>'
+    vid = f'<video class="fvideo" controls playsinline preload="metadata"{f" poster=assets/{photo}" if photo else ""}><source src="assets/{video}" type="video/mp4"></video>' if video else ""
+    return f"""<div class="founder rv{" has-video" if video else ""}">{av}<div><b>Tristan Karim, founder</b><p>Every Konnect AI project starts with a conversation with me. Book a call, tell me what's taking your team's time, and I'll show you how we'd automate it.</p></div>{vid}</div>"""
+
+# ---------- City pages ----------
+CITIES = [
+ ("troy", "Troy", "From the offices along Big Beaver Road to family-run shops, Troy businesses run on fast responses. We build AI systems and websites that answer leads, book appointments and keep follow-ups on schedule.", ["insurance-agencies.html", "mortgage-brokers.html", "accounting.html", "dental-medical.html"]),
+ ("detroit", "Detroit", "Detroit's small businesses and contractors are busy doing the work. We build systems that answer calls you miss, follow up on every estimate and keep your calendar full.", ["home-services.html", "contractors.html", "restaurants.html", "property-management.html"]),
+ ("ann-arbor", "Ann Arbor", "Ann Arbor's professional firms, clinics and local shops serve customers who expect quick answers. We build AI assistants and automations that respond right away and keep everything organized.", ["dental-medical.html", "law-firms.html", "fitness.html", "retail.html"]),
+ ("southfield", "Southfield", "Southfield is full of offices and service firms juggling calls, documents and follow-ups. We build automation that collects documents, routes requests and keeps clients updated.", ["insurance-agencies.html", "law-firms.html", "accounting.html", "mortgage-brokers.html"]),
+ ("royal-oak", "Royal Oak", "Royal Oak's restaurants, salons and shops get questions at all hours. We build assistants that answer, take bookings and bring customers back.", ["local-businesses.html", "restaurants.html", "fitness.html", "retail.html"]),
+ ("farmington-hills", "Farmington Hills", "Farmington Hills service businesses and professional offices lose time to phone tag and manual data entry. We build systems that answer, schedule and file the details for you.", ["home-services.html", "dental-medical.html", "real-estate.html", "cleaning.html"]),
+ ("sterling-heights", "Sterling Heights", "Sterling Heights contractors, auto shops and home service companies are on the job all day. We build systems that catch every lead and keep customers updated.", ["auto-repair.html", "contractors.html", "home-services.html", "cleaning.html"]),
+ ("novi", "Novi", "Novi businesses, from retail to real estate and medical offices, need follow-up that never slips. We build automations that respond fast and keep your pipeline organized.", ["real-estate.html", "retail.html", "dental-medical.html", "mortgage-brokers.html"]),
+]
+def area_links(): return " · ".join(f'<a href="ai-automation-{slug}-mi.html">{name}</a>' for slug, name, *_ in CITIES)
+
+def city_pages():
+    names = {s: c for s, c, _ in INDUSTRIES}
+    for slug, name, intro, inds in CITIES:
+        cards = "".join(f'<a class="ind rv d{(i % 3) + 1}" href="{u}"><h3>{names.get(u, u)}</h3><span class="go">See how →</span></a>' for i, u in enumerate(inds))
+        PAGES[f"ai-automation-{slug}-mi.html"] = (f"AI Automation & Websites in {name}, MI | Konnect AI", f"Custom AI automation systems and websites for {name}, Michigan businesses. Lead follow-up, AI chat and voice agents, booking and more.", f"""
+  {hero(f"{name}, MI", f"Serving {name}, Michigan", f"AI automation in <span>{name}.</span>", intro)}
+  <section><div class="wrap">
+    <div class="head rv"><span class="label">What we build</span><h2>Systems for {name} businesses.</h2></div>
+    <div class="promise">
+      <div class="pr rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v10H8l-4 4z"/></svg><h3>AI chat &amp; voice agents</h3><p>Answer customers day and night in your business's voice.</p></div>
+      <div class="pr rv d1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 19c.8-3.2 3.2-5 6-5s5.2 1.8 6 5"/></svg><h3>Lead follow-up</h3><p>Every new lead gets a fast reply and lands in your CRM.</p></div>
+      <div class="pr rv d2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/></svg><h3>Document processing</h3><p>Forms, PDFs and emails read and filed automatically.</p></div>
+      <div class="pr rv d3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/></svg><h3>Websites</h3><p>Mobile-first sites with tap-to-call, booking and lead forms.</p></div>
+    </div>
+  </div></section>
+  <section class="rule"><div class="wrap">
+    <div class="head rv"><span class="label">Popular in {name}</span><h2>Industries we build for.</h2></div>
+    <div class="inds">{cards}</div>
+    <p class="ex-note mono"><a href="index.html#industries">See all 15 industries →</a></p>
+  </div></section>
+  {reviews_strip()}
+  {CTA}""")
+
+# ---------- Prospect pages (konnectai.org/for/<slug>/) ----------
+PROSPECT_DIR = pathlib.Path(__file__).resolve().parent / "prospects"
+def calc_html(hours, people, rate):
+    return f"""  <section id="calculator" class="calc-sec"><div class="wrap">
+      <div class="head rv"><span class="label">Cost calculator</span><h2>What manual work costs you today.</h2><p>We filled this in with a typical estimate. Move the sliders to match your team.</p></div>
+      <div class="calc">
+        <div class="inputs rv d1">
+          <div class="rng"><div class="row"><label for="c-hours">Hours per week on the task</label><output id="o-hours">{hours}</output></div><input id="c-hours" type="range" min="1" max="60" value="{hours}"></div>
+          <div class="rng"><div class="row"><label for="c-people">People doing it</label><output id="o-people">{people}</output></div><input id="c-people" type="range" min="1" max="20" value="{people}"></div>
+          <div class="rng"><div class="row"><label for="c-rate">Cost per hour (pay + overhead)</label><output id="o-rate">${rate}</output></div><input id="c-rate" type="range" min="15" max="150" step="5" value="{rate}"></div>
+        </div>
+        <div class="result rv d2" aria-live="polite"><span class="mono" style="color:var(--night-dim)">Yearly cost of doing it by hand</span><span class="big" id="r-cost">$0</span><div class="meter"><i id="r-meter"></i></div><span class="hours" id="r-hours"></span><span class="fine">An estimate based on the inputs above and 52 working weeks.</span></div>
+      </div>
+    </div></section>"""
+
+def prospect_pages():
+    import json
+    built = []
+    if not PROSPECT_DIR.exists(): return built
+    for f in sorted(PROSPECT_DIR.glob("*.json")):
+        if f.name.startswith("_"): continue
+        d = json.loads(f.read_text()); slug = f.stem
+        first, biz = d["first_name"], d["business"]
+        ind = next((x for x in INDUSTRIES if x[0] == d.get("industry")), None)
+        note = d.get("note", "")
+        body = f"""
+  <section class="page-hero"><div class="wrap">
+    <span class="label rv">Prepared for {biz}</span>
+    <h1 class="rv d1">Hi {first}. Here's what we'd build for <span>{biz}.</span></h1>
+    <p class="rv d1">{note or "A quick look at how a Konnect AI system could take repetitive work off your team's plate. Nothing here is set in stone; it's a starting point for a conversation."}</p>
+    <div class="ctas rv d2"><a class="btn btn-primary" href="{BOOK}" target="_blank" rel="noopener">Book a 20-minute call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="#" data-open-chat>Ask our AI a question</a></div>
+  </div></section>
+{builder_html(d.get("system", {}), title=f"Your system, {first}.", intro="We picked a starting setup based on businesses like yours. Tap anything to change it.", form_extra=f'<input type="hidden" name="prospect" value="{biz}">')}
+{calc_html(d.get("hours", 10), d.get("people", 2), d.get("rate", 35))}
+  {f'<section class="rule"><div class="wrap"><div class="head rv"><span class="label">For {ind[1].lower()}</span><h2>More on how this works in your industry.</h2></div><a class="btn btn-ghost rv" href="{ind[0]}">See how it works for {ind[1].lower()} <svg aria-hidden="true"><use href="#arrow"/></svg></a></div></section>' if ind else ""}
+{reviews_strip()}
+  {CTA}"""
+        title = f"For {biz} | Konnect AI"
+        html = head(title, f"What Konnect AI would build for {biz}.", "index.html").replace('<meta name="theme-color"', '<base href="/">\n<meta name="robots" content="noindex, nofollow">\n<meta name="theme-color"', 1)
+        out = OUT / "for" / slug; out.mkdir(parents=True, exist_ok=True)
+        (out / "index.html").write_text(html + header("") + '\n<main id="top">' + body + '\n</main>\n\n' + FOOTER.replace("AREA_LINKS", area_links()))
+        built.append(slug)
+    return built
+
 def build():
+    city_pages()
+    footer = FOOTER.replace("AREA_LINKS", area_links())
     for name, (title, desc, body) in PAGES.items():
-        (OUT / name).write_text(head(title, desc, name) + header(name) + '\n<main id="top">' + body + '\n</main>\n\n' + FOOTER)
+        (OUT / name).write_text(head(title, desc, name) + header(name) + '\n<main id="top">' + body + '\n</main>\n\n' + footer)
         print("built", name)
     # sync shared header/footer into the hand-built homepage
     idx = (OUT / "index.html").read_text()
     a = idx.index('<header class="top"'); b = idx.index('</nav>', idx.index('<nav class="menu"')) + 6
     idx = idx[:a] + header("index.html").rstrip() + idx[b:]
     a = idx.index('<footer>'); b = idx.index('</html>') + 7
-    idx = idx[:a] + FOOTER.rstrip() + "\n"
+    idx = idx[:a] + footer.rstrip() + "\n"
     (OUT / "index.html").write_text(idx)
-    for tag, html in (("INDUSTRIES", industries_section()), ("REVIEWS", reviews_strip())):
+    for tag, html in (("INDUSTRIES", industries_section()), ("REVIEWS", reviews_strip()), ("BUILDER", builder_html({"in": ["form", "phone"], "ai": ["qualify"], "out": ["crm", "book"]})), ("FOUNDER", founder_html())):
         a = idx.index(f"<!--{tag}-->") + len(f"<!--{tag}-->"); b = idx.index(f"<!--/{tag}-->")
         idx = idx[:a] + "\n" + html + "\n  " + idx[b:]
     (OUT / "index.html").write_text(idx)
@@ -364,6 +495,7 @@ def build():
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{BASE}/{u}</loc></url>\n" for u in urls) + "</urlset>\n")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {BASE}/sitemap.xml\n")
     print("wrote sitemap.xml, robots.txt")
+    print("prospect pages:", ", ".join(prospect_pages()) or "none")
 
 if __name__ == "__main__":
     build()
