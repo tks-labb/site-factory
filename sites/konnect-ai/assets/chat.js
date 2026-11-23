@@ -47,8 +47,12 @@
       .catch(function () { typing(false); history.pop(); add('bot', "I couldn't connect. Email tristan@getkonnectai.com or book a call: " + BOOK); })
       .then(function () { busy = false; input.focus(); });
   }
+  var closeTimer;
   function setOpen(o) {
-    panel.hidden = !o; openBtn.setAttribute('aria-expanded', o ? 'true' : 'false'); root.classList.toggle('on', o);
+    clearTimeout(closeTimer);
+    openBtn.setAttribute('aria-expanded', o ? 'true' : 'false'); document.body.classList.toggle('chat-open', o);
+    if (o) { panel.classList.remove('closing'); panel.hidden = false; root.classList.add('on'); }
+    else { panel.classList.add('closing'); closeTimer = setTimeout(function () { panel.hidden = true; panel.classList.remove('closing'); root.classList.remove('on'); }, 260); }
     if (o) {
       if (!log.children.length) {
         add('bot', "Hi! I'm Konnect AI's assistant. Tell me about a task that eats up your team's time, or ask about our websites.");
@@ -59,9 +63,10 @@
       setTimeout(function () { input.focus(); }, 50);
     } else openBtn.focus();
   }
-  openBtn.addEventListener('click', function () { setOpen(panel.hidden); });
+  openBtn.addEventListener('click', function () { setOpen(panel.hidden || panel.classList.contains('closing')); });
   root.querySelector('.kc-x').addEventListener('click', function () { setOpen(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) setOpen(false); });
+  openBtn.addEventListener('click', function () {}, { passive: true });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden && !panel.classList.contains('closing')) setOpen(false); });
   form.addEventListener('submit', function (e) { e.preventDefault(); send(input.value); });
   document.querySelectorAll('[data-open-chat]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); setOpen(true); }); });
 })();

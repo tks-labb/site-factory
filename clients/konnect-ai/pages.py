@@ -37,6 +37,7 @@ def head(title, desc, page):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<script>/* logo intro: first visit, refresh, or logo click */(function(){{try{{var d=document.documentElement,s=sessionStorage,n=performance.getEntriesByType("navigation")[0],t=n&&n.type;if(!s.getItem("k_seen")||t==="reload"||s.getItem("k_logo")){{d.classList.add("intro")}}s.setItem("k_seen","1");s.removeItem("k_logo")}}catch(e){{}}}})()</script>
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfessionalService","name":"Konnect AI","url":"{BASE}/","description":"Custom AI automation systems and websites for businesses.","telephone":"+1-248-938-1582","email":"tristan@getkonnectai.com","founder":{{"@type":"Person","name":"Tristan Karim"}},"areaServed":"US"}}</script>
 </head>
 <body>
@@ -58,26 +59,43 @@ def head(title, desc, page):
 </defs></svg>
 '''
 
+INTRO = """<div class="intro-ov" aria-hidden="true"><div class="intro-stage">
+  <svg class="intro-logo" viewBox="-2 -2 104 104">
+    <rect class="ip ip-stem" x="0" y="0" width="14.7" height="100"/>
+    <polygon class="ip ip-arm" points="14.7,43 58.6,0 97.6,0 54.4,42 47.5,35 71,11.6 64.8,11.6 14.7,61"/>
+    <polygon class="ip ip-low" points="14.7,71 28.7,57 33,71 4,100 0,100 0,95"/>
+    <polygon class="ip ip-leg" points="42.6,76 51.4,74 66.6,89 73,89 80,84 96,100 66.4,100"/>
+    <line class="ip ip-bl" x1="50" y1="58" x2="80" y2="45.5" pathLength="1"/>
+    <circle class="ip ip-bn" cx="85.5" cy="43" r="11"/>
+    <line class="ip ip-rl" x1="44" y1="60" x2="77" y2="87" pathLength="1"/>
+    <circle class="ip ip-gap" cx="44" cy="60" r="13"/>
+    <circle class="ip ip-rn" cx="44" cy="60" r="10.6"/>
+    <circle class="ip ip-ring" cx="44" cy="60" r="10.6"/>
+  </svg>
+  <div class="intro-word">""" + "".join(f'<span style="--i:{i}">{"&nbsp;" if c == " " else c}</span>' for i, c in enumerate("Konnect AI")) + """</div>
+</div><p class="intro-skip">Tap to skip</p></div>
+"""
+
+MENU_BTN = """<button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span class="mb"><i></i><i></i><i></i></span></button>"""
+
 def header(page):
     links = "".join(f'<li><a href="{h}"{" aria-current=page" if h == page else ""}>{l}</a></li>' for h, l in NAV)
-    mlinks = "".join(f'<a href="{h}">{l}</a>' for h, l in NAV) + '<a href="index.html#contact">Contact</a>'
-    return f'''<header class="top" id="top-bar">
+    mlinks = "".join(f'<a href="{h}" style="--i:{i}">{l}</a>' for i, (h, l) in enumerate(NAV + [("index.html#contact", "Contact")]))
+    return f"""{INTRO}<header class="top" id="top-bar">
   <div class="wrap">
-    <a class="brand" href="index.html" aria-label="Konnect AI home"><svg class="logo" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
+    <a class="brand" href="index.html" data-intro-link aria-label="Konnect AI home"><svg class="logo" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
     <ul class="nav">{links}</ul>
-    <a class="btn btn-primary" href="{BOOK}" target="_blank" rel="noopener">Book a build call</a>
-    <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu">
-      <svg class="b3" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <svg class="x" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
+    <a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a build call</a>
+    {MENU_BTN}
   </div>
 </header>
 <nav class="menu" id="menu" hidden aria-label="Mobile">
   {mlinks}
-  <a class="btn btn-primary" href="{BOOK}" target="_blank" rel="noopener">Book a build call</a>
+  <a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a free build call</a>
   <div class="meta"><a href="tel:+12489381582" style="font:inherit;border:0;padding:0">(248) 938-1582</a><span>tristan@getkonnectai.com</span></div>
 </nav>
-'''
+<div class="actionbar" id="actionbar"><a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a free call</a><button class="ab-chat" type="button" data-open-chat aria-label="Ask our AI"><span class="kc-dot" aria-hidden="true"></span>Ask AI</button></div>
+"""
 
 FOOTER = '''<footer>
   <div class="wrap">
@@ -91,12 +109,13 @@ FOOTER = '''<footer>
 <script src="assets/site.js" defer></script>
 <script src="assets/chat.js" defer></script>
 <script src="assets/builder.js" defer></script>
+<script src="assets/motion.js" defer></script>
 </body>
 </html>
 '''
 
 def hero(crumb, label, h1, lede, cta=True):
-    btns = f'<div class="ctas rv d2"><a class="btn btn-primary" href="{BOOK}" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="#" data-open-chat>Ask our AI a question</a></div>' if cta else ""
+    btns = f'<div class="ctas rv d2"><a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="#" data-open-chat>Ask our AI a question</a></div>' if cta else ""
     return f'''<section class="page-hero"><div class="wrap">
     <span class="crumbs rv"><a href="index.html">Home</a> / {crumb}</span>
     <span class="label rv">{label}</span>
@@ -109,7 +128,7 @@ def checks(items, icon="check"):
 
 CTA = f'''<section class="cta"><div class="wrap"><div class="cta-box cta-split rv">
     <div class="cta-copy"><h2>Tell us the job. <span>We'll build it.</span></h2><p>A free call, a written plan and price, then we build it.</p></div>
-    <div style="display:grid;gap:12px"><a class="btn btn-primary" href="{BOOK}" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="index.html#contact">Send us a message</a></div>
+    <div style="display:grid;gap:12px"><a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="index.html#contact">Send us a message</a></div>
   </div></div></section>'''
 
 PAGES = {}
@@ -296,12 +315,20 @@ industry("retail.html", "Retail & E-commerce", "AI automation for retail and e-c
   [CRM_Q, ("Does it work with my online store?", "Usually, yes. We connect to common store platforms and order systems."), ("Can it handle returns?", "Yes. It can walk customers through returns using the rules you set.")],
   "Order updates, product answers and repeat sales.")
 
+IND_CAT = {"insurance-agencies.html": "pro", "mortgage-brokers.html": "pro", "real-estate.html": "pro", "law-firms.html": "pro", "accounting.html": "pro", "dental-medical.html": "pro",
+  "home-services.html": "home", "contractors.html": "home", "auto-repair.html": "home", "cleaning.html": "home", "property-management.html": "home",
+  "local-businesses.html": "local", "restaurants.html": "local", "fitness.html": "local", "retail.html": "local"}
+CAT_NAMES = [("all", "All"), ("pro", "Professional & health"), ("home", "Home & trades"), ("local", "Local & retail")]
+
 def industries_section():
-    cards = "".join(f'<a class="ind rv d{(i % 3) + 1}" href="{slug}"><span class="mono" style="color:var(--ink-2)">{i + 1:02d}</span><h3>{crumb}</h3><p>{blurb}</p><span class="go">See how →</span></a>' for i, (slug, crumb, blurb) in enumerate(INDUSTRIES))
+    counts = {k: sum(1 for v in IND_CAT.values() if v == k) for k, _ in CAT_NAMES}; counts["all"] = len(INDUSTRIES)
+    tabs = "".join(f'<button type="button" class="ftab" data-f="{k}" aria-pressed="{"true" if k == "all" else "false"}">{n} <small>{counts[k]}</small></button>' for k, n in CAT_NAMES)
+    cards = "".join(f'<a class="ind" data-cat="{IND_CAT.get(slug, "pro")}" href="{slug}" style="--i:{i}"><span class="mono" style="color:var(--ink-2)">{i + 1:02d}</span><h3>{crumb}</h3><p>{blurb}</p><span class="go">See how <span class="arr">→</span></span></a>' for i, (slug, crumb, blurb) in enumerate(INDUSTRIES))
     return f"""  <section id="industries">
     <div class="wrap">
-      <div class="head rv"><span class="label">Industries</span><h2>Built for how your industry works.</h2><p>Fifteen industries we build for. Pick yours to see what a Konnect system looks like.</p></div>
-      <div class="inds">{cards}</div>
+      <div class="head rv"><span class="label">Industries</span><h2>Built for how your industry works.</h2><p>Fifteen industries we build for. Pick a group, then yours.</p></div>
+      <div class="ftabs rv" role="group" aria-label="Filter industries">{tabs}</div>
+      <div class="inds stg rv" id="ind-grid">{cards}</div>
     </div>
   </section>"""
 
@@ -458,7 +485,7 @@ def prospect_pages():
     <span class="label rv">Prepared for {biz}</span>
     <h1 class="rv d1">Hi {first}. Here's what we'd build for <span>{biz}.</span></h1>
     <p class="rv d1">{note or "A quick look at how a Konnect AI system could take repetitive work off your team's plate. Nothing here is set in stone; it's a starting point for a conversation."}</p>
-    <div class="ctas rv d2"><a class="btn btn-primary" href="{BOOK}" target="_blank" rel="noopener">Book a 20-minute call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="#" data-open-chat>Ask our AI a question</a></div>
+    <div class="ctas rv d2"><a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a 20-minute call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="#" data-open-chat>Ask our AI a question</a></div>
   </div></section>
 {builder_html(d.get("system", {}), title=f"Your system, {first}.", intro="We picked a starting setup based on businesses like yours. Tap anything to change it.", form_extra=f'<input type="hidden" name="prospect" value="{biz}">')}
 {calc_html(d.get("hours", 10), d.get("people", 2), d.get("rate", 35))}
@@ -480,7 +507,10 @@ def build():
         print("built", name)
     # sync shared header/footer into the hand-built homepage
     idx = (OUT / "index.html").read_text()
-    a = idx.index('<header class="top"'); b = idx.index('</nav>', idx.index('<nav class="menu"')) + 6
+    a = idx.find('<div class="intro-ov"'); a = a if a > -1 else idx.index('<header class="top"')
+    b = idx.index('</nav>', idx.index('<nav class="menu"')) + 6
+    ab = idx.find('<div class="actionbar"', b)
+    if ab > -1 and ab - b < 10: b = idx.index('</div>', idx.index('</button>', ab)) + 6
     idx = idx[:a] + header("index.html").rstrip() + idx[b:]
     a = idx.index('<footer>'); b = idx.index('</html>') + 7
     idx = idx[:a] + footer.rstrip() + "\n"

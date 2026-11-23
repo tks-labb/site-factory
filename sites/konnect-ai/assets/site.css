@@ -456,3 +456,181 @@ footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; } footer a { text-de
 .fvideo { grid-column: 1 / -1; width: 100%; max-width: 720px; border-radius: 14px; background: #000; }
 footer .areas { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); display: block; font-size: 14px; color: var(--ink-2); line-height: 1.9; }
 footer .areas a { text-decoration: none; } footer .areas a:hover { color: var(--ink); }
+
+/* =====================================================================
+   MOTION SYSTEM
+   Timing tokens, easing (slow in / slow out), springs for follow-through.
+   ===================================================================== */
+:root {
+  --t1: .12s; --t2: .2s; --t3: .32s; --t4: .5s;
+  --ease-out: cubic-bezier(.2,.8,.2,1);      /* decelerate: things arriving */
+  --ease-in: cubic-bezier(.5,0,.75,0);       /* accelerate: things leaving */
+  --ease-io: cubic-bezier(.65,0,.35,1);      /* slow in, slow out */
+  --spring: cubic-bezier(.34,1.56,.64,1);    /* overshoot + settle (follow-through) */
+  /* solid drawing: one light source from above, consistent elevation */
+  --e1: 0 1px 2px rgba(10,12,16,.06), 0 2px 8px -2px rgba(10,12,16,.08);
+  --e2: 0 2px 4px rgba(10,12,16,.06), 0 14px 28px -12px rgba(10,12,16,.22);
+  --e3: 0 4px 8px rgba(10,12,16,.08), 0 28px 50px -22px rgba(10,12,16,.35);
+  --hero: #D91A1A; --hero-ink: #FFFFFF;
+}
+@media (prefers-color-scheme: dark) { :root { --e1: 0 1px 2px rgba(0,0,0,.5); --e2: 0 14px 28px -12px rgba(0,0,0,.7); --e3: 0 28px 50px -20px rgba(0,0,0,.85); --hero: #FF4D4D; --hero-ink: #0B0C0F; } }
+
+/* ---------- Logo intro ---------- */
+.intro-ov { display: none; }
+.intro .intro-ov { display: grid; place-items: center; position: fixed; inset: 0; z-index: 100; background: var(--bg); cursor: pointer;
+  animation: introFailsafe 0s linear 3.4s forwards; }
+@keyframes introFailsafe { to { visibility: hidden; pointer-events: none; } }
+.intro-stage { display: grid; justify-items: center; gap: 18px; transform-origin: center; will-change: transform; }
+.intro-logo { width: clamp(110px, 22vw, 168px); height: auto; overflow: visible; color: var(--ink); animation: logoPulse .5s var(--spring) 1.3s both; }
+.ip { transform-box: fill-box; transform-origin: center; }
+.ip-stem, .ip-arm, .ip-low, .ip-leg { fill: currentColor; }
+.ip-stem { transform-origin: bottom; animation: stemIn .55s var(--ease-out) .05s both; }
+.ip-arm { animation: slideArm .5s var(--spring) .28s both; }
+.ip-low { animation: slideLow .5s var(--spring) .36s both; }
+.ip-leg { animation: slideLeg .5s var(--spring) .42s both; }
+.ip-rn { fill: var(--red); transform-origin: center bottom; animation: dropNode .6s var(--ease-out) .55s both; }
+.ip-gap { fill: none; stroke: var(--bg); stroke-width: 5; animation: fadeIn .2s linear .7s both; }
+.ip-rl { stroke: var(--red); stroke-width: 9; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .35s var(--ease-io) .82s forwards; }
+.ip-bn { fill: var(--accent); animation: arcNode .6s var(--ease-io) .86s both; }
+.ip-bl { stroke: var(--accent); stroke-width: 7; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .25s var(--ease-out) 1.18s forwards; }
+.ip-ring { fill: none; stroke: var(--red); stroke-width: 2; opacity: 0; animation: ring .7s var(--ease-out) 1.3s; }
+.intro-word { display: flex; overflow: hidden; font: 700 clamp(22px, 4vw, 30px)/1.1 var(--f-display); letter-spacing: -0.01em; color: var(--ink); }
+.intro-word span { display: inline-block; animation: letterUp .5s var(--spring) both; animation-delay: calc(1.05s + var(--i) * 40ms); }
+.intro-skip { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); opacity: 0; animation: fadeIn .4s ease .8s forwards; }
+/* exit: the logo travels to where it lives in the header (origin awareness) */
+.intro-out .intro-ov { animation: none; background: transparent; transition: background-color .45s var(--ease-io) .1s; pointer-events: none; }
+.intro-out .intro-stage { transform: translate(var(--tx, 0), var(--ty, -40vh)) scale(var(--ts, .2)); opacity: 0; transition: transform .6s var(--ease-io), opacity .25s linear .4s; }
+.intro-out .intro-skip { opacity: 0 !important; transition: opacity .15s; }
+.intro .top .brand { opacity: 0; }
+.intro-out .top .brand, .intro-done .top .brand { opacity: 1; transition: opacity .3s ease .45s; }
+@keyframes stemIn { 0% { transform: scale(1, 0); } 45% { transform: scale(.9, 1.14); } 68% { transform: scale(1.08, .93); } 85% { transform: scale(.98, 1.02); } 100% { transform: none; } }
+@keyframes slideArm { from { transform: translate(34%, -34%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes slideLow { from { transform: translate(-60%, 60%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes slideLeg { from { transform: translate(50%, 50%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes dropNode { 0% { transform: translateY(-260%) scale(.7, 1.2); opacity: 0; } 50% { transform: translateY(0) scale(1.35, .68); opacity: 1; } 68% { transform: scale(.88, 1.14); } 84% { transform: scale(1.05, .96); } 100% { transform: none; opacity: 1; } }
+@keyframes arcNode { 0% { transform: translate(160%, 120%) scale(.4); opacity: 0; } 35% { transform: translate(120%, -110%) scale(.8); opacity: 1; } 70% { transform: translate(-12%, 8%) scale(1.18); } 100% { transform: none; opacity: 1; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes ring { 0% { opacity: .8; transform: scale(1); } 100% { opacity: 0; transform: scale(3.6); } }
+@keyframes logoPulse { 0%, 100% { transform: none; } 45% { transform: scale(1.1) rotate(-2deg); } }
+@keyframes letterUp { from { transform: translateY(110%); } to { transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .ip-stem, .ip-arm, .ip-low, .ip-leg, .ip-rn, .ip-bn, .intro-logo, .intro-word span { animation: fadeIn .35s ease both; }
+  .ip-rl, .ip-bl { animation-delay: .2s; animation-duration: .2s; }
+  .ip-ring { display: none; }
+  .intro-out .intro-stage { transform: none; }
+}
+
+/* ---------- Standout booking button (Von Restorff) ---------- */
+.btn-hero { position: relative; overflow: hidden; isolation: isolate; background: var(--hero) !important; border-color: var(--hero) !important; color: var(--hero-ink) !important; box-shadow: 0 10px 28px -14px var(--hero), 0 0 0 0 color-mix(in srgb, var(--hero) 40%, transparent); }
+.btn-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); transform: translateX(-120%); animation: sheen 5s var(--ease-io) 2.5s infinite; }
+@keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+.btn-hero:hover { box-shadow: 0 14px 34px -14px var(--hero), 0 0 0 6px color-mix(in srgb, var(--hero) 18%, transparent); }
+
+/* ---------- Anticipation + squash & stretch on press, spring release ---------- */
+.btn, .ftab, .sb-chip, .kc-open, .ab-chat, .copy, .menu-btn, .kc-chips button, .est button, .sb-form button, .kc-form button {
+  transition: transform var(--t3) var(--spring), background-color var(--t2) ease, color var(--t2) ease, border-color var(--t2) ease, box-shadow var(--t3) var(--ease-out); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active, .ftab:active, .sb-chip:active, .kc-open:active, .ab-chat:active, .copy:active, .menu-btn:active, .kc-chips button:active, .est button:active, .sb-form button:active, .kc-form button:active {
+  transform: scale(.94, .9); transition-duration: var(--t1); transition-timing-function: var(--ease-out); }
+.go .arr, .btn svg { display: inline-block; transition: transform var(--t3) var(--spring); }
+.ind:hover .go .arr { transform: translateX(5px); }
+
+/* ---------- Header logo: secondary action on hover ---------- */
+.brand .logo { transition: transform var(--t4) var(--spring); }
+.brand:hover .logo { transform: rotate(-8deg) scale(1.12); }
+.brand:active .logo { transform: scale(.88); transition-duration: var(--t1); }
+
+/* ---------- Menu button morph (interruptible transitions) ---------- */
+.menu-btn { position: relative; z-index: 31; }
+.mb { position: relative; width: 20px; height: 14px; display: block; }
+.mb i { position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px; background: currentColor; transition: transform var(--t3) var(--spring), opacity var(--t2) ease, top var(--t2) var(--ease-out); }
+.mb i:nth-child(1) { top: 0; } .mb i:nth-child(2) { top: 6px; } .mb i:nth-child(3) { top: 12px; }
+.menu-open .mb i:nth-child(1) { top: 6px; transform: rotate(45deg); }
+.menu-open .mb i:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.menu-open .mb i:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+/* menu grows out of the button that opened it (origin awareness) */
+.menu { clip-path: circle(0 at var(--ox, 95%) var(--oy, 32px)); transition: clip-path .5s var(--ease-io); }
+.menu.open { clip-path: circle(150% at var(--ox, 95%) var(--oy, 32px)); }
+.menu > a { opacity: 0; transform: translateX(24px); transition: opacity var(--t3) ease, transform var(--t4) var(--spring); }
+.menu.open > a { opacity: 1; transform: none; transition-delay: calc(.12s + var(--i, 6) * 45ms); }
+
+/* ---------- Thumb-zone action bar on phones (Fitts + frequency of use) ---------- */
+.actionbar { display: none; }
+@media (max-width: 760px) {
+  .actionbar { display: flex; gap: 10px; position: fixed; z-index: 35; left: 0; right: 0; bottom: 0; padding: 10px max(12px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line);
+    transform: translateY(110%); transition: transform var(--t4) var(--spring); }
+  .actionbar.show { transform: none; }
+  .actionbar .btn { flex: 1; min-height: 52px; }
+  .ab-chat { display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--surface); color: var(--ink); font: 600 15px/1 var(--f-body); cursor: pointer; }
+  .kc:not(.on) .kc-open { display: none; }
+  body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  footer a, footer .areas a { display: inline-block; padding: 8px 0; }     /* bigger tap targets */
+  .nav a { padding: 10px 0; }
+}
+
+/* ---------- Staggered entrances ---------- */
+.js .stg > * { opacity: 0; transform: translateY(18px) scale(.98); transition: opacity .5s ease, transform .6s var(--spring); }
+.js .stg.in > * { opacity: 1; transform: none; transition-delay: calc(min(var(--i, 0), 10) * 50ms); }
+.js .stg.in > *:hover { transition-delay: 0s; }
+
+/* ---------- Industry filter (Hick's law: fewer choices at a time) ---------- */
+.ftabs { display: flex; flex-wrap: wrap; gap: 8px; margin: -20px 0 26px; }
+.ftab { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink-2); font: 600 15px/1 var(--f-body); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.ftab small { font: 500 12px/1 var(--f-mono); padding: 4px 7px; border-radius: 999px; background: var(--bg); }
+.ftab:hover { border-color: var(--ink-2); color: var(--ink); }
+.ftab[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.ftab[aria-pressed="true"] small { background: color-mix(in srgb, var(--bg) 20%, transparent); }
+.ind.out { display: none; }
+.ind.enter { animation: cardIn .45s var(--spring) both; animation-delay: calc(var(--n, 0) * 40ms); }
+@keyframes cardIn { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+
+/* ---------- Depth (solid drawing) ---------- */
+.rcard, .pr, .ind, .ex, .pkg, .frame, .schematic, .feed, .track-card, .build, .cta-box, .sb-summary-box, .sb-form { box-shadow: var(--e1); }
+.ind, .pr, .ex, .rcard { transition: transform var(--t4) var(--spring), box-shadow var(--t3) var(--ease-out), border-color var(--t2) ease; }
+.ind:hover, .pr:hover, .ex:hover, .rcard:hover, .track-card:hover, .pkg:hover { box-shadow: var(--e3); transform: translateY(-5px); }
+
+/* ---------- Follow-through on toggles ---------- */
+.sb-chip.pop, .ftab.pop { animation: chipPop .45s var(--spring); }
+@keyframes chipPop { 0% { transform: scale(.92); } 50% { transform: scale(1.06); } 100% { transform: none; } }
+.sb-core.bump { animation: coreBump .5s var(--spring); }
+@keyframes coreBump { 40% { transform: scale(1.04); } }
+
+/* ---------- Hero headline: exaggerated entrance ---------- */
+.js .hero h1 .word { transform: translateY(55%) rotate(6deg) scale(.9); }
+.js .hero.go h1 .word { transition: opacity .5s ease, transform .8s var(--spring); }
+
+/* ---------- Chat panel grows from its button, along an arc ---------- */
+.kc-panel { transform-origin: bottom right; animation: kcArc .5s var(--spring) both; }
+@keyframes kcArc { 0% { opacity: 0; transform: translate(30px, 40px) scale(.6) rotate(5deg); } 60% { opacity: 1; transform: translate(-3px, -6px) scale(1.02) rotate(-.6deg); } 100% { transform: none; } }
+.kc-panel.closing { animation: none; opacity: 0; transform: translate(20px, 30px) scale(.7) rotate(3deg); transition: opacity var(--t2) ease, transform var(--t3) var(--ease-in); }
+
+/* ---------- Rubber-band drag on the reviews strip ---------- */
+.rmarquee { touch-action: pan-y; cursor: grab; user-select: none; }
+.rmarquee.dragging { cursor: grabbing; }
+.rmarquee .rtrack-wrap { transition: transform .7s var(--spring); }
+.rmarquee.dragging .rtrack-wrap { transition: none; }
+
+/* ---------- Peak-end: celebratory success states ---------- */
+.celebrate { position: relative; animation: successIn .6s var(--spring) both; }
+@keyframes successIn { 0% { opacity: 0; transform: scale(.9) translateY(10px); } 100% { opacity: 1; transform: none; } }
+.okmark { width: 44px; height: 44px; display: block; margin-bottom: 4px; }
+.okmark circle { fill: none; stroke: var(--live); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .5s var(--ease-out) .1s forwards; }
+.okmark path { fill: none; stroke: var(--live); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .35s var(--ease-out) .5s forwards; }
+.burst { position: absolute; left: 30px; top: 30px; width: 0; height: 0; pointer-events: none; }
+.burst i { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--c); animation: burst .8s var(--ease-out) .45s both; }
+@keyframes burst { from { transform: translate(0, 0) scale(1); opacity: 1; } to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; } }
+
+/* ---------- End of page: a signal runs into the final booking button ---------- */
+.cta-box { position: relative; overflow: hidden; }
+.cta-box::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--accent), var(--red), transparent); background-size: 50% 100%; background-repeat: no-repeat; animation: endSignal 3.2s var(--ease-io) infinite; }
+@keyframes endSignal { from { background-position: -50% 0; } to { background-position: 150% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-hero::after, .cta-box::before { animation-duration: 12s; }
+  .btn:active, .ftab:active, .sb-chip:active { transform: scale(.97); }
+  .kc-panel { animation: fadeIn .25s ease both; }
+  .js .hero h1 .word { transform: none; }
+}
+.menu-open .actionbar, .chat-open .actionbar { transform: translateY(110%) !important; }

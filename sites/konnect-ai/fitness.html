@@ -26,6 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<script>/* logo intro: first visit, refresh, or logo click */(function(){try{var d=document.documentElement,s=sessionStorage,n=performance.getEntriesByType("navigation")[0],t=n&&n.type;if(!s.getItem("k_seen")||t==="reload"||s.getItem("k_logo")){d.classList.add("intro")}s.setItem("k_seen","1");s.removeItem("k_logo")}catch(e){}})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Konnect AI","url":"https://konnectai.org/","description":"Custom AI automation systems and websites for businesses.","telephone":"+1-248-938-1582","email":"tristan@getkonnectai.com","founder":{"@type":"Person","name":"Tristan Karim"},"areaServed":"US"}</script>
 </head>
 <body>
@@ -45,29 +46,42 @@
   <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="xmark" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
 </defs></svg>
+<div class="intro-ov" aria-hidden="true"><div class="intro-stage">
+  <svg class="intro-logo" viewBox="-2 -2 104 104">
+    <rect class="ip ip-stem" x="0" y="0" width="14.7" height="100"/>
+    <polygon class="ip ip-arm" points="14.7,43 58.6,0 97.6,0 54.4,42 47.5,35 71,11.6 64.8,11.6 14.7,61"/>
+    <polygon class="ip ip-low" points="14.7,71 28.7,57 33,71 4,100 0,100 0,95"/>
+    <polygon class="ip ip-leg" points="42.6,76 51.4,74 66.6,89 73,89 80,84 96,100 66.4,100"/>
+    <line class="ip ip-bl" x1="50" y1="58" x2="80" y2="45.5" pathLength="1"/>
+    <circle class="ip ip-bn" cx="85.5" cy="43" r="11"/>
+    <line class="ip ip-rl" x1="44" y1="60" x2="77" y2="87" pathLength="1"/>
+    <circle class="ip ip-gap" cx="44" cy="60" r="13"/>
+    <circle class="ip ip-rn" cx="44" cy="60" r="10.6"/>
+    <circle class="ip ip-ring" cx="44" cy="60" r="10.6"/>
+  </svg>
+  <div class="intro-word"><span style="--i:0">K</span><span style="--i:1">o</span><span style="--i:2">n</span><span style="--i:3">n</span><span style="--i:4">e</span><span style="--i:5">c</span><span style="--i:6">t</span><span style="--i:7">&nbsp;</span><span style="--i:8">A</span><span style="--i:9">I</span></div>
+</div><p class="intro-skip">Tap to skip</p></div>
 <header class="top" id="top-bar">
   <div class="wrap">
-    <a class="brand" href="index.html" aria-label="Konnect AI home"><svg class="logo" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
+    <a class="brand" href="index.html" data-intro-link aria-label="Konnect AI home"><svg class="logo" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
     <ul class="nav"><li><a href="index.html#services">Services</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="index.html#industries">Industries</a></li><li><a href="index.html#examples">Examples</a></li><li><a href="index.html#faq">FAQ</a></li></ul>
-    <a class="btn btn-primary" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a build call</a>
-    <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu">
-      <svg class="b3" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <svg class="x" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
+    <a class="btn btn-primary btn-hero" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a build call</a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span class="mb"><i></i><i></i><i></i></span></button>
   </div>
 </header>
 <nav class="menu" id="menu" hidden aria-label="Mobile">
-  <a href="index.html#services">Services</a><a href="reviews.html">Reviews</a><a href="index.html#industries">Industries</a><a href="index.html#examples">Examples</a><a href="index.html#faq">FAQ</a><a href="index.html#contact">Contact</a>
-  <a class="btn btn-primary" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a build call</a>
+  <a href="index.html#services" style="--i:0">Services</a><a href="reviews.html" style="--i:1">Reviews</a><a href="index.html#industries" style="--i:2">Industries</a><a href="index.html#examples" style="--i:3">Examples</a><a href="index.html#faq" style="--i:4">FAQ</a><a href="index.html#contact" style="--i:5">Contact</a>
+  <a class="btn btn-primary btn-hero" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a free build call</a>
   <div class="meta"><a href="tel:+12489381582" style="font:inherit;border:0;padding:0">(248) 938-1582</a><span>tristan@getkonnectai.com</span></div>
 </nav>
+<div class="actionbar" id="actionbar"><a class="btn btn-primary btn-hero" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a free call</a><button class="ab-chat" type="button" data-open-chat aria-label="Ask our AI"><span class="kc-dot" aria-hidden="true"></span>Ask AI</button></div>
 
 <main id="top">
   <section class="page-hero"><div class="wrap">
     <span class="crumbs rv"><a href="index.html">Home</a> / Gyms & Fitness Studios</span>
     <span class="label rv">AI automation for gyms and fitness studios</span>
     <h1 class="rv d1">Turn interest into <span>members.</span></h1>
-    <p class="rv d1">Trial sign-ups followed up instantly, classes booked automatically, and members nudged before they drift away.</p><div class="ctas rv d2"><a class="btn btn-primary" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="#" data-open-chat>Ask our AI a question</a></div>
+    <p class="rv d1">Trial sign-ups followed up instantly, classes booked automatically, and members nudged before they drift away.</p><div class="ctas rv d2"><a class="btn btn-primary btn-hero" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="#" data-open-chat>Ask our AI a question</a></div>
   </div></section>
   <section><div class="wrap">
     <div class="head rv"><span class="label">The difference</span><h2>Where the time goes, and where it could go.</h2></div>
@@ -86,7 +100,7 @@
   </div></section>
   <section class="cta"><div class="wrap"><div class="cta-box cta-split rv">
     <div class="cta-copy"><h2>Tell us the job. <span>We'll build it.</span></h2><p>A free call, a written plan and price, then we build it.</p></div>
-    <div style="display:grid;gap:12px"><a class="btn btn-primary" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="index.html#contact">Send us a message</a></div>
+    <div style="display:grid;gap:12px"><a class="btn btn-primary btn-hero" href="https://calendar.app.google/ZGPwJmMpcz3yWbkt5" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="index.html#contact">Send us a message</a></div>
   </div></div></section>
 </main>
 
@@ -102,5 +116,6 @@
 <script src="assets/site.js" defer></script>
 <script src="assets/chat.js" defer></script>
 <script src="assets/builder.js" defer></script>
+<script src="assets/motion.js" defer></script>
 </body>
 </html>
