@@ -106,7 +106,7 @@ MENU_BTN = """<button class="menu-btn" id="menu-btn" type="button" aria-label="M
 
 def header(page):
     links = "".join(f'<li><a href="{h}"{" aria-current=page" if h == page else ""}>{l}</a></li>' for h, l in NAV)
-    mlinks = "".join(f'<a href="{h}" style="--i:{i}">{l}</a>' for i, (h, l) in enumerate(NAV + [("index.html#contact", "Contact")]))
+    mlinks = "".join(f'<a href="{h}" style="--i:{i}">{l}</a>' for i, (h, l) in enumerate(NAV + [("careers.html", "Careers"), ("index.html#contact", "Contact")]))
     return f"""{INTRO}<header class="top" id="top-bar">
   <div class="wrap">
     <a class="brand" href="index.html" data-intro-link aria-label="Konnect AI home"><svg class="logo" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
@@ -126,7 +126,7 @@ def header(page):
 FOOTER = '''<footer>
   <div class="wrap">
     <a class="brand" href="index.html" style="font-size:15px"><svg class="logo" style="width:24px;height:24px" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
-    <nav aria-label="Footer"><a href="index.html#services">Services</a><a href="reviews.html">Reviews</a><a href="index.html#industries">Industries</a><a href="index.html#contact">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+    <nav aria-label="Footer"><a href="index.html#services">Services</a><a href="reviews.html">Reviews</a><a href="index.html#industries">Industries</a><a href="index.html#contact">Contact</a><a href="careers.html">Careers</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
     <span class="mono">tristan@getkonnectai.com · (248) 938-1582</span>
   </div>
   <div class="wrap areas"><span class="mono">Service areas:</span> AREA_LINKS</div>
@@ -357,6 +357,84 @@ def industries_section():
       <div class="inds stg rv" id="ind-grid">{cards}</div>
     </div>
   </section>"""
+
+
+# ---------- Careers ----------
+ROLES = [
+ ("sales", "Sales & business development", "Find businesses we can help, start conversations and book discovery calls. Great if you like talking to owners and solving real problems.", ["Outreach to local businesses", "Booking and running first calls", "Keeping the pipeline organized"]),
+ ("dev", "AI automation developer", "Build the systems: AI agents, integrations, workflows and the glue between apps. Great if you love making things work end to end.", ["APIs, webhooks and integrations", "AI chat and voice agents", "Testing on real client cases"]),
+ ("web", "Web designer & developer", "Design and build fast, mobile-first websites for local businesses, and help shape our own.", ["Design and front-end build", "Mobile-first, accessible pages", "Launches, forms and hosting"]),
+ ("other", "Something else", "Great at something we didn't list? Operations, marketing, content, project management. Tell us what you'd bring.", ["Tell us what you're great at", "Show us something you've done", "We read every application"]),
+]
+role_cards = "".join(f'<article class="role"><span class="otag">{i + 1:02d}</span><h3>{t}</h3><p>{d}</p><ul>{checks(items)}</ul><a class="btn btn-ghost" href="#apply" data-role="{k}">Apply for this <svg aria-hidden="true"><use href="#arrow"/></svg></a></article>' for i, (k, t, d, items) in enumerate(ROLES))
+role_opts = "".join(f'<option value="{t}">{t}</option>' for _, t, _, _ in ROLES)
+PAGES["careers.html"] = ("Careers | Konnect AI", "Work with Konnect AI. We build AI systems and websites that help businesses land clients, save time and automate tasks. Apply to join us.", f"""
+  {hero("Careers", "Careers", "Build <span>anything</span> with us.", "We build AI systems and websites that help businesses land clients, save time and automate tasks. If you like solving real problems for real business owners, we'd like to hear from you.", cta=False)}
+  <section><div class="wrap">
+    <div class="head rv"><span class="label">Why Konnect AI</span><h2>What working here is like.</h2></div>
+    <div class="promise">
+      <div class="pr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg><h3>Build real things</h3><p>Your work goes live for businesses that use it every day.</p></div>
+      <div class="pr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg><h3>Talk to clients</h3><p>No layers in between. You hear the problem and see the result.</p></div>
+      <div class="pr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg><h3>Learn fast</h3><p>AI moves quickly. You'll work with new tools on real projects.</p></div>
+      <div class="pr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg><h3>Own your work</h3><p>A small team means your ideas and effort show up in what we ship.</p></div>
+    </div>
+  </div></section>
+  <section class="rule"><div class="wrap">
+    <div class="head rv"><span class="label">Areas we're hiring for</span><h2>Where you could fit.</h2><p>We don't post fixed job listings. Pick the area closest to what you do, and tell us about yourself.</p></div>
+    <div class="roles">{role_cards}</div>
+  </div></section>
+  <section><div class="wrap">
+    <div class="head rv"><span class="label">How hiring works</span><h2>Simple and quick.</h2></div>
+    <ol class="steps" id="steps"><span class="bar" id="steps-bar" aria-hidden="true"></span>
+      <li><span class="num">01</span><h3>Apply</h3><p>Fill out the form below. It takes about five minutes.</p></li>
+      <li><span class="num">02</span><h3>Intro call</h3><p>If it looks like a fit, we set up a short call to get to know you.</p></li>
+      <li><span class="num">03</span><h3>Show us your skills</h3><p>A conversation or small practical exercise related to the work.</p></li>
+      <li><span class="num">04</span><h3>Decision</h3><p>We let you know either way, and if it's a yes, we talk next steps.</p></li>
+    </ol>
+  </div></section>
+  <section id="apply" class="cta"><div class="wrap"><div class="cta-box rv">
+    <div class="cta-copy">
+      <h2>Apply to <span>work with us.</span></h2>
+      <p>Tell us who you are and what you'd bring. We read every application.</p>
+      <div class="card"><span class="who">Questions?</span><div class="crow"><a href="mailto:tristan@getkonnectai.com">tristan@getkonnectai.com</a></div></div>
+    </div>
+    <div>
+      <form id="apply-form" name="careers" method="POST" data-netlify="true" netlify-honeypot="career-website" enctype="multipart/form-data" novalidate>
+        <input type="hidden" name="form-name" value="careers">
+        <p hidden><label>Leave this empty <input name="career-website"></label></p>
+        <div class="frow">
+          <div class="field"><label for="a-name">Full name</label><input id="a-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="a-email">Email</label><input id="a-email" name="email" type="email" autocomplete="email" required><span class="err" id="a-e-email" hidden>Enter an email address like name@example.com.</span></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="a-phone">Phone</label><input id="a-phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div class="field"><label for="a-loc">City and state</label><input id="a-loc" name="location" autocomplete="address-level2" placeholder="Troy, MI"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="a-role">Area of interest</label><select id="a-role" name="role">{role_opts}</select></div>
+          <div class="field"><label for="a-type">Looking for</label><select id="a-type" name="work_type"><option>Full-time</option><option>Part-time</option><option>Contract / freelance</option><option>Internship</option></select></div>
+        </div>
+        <div class="field"><label for="a-link">LinkedIn, portfolio or GitHub <span class="hint">(optional)</span></label><input id="a-link" name="link" type="url" placeholder="https://"></div>
+        <div class="field"><label for="a-cv">Résumé <span class="hint">(PDF or Word, up to 8 MB)</span></label><input id="a-cv" name="resume" type="file" accept=".pdf,.doc,.docx"><span class="err" id="a-e-cv" hidden>Please choose a file under 8 MB.</span></div>
+        <div class="field"><label for="a-why">Why Konnect AI, and what would you bring?</label><textarea id="a-why" name="why" required></textarea></div>
+        <div class="field"><label for="a-proud">Something you built, sold or fixed that you're proud of <span class="hint">(optional)</span></label><textarea id="a-proud" name="proud"></textarea></div>
+        <button class="btn btn-primary" type="submit" style="justify-self:start">Send my application <svg aria-hidden="true"><use href="#arrow"/></svg></button>
+        <p class="err" id="a-e-send" hidden>Your application didn't send. Please try again, or email tristan@getkonnectai.com.</p>
+        <p class="hint">By applying you agree that we can use your details to review your application. See our <a href="privacy.html">privacy policy</a>.</p>
+      </form>
+      <div class="sent" id="apply-sent" hidden><strong class="mono">Application sent</strong><p>Thanks for applying. We'll review it and get back to you.</p></div>
+    </div>
+  </div></div></section>
+  <section class="rule"><div class="wrap">
+    <div class="head rv"><span class="label">Questions</span><h2>Careers FAQ.</h2></div>
+    <div class="faq rv">
+      <details><summary>Do you have open positions right now?</summary><p>We hire as projects and the team grow, so we keep applications open all the time. Pick the area closest to what you do and tell us about yourself.</p></details>
+      <details><summary>Is the work remote or in person?</summary><p>It depends on the role. Tell us your location and what you're looking for in the form, and we'll talk it through on the intro call.</p></details>
+      <details><summary>Do I need experience with AI?</summary><p>Not necessarily. Curiosity and a track record of getting things done matter most. For developer roles, experience with APIs and integrations helps.</p></details>
+      <details><summary>Will I hear back?</summary><p>We read every application. If it looks like a fit, we'll reach out to set up a call.</p></details>
+    </div>
+    <p class="note-box">Konnect AI welcomes applicants of all backgrounds.</p>
+  </div></section>""")
 
 # ---------- Legal ----------
 PAGES["privacy.html"] = ("Privacy Policy | Konnect AI", "How Konnect AI collects and uses information submitted through konnectai.org.", f'''

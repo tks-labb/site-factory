@@ -701,3 +701,16 @@ footer .areas a { text-decoration: none; } footer .areas a:hover { color: var(--
 .btag { font: 600 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; border: 1px solid currentColor; }
 .t-c { color: var(--red); } .t-t { color: var(--accent); } .t-a { color: var(--live); } .t-x { color: var(--ink-2); }
 @media (prefers-reduced-motion: reduce) { .out.in .notes span, .out.in .ticks li, .out.in .ticks li::before, .out.in .rfg, .out.in .hand { animation-duration: 12s; } .rot::after { display: none; } }
+
+/* ===== careers ===== */
+.roles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.role { --oc: var(--accent); display: grid; gap: 12px; align-content: start; padding: 28px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--e1); min-width: 0; transition: transform var(--t4) var(--spring), box-shadow var(--t3) var(--ease-out); }
+.role:nth-child(2) { --oc: var(--red); } .role:nth-child(3) { --oc: var(--live); } .role:nth-child(4) { --oc: var(--ink-2); }
+.role:hover { transform: translateY(-5px); box-shadow: var(--e3); }
+.role h3 { font: 700 24px/1.15 var(--f-display); letter-spacing: -0.02em; }
+.role p { color: var(--ink-2); }
+.role ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.role li { display: flex; gap: 10px; font-size: 15px; } .role li svg { width: 18px; height: 18px; color: var(--oc); flex-shrink: 0; margin-top: 3px; }
+.role .btn { justify-self: start; margin-top: 4px; }
+@media (max-width: 760px) { .roles { grid-template-columns: 1fr; } }
+input[type=file] { padding: 10px; }

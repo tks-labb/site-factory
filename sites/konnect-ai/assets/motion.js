@@ -36,7 +36,7 @@
   } else { fire(); }
 
   // ---------- Staggered entrances ----------
-  ['.builds', '.promise', '.rgrid', '.webs', '.tracks', '.outs'].forEach(function (sel) {
+  ['.builds', '.promise', '.rgrid', '.webs', '.tracks', '.outs', '.roles'].forEach(function (sel) {
     document.querySelectorAll(sel).forEach(function (box) {
       box.classList.add('stg');
       Array.prototype.forEach.call(box.children, function (c, i) { c.classList.remove('rv', 'd1', 'd2', 'd3'); c.style.setProperty('--i', i); });
@@ -127,6 +127,26 @@
     outs.forEach(function (o) { oio.observe(o); });
   } else outs.forEach(function (o) { o.classList.add('in'); });
 
+
+  // ---------- Careers: role buttons pre-select the form, form submits with the resume ----------
+  document.querySelectorAll('[data-role]').forEach(function (a) {
+    a.addEventListener('click', function () { var sel = document.getElementById('a-role'), card = a.closest('.role'); if (sel && card) sel.value = card.querySelector('h3').textContent; });
+  });
+  var apply = document.getElementById('apply-form');
+  if (apply) apply.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var $$ = function (id) { return document.getElementById(id); };
+    var okE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(apply.email.value.trim()); $$('a-e-email').hidden = okE;
+    var f = apply.resume.files[0], okF = !f || f.size <= 8 * 1024 * 1024; $$('a-e-cv').hidden = okF;
+    if (!okE) { apply.email.focus(); return; } if (!okF) { apply.resume.focus(); return; }
+    var empty = Array.prototype.find.call(apply.querySelectorAll('[required]'), function (el) { return !el.value.trim(); });
+    if (empty) { empty.focus(); return; }
+    var btn = apply.querySelector('button[type=submit]'), label = btn.firstChild.textContent; btn.disabled = true; btn.firstChild.textContent = 'Sending… ';
+    fetch('/', { method: 'POST', body: new FormData(apply) })   /* multipart, so the resume file is included */
+      .then(function (r) { if (!r.ok) throw 0; apply.hidden = true; $$('apply-sent').hidden = false; if (window.fbq) fbq('track', 'SubmitApplication'); })
+      .catch(function () { btn.disabled = false; btn.firstChild.textContent = label; $$('a-e-send').hidden = false; });
+  });
+
   // ---------- Peak-end: celebrate every successful submission ----------
   var colors = ['var(--accent)', 'var(--red)', 'var(--live)', '#FFB020'];
   function celebrate(el) {
@@ -138,7 +158,7 @@
     }).join('') + '</span>';
     el.insertAdjacentHTML('afterbegin', ok + (reduce ? '' : burst));
   }
-  var targets = document.querySelectorAll('.sent, .sb-sent, #est-sent');
+  var targets = document.querySelectorAll('.sent, .sb-sent, #est-sent, #apply-sent');
   if ('MutationObserver' in window) targets.forEach(function (el) {
     new MutationObserver(function () { if (!el.hidden) celebrate(el); }).observe(el, { attributes: true, attributeFilter: ['hidden'] });
   });
