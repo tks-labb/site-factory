@@ -109,7 +109,7 @@
     est.hours.value = hrs.value; est.people.value = ppl.value; est.rate.value = rate.value; est.yearly_cost.value = out.textContent;
     var b = est.querySelector('button'); b.disabled = true; b.textContent = 'Sending…';
     fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(est)).toString() })
-      .then(function (r) { if (!r.ok) throw 0; est.hidden = true; $('est-sent').hidden = false; })
+      .then(function (r) { if (!r.ok) throw 0; est.hidden = true; $('est-sent').hidden = false; if (window.fbq) fbq('track', 'Lead'); })
       .catch(function () { b.disabled = false; b.textContent = 'Send me the plan'; $('e-est').textContent = "That didn't send. Please try again."; $('e-est').hidden = false; });
   });
   }
@@ -134,7 +134,7 @@
     if (empty) { empty.focus(); return; }
     var btn = form.querySelector('button[type=submit]'); btn.disabled = true; btn.firstChild.textContent = 'Sending… ';
     fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-      .then(function (r) { if (!r.ok) throw 0; form.hidden = true; sent.hidden = false; })
+      .then(function (r) { if (!r.ok) throw 0; form.hidden = true; sent.hidden = false; if (window.fbq) fbq('track', 'Lead'); })
       .catch(function () { btn.disabled = false; btn.firstChild.textContent = 'Send my request '; $('e-send').hidden = false; });
   });
 })();

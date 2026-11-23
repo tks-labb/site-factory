@@ -30,6 +30,30 @@
 <link rel="stylesheet" href="assets/site.css">
 <script>/* logo intro: first visit, refresh, or logo click */(function(){try{var d=document.documentElement,s=sessionStorage,n=performance.getEntriesByType("navigation")[0],t=n&&n.type;if(!s.getItem("k_seen")||t==="reload"||s.getItem("k_logo")){d.classList.add("intro")}s.setItem("k_seen","1");s.removeItem("k_logo")}catch(e){}})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Konnect AI","url":"https://konnectai.org/","description":"Custom AI automation systems and websites for businesses.","telephone":"+1-248-938-1582","email":"tristan@getkonnectai.com","founder":{"@type":"Person","name":"Tristan Karim"},"areaServed":"US"}</script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1659701988966847');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1659701988966847&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<script>
+/* Meta events: Schedule on booking-link clicks. Leads fire in each form's success handler (all forms submit with JavaScript). */
+document.addEventListener('click', function (e) {
+  var link = e.target.closest('a[href*="calendar.app.google"]');
+  if (link && window.fbq) fbq('track', 'Schedule');
+}, true);
+</script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -101,8 +125,8 @@
             <input type="hidden" name="form-name" value="system-plan">
             <p hidden><label>Leave this empty <input name="sb-website"></label></p>
             <input type="hidden" name="system"><input type="hidden" name="inputs"><input type="hidden" name="ai_tasks"><input type="hidden" name="outcomes"><input type="hidden" name="prospect" value="Lakeside Insurance Group">
-            <label for="sb-email-140233952586368" style="font-weight:600">Get a free plan for this system</label>
-            <div class="r"><input name="name" placeholder="Your name" autocomplete="name" aria-label="Your name"><input id="sb-email-140233952586368" name="email" type="email" placeholder="you@company.com" autocomplete="email" required></div>
+            <label for="sb-email-140550360378304" style="font-weight:600">Get a free plan for this system</label>
+            <div class="r"><input name="name" placeholder="Your name" autocomplete="name" aria-label="Your name"><input id="sb-email-140550360378304" name="email" type="email" placeholder="you@company.com" autocomplete="email" required></div>
             <button type="submit">Send me this plan</button>
             <p class="sb-err" hidden></p>
           </form>

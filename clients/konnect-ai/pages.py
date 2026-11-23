@@ -7,6 +7,32 @@ BASE = "https://konnectai.org"
 BOOK = "https://calendar.app.google/ZGPwJmMpcz3yWbkt5"
 NAV = [("index.html#services", "Services"), ("reviews.html", "Reviews"), ("index.html#industries", "Industries"), ("index.html#examples", "Examples"), ("index.html#faq", "FAQ")]
 
+META_PIXEL = """<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1659701988966847');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1659701988966847&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<script>
+/* Meta events: Schedule on booking-link clicks. Leads fire in each form's success handler (all forms submit with JavaScript). */
+document.addEventListener('click', function (e) {
+  var link = e.target.closest('a[href*="calendar.app.google"]');
+  if (link && window.fbq) fbq('track', 'Schedule');
+}, true);
+</script>
+"""
+
 def head(title, desc, page):
     url = BASE + "/" + ("" if page == "index.html" else page)
     return f'''<!doctype html>
@@ -39,7 +65,7 @@ def head(title, desc, page):
 <link rel="stylesheet" href="assets/site.css">
 <script>/* logo intro: first visit, refresh, or logo click */(function(){{try{{var d=document.documentElement,s=sessionStorage,n=performance.getEntriesByType("navigation")[0],t=n&&n.type;if(!s.getItem("k_seen")||t==="reload"||s.getItem("k_logo")){{d.classList.add("intro")}}s.setItem("k_seen","1");s.removeItem("k_logo")}}catch(e){{}}}})()</script>
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfessionalService","name":"Konnect AI","url":"{BASE}/","description":"Custom AI automation systems and websites for businesses.","telephone":"+1-248-938-1582","email":"tristan@getkonnectai.com","founder":{{"@type":"Person","name":"Tristan Karim"}},"areaServed":"US"}}</script>
-</head>
+{META_PIXEL}</head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <symbol id="logo" viewBox="-2 -2 104 104">
@@ -334,16 +360,18 @@ def industries_section():
 
 # ---------- Legal ----------
 PAGES["privacy.html"] = ("Privacy Policy | Konnect AI", "How Konnect AI collects and uses information submitted through konnectai.org.", f'''
-  {hero("Privacy", "Legal", "Privacy policy", "Last updated: November 17, 2026", cta=False)}
+  {hero("Privacy", "Legal", "Privacy policy", "Last updated: November 23, 2026", cta=False)}
   <section><div class="wrap legal">
     <p>This policy explains what information Konnect AI ("we") collects through konnectai.org and how we use it.</p>
     <h2>Information we collect</h2>
-    <ul><li><b>Information you send us:</b> your name, email, phone number and message when you use our contact or estimate forms.</li><li><b>Chat messages:</b> the messages you type into our AI assistant, so it can reply.</li><li><b>Booking details:</b> if you book a call, the scheduling tool collects the details you enter.</li><li><b>Basic technical data:</b> our hosting provider may log standard information such as IP address and browser type for security and reliability.</li></ul>
+    <ul><li><b>Information you send us:</b> your name, email, phone number and message when you use our contact or estimate forms.</li><li><b>Chat messages:</b> the messages you type into our AI assistant, so it can reply.</li><li><b>Booking details:</b> if you book a call, the scheduling tool collects the details you enter.</li><li><b>Basic technical data:</b> our hosting provider may log standard information such as IP address and browser type for security and reliability.</li><li><b>Activity on the site:</b> the Meta Pixel records page views, form submissions and booking-link clicks (see below).</li></ul>
     <h2>How we use it</h2>
     <ul><li>To reply to your inquiry and provide our services.</li><li>To send you the information you asked for, such as an automation estimate.</li><li>To keep the website secure and working.</li></ul>
     <p>We do not sell your personal information.</p>
     <h2>Service providers</h2>
     <p>We use trusted providers to run the website: Netlify (hosting and form handling), Google (calendar booking), and Anthropic (the AI model behind our chat assistant). They process information on our behalf to provide these services.</p>
+    <h2>Advertising and measurement</h2>
+    <p>We use the Meta Pixel, a tool from Meta Platforms, to measure visits and actions on this site (such as page views, form submissions and booking-link clicks) and to show and measure our ads on Facebook and Instagram. Meta may use cookies and receive information such as your IP address and browser details. You can manage ad preferences in your Facebook or Instagram settings and limit tracking in your browser.</p>
     <h2>Chat assistant</h2>
     <p>The AI assistant is automated and may make mistakes. Please don't share sensitive personal information, such as financial or health details, in the chat.</p>
     <h2>Your choices</h2>

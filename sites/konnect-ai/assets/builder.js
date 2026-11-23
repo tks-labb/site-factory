@@ -71,7 +71,7 @@
       err.hidden = true;
       var b = form.querySelector('button'); b.disabled = true; b.textContent = 'Sending…';
       fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-        .then(function (r) { if (!r.ok) throw 0; form.hidden = true; sent.hidden = false; })
+        .then(function (r) { if (!r.ok) throw 0; form.hidden = true; sent.hidden = false; if (window.fbq) fbq('track', 'Lead'); })
         .catch(function () { b.disabled = false; b.textContent = 'Send me this plan'; err.textContent = "That didn't send. Please try again."; err.hidden = false; });
     });
   }
