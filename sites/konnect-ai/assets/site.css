@@ -634,3 +634,70 @@ footer .areas a { text-decoration: none; } footer .areas a:hover { color: var(--
   .js .hero h1 .word { transform: none; }
 }
 .menu-open .actionbar, .chat-open .actionbar { transform: translateY(110%) !important; }
+
+/* ===== Outcome-led messaging ===== */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* rotating outcome line under the headline */
+.rotator { margin-top: 16px; font: 700 clamp(20px, 2.4vw, 30px)/1.2 var(--f-display); letter-spacing: -0.02em; color: var(--ink); }
+.rot { position: relative; display: inline-grid; vertical-align: bottom; overflow: hidden; color: var(--accent); padding-bottom: .08em; }
+.rot b { grid-area: 1 / 1; font-weight: inherit; white-space: nowrap; transform: translateY(105%); opacity: 0; transition: transform .55s var(--spring), opacity .3s ease; }
+.rot b.on { transform: none; opacity: 1; }
+.rot b.off { transform: translateY(-105%); opacity: 0; transition: transform .4s var(--ease-in), opacity .25s ease; }
+.rot::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; border-radius: 2px; background: currentColor; transform-origin: left; animation: rotBar 2.8s linear infinite; opacity: .35; }
+@keyframes rotBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width: 520px) { .rot b { white-space: normal; } }
+
+/* three outcome pillars */
+.outs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.out { position: relative; display: grid; gap: 14px; align-content: start; padding: 28px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--e1); overflow: hidden; min-width: 0; transition: transform var(--t4) var(--spring), box-shadow var(--t3) var(--ease-out); --oc: var(--accent); }
+.out:hover { transform: translateY(-6px); box-shadow: var(--e3); }
+.out::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--oc); }
+.o-clients { --oc: var(--red); } .o-time { --oc: var(--accent); } .o-auto { --oc: var(--live); }
+.otag { font: 600 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--oc); }
+.out h3 { font: 700 clamp(24px, 2.4vw, 30px)/1.1 var(--f-display); letter-spacing: -0.02em; }
+.out p { color: var(--ink-2); }
+.out ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.out li { display: flex; gap: 10px; font-size: 15px; } .out li svg { width: 18px; height: 18px; color: var(--oc); flex-shrink: 0; margin-top: 3px; }
+.ov { height: 132px; border-radius: 14px; background: color-mix(in srgb, var(--oc) 7%, var(--bg)); display: grid; place-items: center; position: relative; overflow: hidden; }
+/* clients: notifications slide in one after another */
+.notes { display: grid; gap: 7px; width: 86%; }
+.notes span { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 10px; background: var(--surface); box-shadow: var(--e1); font-size: 13px; font-weight: 600; opacity: 0; transform: translateX(-16px); }
+.notes span b { font-weight: 500; color: var(--ink-2); }
+.notes span i { width: 8px; height: 8px; border-radius: 50%; background: var(--oc); flex-shrink: 0; }
+.out.in .notes span { animation: noteIn 6s var(--spring) infinite; }
+.out.in .notes span:nth-child(2) { animation-delay: .5s; } .out.in .notes span:nth-child(3) { animation-delay: 1s; }
+@keyframes noteIn { 0% { opacity: 0; transform: translateX(-16px); } 10%, 80% { opacity: 1; transform: none; } 92%, 100% { opacity: 0; transform: translateX(12px); } }
+/* time: a ring fills while the hand sweeps */
+.ring { width: 104px; height: 104px; }
+.rbg { fill: none; stroke: color-mix(in srgb, var(--oc) 18%, transparent); stroke-width: 9; }
+.rfg { fill: none; stroke: var(--oc); stroke-width: 9; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transform: rotate(-90deg); transform-origin: center; }
+.hand { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; transform-origin: 60px 60px; }
+.pin { fill: var(--ink); }
+.out.in .rfg { animation: ringFill 4s var(--ease-io) infinite; }
+.out.in .hand { animation: sweep 4s var(--ease-io) infinite; }
+@keyframes ringFill { 0% { stroke-dashoffset: 1; } 70%, 90% { stroke-dashoffset: .02; } 100% { stroke-dashoffset: 1; } }
+@keyframes sweep { 0% { transform: rotate(0); } 70%, 90% { transform: rotate(353deg); } 100% { transform: rotate(360deg); } }
+.rlabel { position: absolute; right: 16px; bottom: 14px; font: 500 11px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2); text-align: right; }
+/* automate: tasks tick themselves off */
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; width: 80%; }
+.ticks li { position: relative; padding: 6px 10px 6px 34px; border-radius: 9px; background: var(--surface); box-shadow: var(--e1); font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.ticks li::before { content: ""; position: absolute; left: 10px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 4px; border: 2px solid var(--line); transition: background-color .3s, border-color .3s; }
+.out.in .ticks li { animation: tickText 5s steps(1) infinite; }
+.out.in .ticks li::before { animation: tickBox 5s var(--spring) infinite; }
+.out.in .ticks li:nth-child(2), .out.in .ticks li:nth-child(2)::before { animation-delay: .6s; }
+.out.in .ticks li:nth-child(3), .out.in .ticks li:nth-child(3)::before { animation-delay: 1.2s; }
+.out.in .ticks li:nth-child(4), .out.in .ticks li:nth-child(4)::before { animation-delay: 1.8s; }
+@keyframes tickBox { 0%, 8% { background: transparent; border-color: var(--line); transform: none; } 12% { background: var(--oc); border-color: var(--oc); transform: scale(1.25); } 18%, 85% { background: var(--oc); border-color: var(--oc); transform: none; } 100% { background: transparent; border-color: var(--line); } }
+@keyframes tickText { 0%, 10% { color: var(--ink-2); } 11%, 85% { color: var(--ink); } }
+@media (max-width: 960px) { .outs { grid-template-columns: 1fr; max-width: 640px; } }
+/* "we can build anything" banner */
+.anything { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; padding: 26px 30px; border-radius: 22px; background: var(--night); color: var(--night-ink); box-shadow: var(--e2); }
+.anything .mono { color: var(--night-dim); }
+.anything strong { font: 800 clamp(24px, 3.2vw, 40px)/1 var(--f-display); text-transform: uppercase; letter-spacing: -0.03em; margin-right: auto; }
+.anything strong span { color: #FF4D4D; }
+.anything .btn-ghost { color: var(--night-ink); border-color: var(--night-ink); } .anything .btn-ghost:hover { background: var(--night-ink); color: var(--night); }
+/* outcome tags on build cards */
+.btags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: -4px; }
+.btag { font: 600 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; border: 1px solid currentColor; }
+.t-c { color: var(--red); } .t-t { color: var(--accent); } .t-a { color: var(--live); } .t-x { color: var(--ink-2); }
+@media (prefers-reduced-motion: reduce) { .out.in .notes span, .out.in .ticks li, .out.in .ticks li::before, .out.in .rfg, .out.in .hand { animation-duration: 12s; } .rot::after { display: none; } }

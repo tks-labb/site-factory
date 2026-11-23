@@ -36,7 +36,7 @@
   } else { fire(); }
 
   // ---------- Staggered entrances ----------
-  ['.builds', '.promise', '.rgrid', '.webs', '.tracks'].forEach(function (sel) {
+  ['.builds', '.promise', '.rgrid', '.webs', '.tracks', '.outs'].forEach(function (sel) {
     document.querySelectorAll(sel).forEach(function (box) {
       box.classList.add('stg');
       Array.prototype.forEach.call(box.children, function (c, i) { c.classList.remove('rv', 'd1', 'd2', 'd3'); c.style.setProperty('--i', i); });
@@ -104,6 +104,28 @@
     var onScroll = function () { bar.classList.toggle('show', window.scrollY > 420); };
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   }
+
+
+  // ---------- Rotating outcome line under the headline ----------
+  var rot = document.getElementById('rot');
+  if (rot) {
+    var words = rot.querySelectorAll('b'), wi = 0;
+    var spin = function () {
+      var cur = words[wi]; wi = (wi + 1) % words.length; var nxt = words[wi];
+      cur.classList.remove('on'); cur.classList.add('off');
+      nxt.classList.remove('off'); void nxt.offsetWidth; nxt.classList.add('on');
+      setTimeout(function () { cur.classList.remove('off'); }, 500);
+    };
+    var rotTimer = setInterval(spin, reduce ? 5000 : 2800);
+    document.addEventListener('visibilitychange', function () { clearInterval(rotTimer); if (!document.hidden) rotTimer = setInterval(spin, reduce ? 5000 : 2800); });
+  }
+
+  // ---------- Outcome pillars animate when they scroll in ----------
+  var outs = document.querySelectorAll('.out');
+  if (outs.length && 'IntersectionObserver' in window) {
+    var oio = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('in', e.isIntersecting); }); }, { threshold: 0.25 });
+    outs.forEach(function (o) { oio.observe(o); });
+  } else outs.forEach(function (o) { o.classList.add('in'); });
 
   // ---------- Peak-end: celebrate every successful submission ----------
   var colors = ['var(--accent)', 'var(--red)', 'var(--live)', '#FFB020'];

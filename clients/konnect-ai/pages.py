@@ -127,7 +127,7 @@ def checks(items, icon="check"):
     return "".join(f'<li><svg aria-hidden="true"><use href="#{icon}"/></svg><span>{i}</span></li>' for i in items)
 
 CTA = f'''<section class="cta"><div class="wrap"><div class="cta-box cta-split rv">
-    <div class="cta-copy"><h2>Tell us the job. <span>We'll build it.</span></h2><p>A free call, a written plan and price, then we build it.</p></div>
+    <div class="cta-copy"><h2>Tell us the job. <span>We'll build it.</span></h2><p>More clients, more time back, less busywork. A free call, a written plan and price, then we build it.</p></div>
     <div style="display:grid;gap:12px"><a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a free build call <svg aria-hidden="true"><use href="#arrow"/></svg></a><a class="btn btn-ghost" href="index.html#contact">Send us a message</a></div>
   </div></div></section>'''
 
