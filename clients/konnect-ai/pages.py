@@ -5,7 +5,7 @@ import pathlib, re
 OUT = pathlib.Path(__file__).resolve().parents[2] / "sites" / "konnect-ai"
 BASE = "https://konnectai.org"
 BOOK = "https://calendar.app.google/ZGPwJmMpcz3yWbkt5"
-NAV = [("index.html#services", "Services"), ("reviews.html", "Reviews"), ("index.html#industries", "Industries"), ("index.html#examples", "Examples"), ("index.html#faq", "FAQ")]
+NAV = [("index.html#services", "Services"), ("reviews.html", "Reviews"), ("index.html#industries", "Industries"), ("index.html#examples", "Examples"), ("index.html#faq", "FAQ"), ("careers.html", "Careers")]
 
 META_PIXEL = """<!-- Meta Pixel Code -->
 <script>
@@ -106,7 +106,7 @@ MENU_BTN = """<button class="menu-btn" id="menu-btn" type="button" aria-label="M
 
 def header(page):
     links = "".join(f'<li><a href="{h}"{" aria-current=page" if h == page else ""}>{l}</a></li>' for h, l in NAV)
-    mlinks = "".join(f'<a href="{h}" style="--i:{i}">{l}</a>' for i, (h, l) in enumerate(NAV + [("careers.html", "Careers"), ("index.html#contact", "Contact")]))
+    mlinks = "".join(f'<a href="{h}" style="--i:{i}">{l}</a>' for i, (h, l) in enumerate(NAV + [("index.html#contact", "Contact")]))
     return f"""{INTRO}<header class="top" id="top-bar">
   <div class="wrap">
     <a class="brand" href="index.html" data-intro-link aria-label="Konnect AI home"><svg class="logo" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
