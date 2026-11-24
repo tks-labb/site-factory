@@ -293,6 +293,10 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
 .checks label:active { transform: scale(.97); }
 .checks input { width: 20px; height: 20px; min-height: 0; accent-color: var(--navy); }
 .checks label:has(input:checked) { border-color: var(--navy); background: color-mix(in srgb, var(--butter) 45%, white); }
+.checks .emo { font-size: 22px; line-height: 1; display: inline-block; transition: transform .4s var(--spring); }
+.checks label:hover .emo { transform: rotate(-12deg) scale(1.15); }
+.checks label:has(input:checked) .emo { animation: wiggle .6s var(--spring); }
+@keyframes wiggle { 30% { transform: scale(1.35) rotate(-14deg); } 60% { transform: scale(1.1) rotate(10deg); } }
 .err { color: #B3261E; font-size: 14px; }
 .shake { animation: shake .45s ease; }
 @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
@@ -520,10 +524,10 @@ footer img:hover { transform: rotate(-8deg) scale(1.08); }
             </div>
             <fieldset><legend>Which bars interest you?</legend>
               <div class="checks">
-                <label><input type="checkbox" name="bars" value="Squishy Bar">Squishy Bar</label>
-                <label><input type="checkbox" name="bars" value="Keychain Bar">Keychain Bar</label>
-                <label><input type="checkbox" name="bars" value="Hair Accessory Bar">Hair Accessory Bar</label>
-                <label><input type="checkbox" name="bars" value="Patch Bar">Patch Bar</label>
+                <label><input type="checkbox" name="bars" value="Squishy Bar"><span class="emo" aria-hidden="true">🫧</span>Squishy Bar</label>
+                <label><input type="checkbox" name="bars" value="Keychain Bar"><span class="emo" aria-hidden="true">🔑</span>Keychain Bar</label>
+                <label><input type="checkbox" name="bars" value="Hair Accessory Bar"><span class="emo" aria-hidden="true">🎀</span>Hair Accessory Bar</label>
+                <label><input type="checkbox" name="bars" value="Patch Bar"><span class="emo" aria-hidden="true">🧵</span>Patch Bar</label>
               </div>
             </fieldset>
             <div class="field"><label for="i-msg">Anything else we should know?</label><textarea id="i-msg" name="message" placeholder="Ages, party theme, timing, questions…"></textarea></div>
