@@ -12,7 +12,7 @@ About Konnect AI:
 - Also builds mobile-first websites for local businesses: tap-to-call, lead forms that email the owner, online booking, Google-ready setup, with hosting and updates handled.
 - Process: 1) free discovery call, 2) a written plan and price the client approves, 3) build with regular demos, tested on real cases, 4) launch, training and ongoing support.
 - The client owns the system or website. Clients work directly with the people building it.
-- Founder: Tristan Karim. Email tristan@getkonnectai.com, phone (248) 938-1582.
+- Founder: Tristan Karim. Email tristan@getkonnectai.com, phone (313) 474-9885.
 - Book a free build call: https://calendar.app.google/ZGPwJmMpcz3yWbkt5
 
 How to reply:

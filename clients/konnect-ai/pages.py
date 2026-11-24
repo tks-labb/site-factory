@@ -64,7 +64,7 @@ def head(title, desc, page):
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 <script>/* logo intro: first visit, refresh, or logo click */(function(){{try{{var d=document.documentElement,s=sessionStorage,n=performance.getEntriesByType("navigation")[0],t=n&&n.type;if(!s.getItem("k_seen")||t==="reload"||s.getItem("k_logo")){{d.classList.add("intro")}}s.setItem("k_seen","1");s.removeItem("k_logo")}}catch(e){{}}}})()</script>
-<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfessionalService","name":"Konnect AI","url":"{BASE}/","description":"Custom AI automation systems and websites for businesses.","telephone":"+1-248-938-1582","email":"tristan@getkonnectai.com","founder":{{"@type":"Person","name":"Tristan Karim"}},"areaServed":"US"}}</script>
+<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfessionalService","name":"Konnect AI","url":"{BASE}/","description":"Custom AI automation systems and websites for businesses.","telephone":"+1-313-474-9885","email":"tristan@getkonnectai.com","founder":{{"@type":"Person","name":"Tristan Karim"}},"areaServed":"US"}}</script>
 {META_PIXEL}</head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -118,7 +118,7 @@ def header(page):
 <nav class="menu" id="menu" hidden aria-label="Mobile">
   {mlinks}
   <a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a free build call</a>
-  <div class="meta"><a href="tel:+12489381582" style="font:inherit;border:0;padding:0">(248) 938-1582</a><span>tristan@getkonnectai.com</span></div>
+  <div class="meta"><a href="tel:+13134749885" style="font:inherit;border:0;padding:0">(313) 474-9885</a><span>tristan@getkonnectai.com</span></div>
 </nav>
 <div class="actionbar" id="actionbar"><a class="btn btn-primary btn-hero" href="{BOOK}" target="_blank" rel="noopener">Book a free call</a><button class="ab-chat" type="button" data-open-chat aria-label="Ask our AI"><span class="kc-dot" aria-hidden="true"></span>Ask AI</button></div>
 """
@@ -127,7 +127,7 @@ FOOTER = '''<footer>
   <div class="wrap">
     <a class="brand" href="index.html" style="font-size:15px"><svg class="logo" style="width:24px;height:24px" aria-hidden="true"><use href="#logo"/></svg>Konnect AI</a>
     <nav aria-label="Footer"><a href="index.html#services">Services</a><a href="reviews.html">Reviews</a><a href="index.html#industries">Industries</a><a href="index.html#contact">Contact</a><a href="careers.html">Careers</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
-    <span class="mono">tristan@getkonnectai.com · (248) 938-1582</span>
+    <span class="mono">tristan@getkonnectai.com · (313) 474-9885</span>
   </div>
   <div class="wrap areas"><span class="mono">Service areas:</span> AREA_LINKS</div>
 </footer>
@@ -455,7 +455,7 @@ PAGES["privacy.html"] = ("Privacy Policy | Konnect AI", "How Konnect AI collects
     <h2>Your choices</h2>
     <p>You can ask us to access, correct or delete the information you've sent us by emailing tristan@getkonnectai.com.</p>
     <h2>Contact</h2>
-    <p>Questions about this policy: tristan@getkonnectai.com or (248) 938-1582.</p>
+    <p>Questions about this policy: tristan@getkonnectai.com or (313) 474-9885.</p>
     <p class="note-box">Template notice: this policy is a starting point. Have it reviewed for your business and location.</p>
   </div></section>''')
 
@@ -474,7 +474,7 @@ PAGES["terms.html"] = ("Terms of Use | Konnect AI", "Terms for using konnectai.o
     <h2>Limitation of liability</h2>
     <p>The site is provided "as is". To the extent the law allows, Konnect AI isn't liable for damages arising from use of the site.</p>
     <h2>Contact</h2>
-    <p>tristan@getkonnectai.com · (248) 938-1582</p>
+    <p>tristan@getkonnectai.com · (313) 474-9885</p>
     <p class="note-box">Template notice: these terms are a starting point. Have them reviewed for your business and location.</p>
   </div></section>''')
 
