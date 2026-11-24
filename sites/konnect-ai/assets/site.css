@@ -714,3 +714,12 @@ footer .areas a { text-decoration: none; } footer .areas a:hover { color: var(--
 .role .btn { justify-self: start; margin-top: 4px; }
 @media (max-width: 760px) { .roles { grid-template-columns: 1fr; } }
 input[type=file] { padding: 10px; }
+
+/* ---------- SMS consent + text-us line ---------- */
+.sms-consent { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; color: var(--ink-2); font-weight: 400; cursor: pointer; }
+.sms-consent input { flex: none; width: 18px; height: 18px; min-height: 0; margin: 2px 0 0; padding: 0; accent-color: var(--accent); }
+.sms-consent a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+footer .wrap.textus { display: block; font-size: 14px; line-height: 1.6; color: var(--ink-2); padding-top: 14px; }
+footer .textus .mono { margin-right: 6px; }
+.legal h2[id] { scroll-margin-top: 96px; }
+footer .textus a { color: var(--ink); font-weight: 600; }

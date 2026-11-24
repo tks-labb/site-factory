@@ -129,6 +129,7 @@ FOOTER = '''<footer>
     <nav aria-label="Footer"><a href="index.html#services">Services</a><a href="reviews.html">Reviews</a><a href="index.html#industries">Industries</a><a href="index.html#contact">Contact</a><a href="careers.html">Careers</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
     <span class="mono">tristan@getkonnectai.com · (313) 474-9885</span>
   </div>
+  <div class="wrap textus"><span class="mono">Prefer to text?</span> Text <b>DEMO</b> to <a href="sms:+13134749885?&amp;body=DEMO">(313) 474-9885</a> to chat with our AI assistant and book a free call. Msg &amp; data rates may apply. Reply STOP to opt out.</div>
   <div class="wrap areas"><span class="mono">Service areas:</span> AREA_LINKS</div>
 </footer>
 
@@ -438,7 +439,7 @@ PAGES["careers.html"] = ("Careers | Konnect AI", "Work with Konnect AI. We build
 
 # ---------- Legal ----------
 PAGES["privacy.html"] = ("Privacy Policy | Konnect AI", "How Konnect AI collects and uses information submitted through konnectai.org.", f'''
-  {hero("Privacy", "Legal", "Privacy policy", "Last updated: November 23, 2026", cta=False)}
+  {hero("Privacy", "Legal", "Privacy policy", "Last updated: November 24, 2026", cta=False)}
   <section><div class="wrap legal">
     <p>This policy explains what information Konnect AI ("we") collects through konnectai.org and how we use it.</p>
     <h2>Information we collect</h2>
@@ -448,6 +449,8 @@ PAGES["privacy.html"] = ("Privacy Policy | Konnect AI", "How Konnect AI collects
     <p>We do not sell your personal information.</p>
     <h2>Service providers</h2>
     <p>We use trusted providers to run the website: Netlify (hosting and form handling), Google (calendar booking), and Anthropic (the AI model behind our chat assistant). They process information on our behalf to provide these services.</p>
+    <h2 id="sms">Text messaging (SMS)</h2>
+    <p>If you opt in to receive text messages from Konnect AI, we collect your mobile phone number and your messaging consent. We use this information only to send the messages you agreed to receive. We do not sell, rent, or share your mobile phone number or SMS opt-in data with third parties or affiliates for their marketing or promotional purposes. Information may be shared with service providers (such as our messaging platform) only as needed to deliver messages to you. You can opt out at any time by replying STOP.</p>
     <h2>Advertising and measurement</h2>
     <p>We use the Meta Pixel, a tool from Meta Platforms, to measure visits and actions on this site (such as page views, form submissions and booking-link clicks) and to show and measure our ads on Facebook and Instagram. Meta may use cookies and receive information such as your IP address and browser details. You can manage ad preferences in your Facebook or Instagram settings and limit tracking in your browser.</p>
     <h2>Chat assistant</h2>
@@ -460,7 +463,7 @@ PAGES["privacy.html"] = ("Privacy Policy | Konnect AI", "How Konnect AI collects
   </div></section>''')
 
 PAGES["terms.html"] = ("Terms of Use | Konnect AI", "Terms for using konnectai.org.", f'''
-  {hero("Terms", "Legal", "Terms of use", "Last updated: November 17, 2026", cta=False)}
+  {hero("Terms", "Legal", "Terms of use", "Last updated: November 24, 2026", cta=False)}
   <section><div class="wrap legal">
     <p>By using konnectai.org you agree to these terms.</p>
     <h2>Website content</h2>
@@ -471,6 +474,8 @@ PAGES["terms.html"] = ("Terms of Use | Konnect AI", "Terms for using konnectai.o
     <p>Any project we take on is governed by a separate written agreement or plan. These terms do not create a client relationship.</p>
     <h2>Acceptable use</h2>
     <p>Don't misuse the site or the chat assistant, including attempts to disrupt it, send spam, or submit unlawful content.</p>
+    <h2 id="sms">SMS Terms</h2>
+    <ul><li><b>Program:</b> Konnect AI sends text messages about your inquiry, appointment scheduling and reminders, follow-ups about our AI automation and website services, and support for existing clients.</li><li><b>How you opt in:</b> by checking the SMS consent box on our website form, by texting a keyword such as DEMO to (313) 474-9885, or by agreeing verbally during a phone call with our assistant.</li><li><b>Frequency:</b> message frequency varies.</li><li><b>Cost:</b> message and data rates may apply.</li><li><b>Opt out:</b> reply STOP at any time to stop receiving messages. Reply HELP for help, or contact tristan@getkonnectai.com.</li><li><b>Carriers:</b> carriers are not liable for delayed or undelivered messages.</li><li><b>Privacy:</b> see our Privacy Policy at <a href="/privacy">konnectai.org/privacy</a>.</li></ul>
     <h2>Limitation of liability</h2>
     <p>The site is provided "as is". To the extent the law allows, Konnect AI isn't liable for damages arising from use of the site.</p>
     <h2>Contact</h2>
@@ -605,6 +610,18 @@ def prospect_pages():
         built.append(slug)
     return built
 
+REDIRECTS = """/websites.html  /reviews.html  301
+/websites  /reviews.html  301
+# Old site addresses
+/services/*  /#services  301
+/services  /#services  301
+/about  /#why  301
+/about-us  /#why  301
+/contact  /#contact  301
+/contact-us  /#contact  301
+/book  https://calendar.app.google/ZGPwJmMpcz3yWbkt5  302
+"""
+
 def build():
     city_pages()
     footer = FOOTER.replace("AREA_LINKS", area_links())
@@ -625,7 +642,7 @@ def build():
         a = idx.index(f"<!--{tag}-->") + len(f"<!--{tag}-->"); b = idx.index(f"<!--/{tag}-->")
         idx = idx[:a] + "\n" + html + "\n  " + idx[b:]
     (OUT / "index.html").write_text(idx)
-    (OUT / "_redirects").write_text("/websites.html  /reviews.html  301\n/websites  /reviews.html  301\n")
+    (OUT / "_redirects").write_text(REDIRECTS)
     print("synced index.html, wrote _redirects")
     urls = ["", *PAGES.keys()]
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{BASE}/{u}</loc></url>\n" for u in urls) + "</urlset>\n")
