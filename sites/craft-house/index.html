@@ -362,7 +362,7 @@ footer img { width: 110px; }
             </fieldset>
             <div class="field"><label for="i-msg">Anything else we should know?</label><textarea id="i-msg" name="message" placeholder="Ages, party theme, timing, questions…"></textarea></div>
             <button class="btn btn-primary" type="submit" style="justify-self:start">Send my request</button>
-            <p class="err" id="e-send" hidden>Your request didn't send. Please try again.</p>
+            <p class="err" id="e-send" hidden>Your request didn't send. Please try again, or call or text (248) 807-7455.</p>
           </form>
           <div class="sent" id="sent" hidden><strong>Request sent ✦</strong><p>Thank you! We'll be in touch soon about your event.</p></div>
         </div>
@@ -427,9 +427,27 @@ footer img { width: 110px; }
     if (!okE) { form.email.focus(); return; } if (!okP) { form.phone.focus(); return; }
     if (!form.name.value.trim()) { form.name.focus(); return; }
     var btn = form.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Sending…';
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-      .then(function (r) { if (!r.ok) throw 0; form.hidden = true; $('sent').hidden = false; })
-      .catch(function () { btn.disabled = false; btn.textContent = 'Send my request'; $('e-send').hidden = false; });
+    var fd = new FormData(form);
+    // 1) Email the request to Craft House (FormSubmit sends every field as a table)
+    var data = {
+      _subject: 'New Craft House booking request from ' + form.name.value.trim(),
+      _template: 'table', _captcha: 'false', _replyto: form.email.value.trim(),
+      Name: fd.get('name'), Phone: fd.get('phone'), Email: fd.get('email'),
+      'Event date': fd.get('event_date') || 'Not given', 'Event type': fd.get('event_type'),
+      'City or venue': fd.get('location') || 'Not given', Guests: fd.get('guests') || 'Not given',
+      'Bars interested in': fd.getAll('bars').join(', ') || 'None selected',
+      Message: fd.get('message') || '(none)'
+    };
+    var emailIt = fetch('https://formsubmit.co/ajax/crafthouse1223@gmail.com', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data)
+    }).then(function (r) { if (!r.ok) throw 0; return r; });
+    // 2) Keep a backup copy in Netlify Forms
+    var saveIt = fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() })
+      .then(function (r) { if (!r.ok) throw 0; return r; });
+    Promise.allSettled([emailIt, saveIt]).then(function (res) {
+      if (res.some(function (x) { return x.status === 'fulfilled'; })) { form.hidden = true; $('sent').hidden = false; }
+      else { btn.disabled = false; btn.textContent = 'Send my request'; $('e-send').hidden = false; }
+    });
   });
 })();
 </script>
