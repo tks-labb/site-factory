@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Craft House | Mobile Craft Stations for Parties &amp; Events</title>
-<meta name="description" content="Craft House brings mobile party activity bars to your event: Squishy Bar, Keychain Bar, Hair Accessory Bar and Patch Bar. Guests create something to take home.">
+<title>Craft House | Mobile Craft Stations in Oakland, Wayne &amp; Macomb</title>
+<meta name="description" content="Craft House brings mobile party activity bars to events in Oakland, Wayne and Macomb counties, Michigan: Squishy Bar, Keychain Bar, Hair Accessory Bar and Patch Bar.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"Craft House","description":"Mobile craft stations and party activity bars brought to your event.","telephone":"+1-248-807-7455","email":"crafthouse@gmail.com","sameAs":["https://www.instagram.com/thecrafthouse16_/"],"areaServed":[{"@type":"AdministrativeArea","name":"Oakland County, Michigan"},{"@type":"AdministrativeArea","name":"Wayne County, Michigan"},{"@type":"AdministrativeArea","name":"Macomb County, Michigan"}]}</script>
 <meta name="theme-color" content="#F8F1EE">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="assets/favicon.png" type="image/png">
@@ -99,7 +100,7 @@ p { margin: 0; }
 @keyframes slide { to { transform: translateX(-50%); } }
 
 /* sections */
-section { padding-block: 92px; }
+section { padding-block: 92px; scroll-margin-top: 76px; }
 .head { display: grid; gap: 14px; justify-items: center; text-align: center; margin-bottom: 48px; }
 .head h2 { font-size: clamp(36px, 5vw, 60px); text-transform: uppercase; }
 .head p { color: var(--ink-2); font-size: 19px; max-width: 56ch; }
@@ -177,13 +178,33 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
 @media (max-width: 860px) { .book .box { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .row, .checks { grid-template-columns: 1fr; } form .btn { width: 100%; } }
 
+.area .counties { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+.county { display: grid; justify-items: center; gap: 10px; padding: 30px 20px; border-radius: 24px; background: var(--card); border: 2px dashed color-mix(in srgb, var(--navy) 22%, transparent); text-align: center; transition: transform .4s var(--spring), background-color .25s; }
+.county:nth-child(1):hover { background: var(--mint); } .county:nth-child(2):hover { background: var(--lilac); } .county:nth-child(3):hover { background: var(--pink); }
+.county:hover { transform: translateY(-5px) rotate(-1.5deg); }
+.county .pin { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: var(--butter); font-size: 24px; }
+.county h3 { font-size: clamp(24px, 2.6vw, 32px); text-transform: uppercase; }
+.area-note { text-align: center; margin-top: 26px; color: var(--ink-2); }
+.area-note a { font-weight: 600; color: var(--navy); }
+@media (max-width: 640px) { .area .counties { grid-template-columns: 1fr; } }
+.contact { display: grid; gap: 10px; margin-top: 4px; }
+.contact a { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; padding: 10px 14px; border-radius: 14px; background: var(--paper); border: 2px solid var(--line); justify-self: start; transition: border-color .2s, transform .3s var(--spring); overflow-wrap: anywhere; }
+.contact a:hover { border-color: var(--navy); transform: translateX(3px); }
+.faq { max-width: 820px; margin: 0 auto; border-top: 2px dashed color-mix(in srgb, var(--navy) 20%, transparent); }
+.faq details { border-bottom: 2px dashed color-mix(in srgb, var(--navy) 20%, transparent); }
+.faq summary { cursor: pointer; list-style: none; padding: 22px 0; font-weight: 600; font-size: 19px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 400 30px/1 var(--f-display); transition: transform .3s var(--spring); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding-bottom: 22px; color: var(--ink-2); max-width: 65ch; }
+.fcontact a { color: var(--navy); font-weight: 600; text-decoration: none; }
 footer { padding-block: 40px 56px; text-align: center; display: grid; gap: 14px; justify-items: center; color: var(--ink-2); }
 footer img { width: 110px; }
 .callbar { display: none; }
 @media (max-width: 640px) {
-  .callbar { display: block; position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; padding: 10px max(14px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left)); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .5s var(--spring); }
+  .callbar { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; padding: 10px max(14px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left)); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .5s var(--spring); }
   .callbar.show { transform: none; }
-  .callbar .btn { width: 100%; }
+  .callbar { display: flex; gap: 10px; } .callbar .btn { flex: 1; min-height: 50px; }
   body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -197,7 +218,7 @@ footer img { width: 110px; }
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Craft House home"><img src="assets/logo.webp" alt="Craft House, Mobile Craft Stations" width="355" height="264"></a>
-    <nav class="nav" aria-label="Main"><a href="#bars">Our bars</a><a href="#how">How it works</a><a href="#events">Events</a><a href="#book">Book</a></nav>
+    <nav class="nav" aria-label="Main"><a href="#bars">Our bars</a><a href="#how">How it works</a><a href="#events">Events</a><a href="#area">Service area</a><a href="#book">Book</a></nav>
     <a class="btn btn-primary" href="#book">Book a bar</a>
   </div>
 </header>
@@ -206,14 +227,14 @@ footer img { width: 110px; }
   <section class="hero">
     <div class="wrap">
       <div>
-        <span class="kicker rv">Mobile craft stations</span>
+        <span class="kicker rv">Mobile craft stations · Metro Detroit</span>
         <h1 class="rv d1">The craft party, <em>brought to you.</em></h1>
         <p class="lede rv d2">Craft House sets up hands-on activity bars at your event, where every guest creates something of their own and takes it home.</p>
         <div class="ctas rv d3">
           <a class="btn btn-primary" href="#book">Request your date</a>
           <a class="btn btn-ghost" href="#bars">See the bars</a>
         </div>
-        <p class="note hand rv d3">Squishies, keychains, hair clips &amp; patches ✦</p>
+        <p class="note hand rv d3">Serving Oakland, Wayne &amp; Macomb counties ✦</p>
       </div>
       <div class="collage rv d2" aria-hidden="true">
         <figure class="polaroid p1"><img src="assets/squishy.webp" alt="" width="1000" height="478"><span>squishy bar</span></figure>
@@ -287,14 +308,32 @@ footer img { width: 110px; }
     </div>
   </section>
 
+  <section id="area" class="area">
+    <div class="wrap">
+      <div class="head rv"><span class="kicker">Where we go</span><div class="rule"><h2>Service area</h2></div><p>We bring our craft bars to parties and events across three Metro Detroit counties.</p></div>
+      <div class="counties">
+        <div class="county rv"><span class="pin" aria-hidden="true">★</span><h3>Oakland County</h3></div>
+        <div class="county rv d1"><span class="pin" aria-hidden="true">★</span><h3>Wayne County</h3></div>
+        <div class="county rv d2"><span class="pin" aria-hidden="true">★</span><h3>Macomb County</h3></div>
+      </div>
+      <p class="area-note rv">Not sure if you're in our area? Call or text <a href="tel:+12488077455">(248) 807-7455</a> and ask.</p>
+    </div>
+  </section>
+
   <section id="book" class="book">
     <div class="wrap">
       <div class="box rv">
         <div class="copy">
           <span class="kicker">Book a bar</span>
           <h2>Bring the craft party to you.</h2>
-          <p>Tell us about your event and which bars you're interested in. We'll get back to you with availability and details.</p>
+          <p>Tell us about your event and which bars you're interested in. We'll get back to you with availability and details for your event.</p>
           <div><span class="hand">Your picks:</span><div class="picked" id="picked" aria-live="polite"></div></div>
+          <div class="contact">
+            <span class="hand">Rather talk?</span>
+            <a href="tel:+12488077455"><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>Call or text (248) 807-7455</a>
+            <a href="mailto:crafthouse@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>crafthouse@gmail.com</a>
+            <a href="https://www.instagram.com/thecrafthouse16_/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>@thecrafthouse16_</a>
+          </div>
         </div>
         <div>
           <form id="inquiry" name="craft-house-inquiry" method="POST" data-netlify="true" netlify-honeypot="website" novalidate>
@@ -310,7 +349,7 @@ footer img { width: 110px; }
               <div class="field"><label for="i-type">Type of event</label><select id="i-type" name="event_type"><option>Birthday party</option><option>Sleepover</option><option>School or camp</option><option>Shower or graduation</option><option>Holiday party</option><option>Team or corporate event</option><option>Community or group event</option><option>Other</option></select></div>
             </div>
             <div class="row">
-              <div class="field"><label for="i-loc">City or venue</label><input id="i-loc" name="location" autocomplete="address-level2"></div>
+              <div class="field"><label for="i-loc">City or venue</label><input id="i-loc" name="location" autocomplete="address-level2" placeholder="e.g. Troy, Livonia, Sterling Heights"></div>
               <div class="field"><label for="i-guests">Number of guests</label><input id="i-guests" name="guests" type="number" min="1" inputmode="numeric"></div>
             </div>
             <fieldset><legend>Which bars interest you?</legend>
@@ -330,14 +369,27 @@ footer img { width: 110px; }
       </div>
     </div>
   </section>
+  <section id="faq" class="steps-sec">
+    <div class="wrap">
+      <div class="head rv"><span class="kicker">Questions</span><div class="rule"><h2>Good to know</h2></div></div>
+      <div class="faq rv">
+        <details><summary>What areas do you serve?</summary><p>Oakland, Wayne and Macomb counties in Michigan. If you're close by and not sure, call or text us.</p></details>
+        <details><summary>Can we have more than one bar?</summary><p>Tell us which bars you're interested in on the form. You can pick as many as you like, and we'll follow up with options for your event.</p></details>
+        <details><summary>How do I get pricing?</summary><p>Send a request with your date, location, guest count and the bars you like, and we'll send you the details for your event.</p></details>
+        <details><summary>How far ahead should I book?</summary><p>As early as you can, especially for weekends. Send your date and we'll let you know if it's available.</p></details>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
   <img src="assets/logo.webp" alt="Craft House, Mobile Craft Stations" width="355" height="264" loading="lazy">
   <p class="hand">Mobile party activity bars, brought to your event</p>
+  <p class="fcontact"><a href="tel:+12488077455">(248) 807-7455</a> · <a href="mailto:crafthouse@gmail.com">crafthouse@gmail.com</a> · <a href="https://www.instagram.com/thecrafthouse16_/" target="_blank" rel="noopener">@thecrafthouse16_</a></p>
+  <p style="font-size:15px">Serving Oakland, Wayne &amp; Macomb counties, Michigan</p>
   <p style="font-size:14px">© 2026 Craft House</p>
 </footer>
-<div class="callbar" id="callbar"><a class="btn btn-primary" href="#book">Book a bar</a></div>
+<div class="callbar" id="callbar"><a class="btn btn-ghost" href="tel:+12488077455">Call / text</a><a class="btn btn-primary" href="#book">Book a bar</a></div>
 
 <script>
 (function () {
