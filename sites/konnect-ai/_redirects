@@ -1,2 +1,10 @@
 /websites.html  /reviews.html  301
 /websites  /reviews.html  301
+# Old site addresses
+/services/*  /#services  301
+/services  /#services  301
+/about  /#why  301
+/about-us  /#why  301
+/contact  /#contact  301
+/contact-us  /#contact  301
+/book  https://calendar.app.google/ZGPwJmMpcz3yWbkt5  302
