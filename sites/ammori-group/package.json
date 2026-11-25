@@ -1,0 +1,8 @@
+{
+  "name": "ammori-group-site",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.4.0"
+  }
+}

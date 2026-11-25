@@ -2,6 +2,31 @@
   var $ = function (id) { return document.getElementById(id); };
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  var d = document.documentElement;
+
+  // Opening motion graphic (homepage, first visit in a session). Skippable.
+  if (d.classList.contains('intro')) {
+    var done = false, ev = ['click', 'keydown', 'wheel', 'touchmove'];
+    var out = function () {
+      if (done) return; done = true; clearTimeout(t1);
+      ev.forEach(function (n) { window.removeEventListener(n, out); });
+      d.classList.add('intro-out');
+      setTimeout(function () { d.classList.remove('intro', 'intro-out'); }, reduce ? 450 : 1050);
+    };
+    var t1 = setTimeout(out, reduce ? 1200 : 3900);
+    setTimeout(function () { if (!done) ev.forEach(function (n) { window.addEventListener(n, out, { passive: true }); }); }, 300);
+  }
+
+  // Light / dark mode (remembers the visitor's choice; otherwise follows their device)
+  var tbtn = $('theme-btn');
+  function isDark() { var t = d.getAttribute('data-theme'); return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label() { tbtn.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode'); }
+  if (tbtn) { label(); tbtn.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark'; d.setAttribute('data-theme', next);
+    try { localStorage.setItem('am_theme', next); } catch (e) {}
+    label();
+  }); }
+
   // Reveal on scroll
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
     es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });

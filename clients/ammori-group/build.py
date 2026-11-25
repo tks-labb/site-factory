@@ -80,9 +80,10 @@ def media(p, i, cls="ph"):
         return f'<div class="{cls}"><img src="assets/{e(p["photo"])}" alt="{e(p["name"])}, {e(p["city"])}, {e(p["state"])}" loading="lazy" width="1200" height="780"></div>'
     return f'<div class="{cls}">{art(p["art"], i)}</div>'
 
-LOGO = '<svg class="logo" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="9" fill="#C9A35C"/><path d="M10 27 18 9l8 18M13.2 20.6h9.6" fill="none" stroke="#0E0E0D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+LOGO = '<img class="logo" src="assets/mark-sm.png" alt="" width="178" height="48">'
 
 def head(title, desc, path, extra_ld=None):
+    page = 'home' if path == 'index.html' else 'inner'
     ld = {
         "@context": "https://schema.org", "@type": "RealEstateAgent", "name": COMPANY["name"],
         "url": BASE + "/", "email": COMPANY["email"],
@@ -94,7 +95,7 @@ def head(title, desc, path, extra_ld=None):
     lds = [ld] + (extra_ld or [])
     url = BASE + "/" + ("" if path == "index.html" else path)
     return f'''<!doctype html>
-<html lang="en">
+<html lang="en" data-page="{page}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -102,13 +103,14 @@ def head(title, desc, path, extra_ld=None):
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{url}">
 <meta name="theme-color" content="#FFFFFF">
-<meta property="og:type" content="website"><meta property="og:url" content="{url}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website"><meta property="og:url" content="{url}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{BASE}/assets/logo.png">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Cinzel:wght@500;600&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 {"".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in lds)}
-<script>document.documentElement.classList.add('js')</script>
+<script>(function(){{var d=document.documentElement;d.classList.add('js');try{{var t=localStorage.getItem('am_theme');if(t)d.setAttribute('data-theme',t);if(d.dataset.page==='home'&&!sessionStorage.getItem('am_intro')){{d.classList.add('intro');sessionStorage.setItem('am_intro','1');}}}}catch(e){{}}}})();</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -116,6 +118,7 @@ def head(title, desc, path, extra_ld=None):
   <div class="wrap">
     <a class="brand" href="index.html">{LOGO}<span class="wm">Ammori <b>Group</b></span></a>
     <nav class="nav" id="nav" aria-label="Main"><a href="index.html#spaces">Available spaces</a><a href="index.html#portfolio">Portfolio</a><a href="index.html#about">About</a><a href="index.html#acquisitions">Acquisitions</a><a class="btn btn-gold" href="index.html#contact">Contact</a></nav>
+    <button class="theme-btn" id="theme-btn" type="button" aria-label="Switch to dark mode"><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button>
     <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span></button>
   </div>
 </header>
@@ -190,7 +193,7 @@ def footer():
     links = "".join(f'<a href="{p["slug"]}.html">{e(p["name"])}, {e(p["city"])}</a>' for p in PROPERTIES)
     return f'''<footer>
   <div class="wrap fgrid">
-    <div><a class="brand" href="index.html">{LOGO}<span class="wm">Ammori <b>Group</b></span></a><p class="muted">Owner-operated commercial real estate in Metro Detroit and Ann Arbor.</p></div>
+    <div><a class="flogo" href="index.html" aria-label="Ammori Group home"><img src="assets/logo-light.webp" alt="Ammori Group, Real Estate and Property Management" width="520" height="412" loading="lazy"></a><p class="muted">Owner-operated commercial real estate in Metro Detroit and Ann Arbor.</p></div>
     <div><p class="k">Properties</p>{links}</div>
     <div><p class="k">Company</p><a href="index.html#about">About</a><a href="index.html#acquisitions">Acquisitions</a><a href="index.html#contact">Contact</a></div>
     <div><p class="k">Office</p><p class="muted">{e(COMPANY["street"])}<br>{e(COMPANY["city"])}, {COMPANY["state"]} {COMPANY["zip"]}<br><a href="mailto:{COMPANY["email"]}">{COMPANY["email"]}</a></p></div>
@@ -198,6 +201,7 @@ def footer():
   <div class="wrap fine"><span>© 2026 Ammori Group. All rights reserved.</span><span>Availability and sizes are approximate and subject to change.</span></div>
 </footer>
 <script src="assets/site.js" defer></script>
+<script src="assets/chat.js" defer></script>
 </body>
 </html>
 '''
@@ -206,6 +210,89 @@ def place_ld(p):
     return {"@context": "https://schema.org", "@type": "Place", "name": f'{p["name"]}, {p["city"]}',
             "address": {"@type": "PostalAddress", "streetAddress": p["name"], "addressLocality": p["city"], "addressRegion": p["state"], "postalCode": p["zip"], "addressCountry": "US"},
             "description": p["summary"]}
+
+def intro_html():
+    """Opening motion graphic: 5600 Crooks Road draws itself in gold, windows light up, then the page is revealed."""
+    p = PROPERTIES[0]; av = available(p)
+    wins = []
+    k = 0
+    for row, y in enumerate((178, 240)):
+        for x in range(176, 624, 32):
+            d = 1.25 + ((k * 37) % 23) * 0.035 + row * 0.12
+            wins.append(f'<rect class="w" x="{x}" y="{y}" width="18" height="34" style="--d:{d:.2f}s"/>')
+            k += 1
+    trees = "".join(
+        f'<g class="tree"><path class="ln" style="--d:{d}s" pathLength="1" d="M{x} 330v-34"/><circle class="ln" style="--d:{d + .1:.2f}s" pathLength="1" cx="{x}" cy="{y}" r="{r}"/></g>'
+        for x, y, r, d in ((88, 276, 24, 1.0), (122, 290, 15, 1.1), (712, 280, 22, 1.05), (742, 294, 13, 1.15)))
+    svg = (
+        '<svg class="ix-art" viewBox="0 0 800 400" aria-hidden="true">'
+        '<defs><radialGradient id="ixglow" cx="50%" cy="66%" r="34%"><stop offset="0" stop-color="#C9A35C" stop-opacity=".30"/><stop offset="1" stop-color="#C9A35C" stop-opacity="0"/></radialGradient></defs>'
+        '<rect class="ix-glow" x="0" y="0" width="800" height="400" fill="url(#ixglow)"/>'
+        '<g fill="none" stroke="#C9A35C" stroke-width="1.6" stroke-linecap="round">'
+        '<path class="ln" style="--d:.15s" pathLength="1" d="M30 330H770"/>'
+        '<path class="ln" style="--d:.35s" pathLength="1" d="M150 330V156H650V330"/>'
+        '<path class="ln" style="--d:.55s" pathLength="1" d="M132 156H668"/>'
+        '<path class="ln" style="--d:.7s" pathLength="1" d="M150 222H650"/>'
+        '<path class="ln" style="--d:.78s" pathLength="1" d="M150 284H650"/>'
+        '<path class="ln" style="--d:.9s" pathLength="1" d="M360 296H440M372 296V330M428 296V330"/>'
+        '<path class="ln thin" style="--d:1.0s" pathLength="1" d="M60 346H740"/>'
+        '<path class="ln thin" style="--d:1.1s" pathLength="1" d="M110 362H690"/>'
+        + trees +
+        '</g><g fill="#C9A35C">' + "".join(wins) + '</g></svg>')
+    return (
+        '<div class="intro-ov" id="intro" aria-hidden="true">\n'
+        '  <div class="ix-stage">\n    ' + svg + '\n'
+        '    <div class="ix-copy">\n'
+        '      <img class="ix-logo" src="assets/logo-light.webp" alt="" width="520" height="412">\n'
+        '      <p class="ix-k">Presents</p>\n'
+        f'      <p class="ix-t">{e(p["name"])}</p>\n'
+        f'      <p class="ix-s">{e(p["city"])}, Michigan &middot; {len(av)} spaces now leasing</p>\n'
+        '    </div>\n  </div>\n'
+        '  <button class="ix-skip" type="button">Skip</button>\n'
+        '</div>\n')
+
+
+CHAT_FN_TEMPLATE = Path(__file__).with_name("chat_function.mjs.tpl")
+
+def chat_function():
+    lines = []
+    for p in PROPERTIES:
+        lines.append(f'- {p["name"]}, {p["city"]}, {p["state"]} {p["zip"]} ({p["kind"]}). {p["summary"]} Page: {BASE}/{p["slug"]}.html')
+        for k, v in p["facts"]:
+            lines.append(f'  - {k}: {v}')
+        for sp in available(p):
+            size = f'{sp["sf"]:,} SF' if sp["sf"] else "size on request"
+            lines.append(f'  - AVAILABLE: {sp["suite"]}: {size}, {sp.get("label", sp["type"])}. {sp["note"]}'.rstrip())
+        leased = [sp["suite"] for sp in p["spaces"] if sp["status"] != "available"]
+        if leased:
+            lines.append(f'  - Currently leased (not available): {", ".join(leased)}')
+    phone = f'Phone: {COMPANY["phone"]}. ' if COMPANY["phone"] else ""
+    system = "\n".join([
+        "You are the website assistant for Ammori Group, chatting with visitors on ammorigroup.com.",
+        "",
+        "About Ammori Group:",
+        "- A Bloomfield Hills, Michigan real estate company that owns and manages its own commercial properties in Metro Detroit and Ann Arbor. It manages only its own buildings, never other owners' properties.",
+        "- Tenants lease directly from ownership. Suites can often be combined or built to suit.",
+        "- Acquisitions: Ammori Group is actively buying commercial buildings (office, medical office, retail, mixed-use, including value-add properties) and operating businesses, with or without real estate, in Metro Detroit, Ann Arbor and surrounding markets.",
+        f'- Office: {COMPANY["street"]}, {COMPANY["city"]}, {COMPANY["state"]} {COMPANY["zip"]}. Email: {COMPANY["email"]}. {phone}'.rstrip(),
+        f"- Inquiry form: {BASE}/#contact",
+        "",
+        "Current portfolio and availability (the only properties and spaces that exist; sizes are approximate):",
+        *lines,
+        "",
+        "How to reply:",
+        "- Keep replies short: two to four sentences, plain text, no markdown headings, bullets or tables.",
+        "- Be professional, warm and helpful. Help visitors find a space that fits their size, use and location, and name the specific suite and building.",
+        f'- Only state facts listed above. You do not know rents, lease terms, pricing, floor plans, parking ratios or exact dates; for those, ask the visitor to send the inquiry form or email {COMPANY["email"]}, and say the team usually replies the same business day.',
+        "- Never invent properties, suites, tenants, prices or amenities. Never promise availability; spaces are subject to change.",
+        '- If someone wants to sell a building or a business, welcome it and point them to the inquiry form (choose "Selling a property" or "Selling a business").',
+        f"- When a visitor seems interested, invite them to send the inquiry form at {BASE}/#contact to ask about a tour.",
+        "- Stay on topics related to Ammori Group, its properties, leasing and acquisitions. Politely decline unrelated requests.",
+    ])
+    fallback = f'I can\'t help with that here. For questions about our properties, use the inquiry form or email {COMPANY["email"]}.'
+    tpl = CHAT_FN_TEMPLATE.read_text()
+    return tpl.replace("__SYSTEM__", json.dumps(system, ensure_ascii=False)).replace("__FALLBACK__", json.dumps(fallback))
+
 
 def index():
     all_av = [(p, s) for p in PROPERTIES for s in available(p)]
@@ -221,7 +308,7 @@ def index():
     if COMPANY["total_sf"]: snap.insert(1, ("Square feet owned", COMPANY["total_sf"]))
     if COMPANY["asset_value"]: snap.insert(0, ("Real estate asset value", COMPANY["asset_value"]))
     snap_html = "".join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in snap)
-    body = f'''<main id="main">
+    body = intro_html() + f'''<main id="main">
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
@@ -353,7 +440,10 @@ def build():
         (OUT / f'{p["slug"]}.html').write_text(property_page(p, i))
     urls = [""] + [p["slug"] + ".html" for p in PROPERTIES]
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{BASE}/{u}</loc></url>\n" for u in urls) + "</urlset>\n")
-    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {BASE}/sitemap.xml\n")
+    fn = OUT / "netlify" / "functions"; fn.mkdir(parents=True, exist_ok=True)
+    (fn / "chat.mjs").write_text(chat_function())
+    (OUT / "package.json").write_text('{\n  "name": "ammori-group-site",\n  "private": true,\n  "type": "module",\n  "dependencies": {\n    "@anthropic-ai/sdk": "1.4.0"\n  }\n}\n')
     print("built", ", ".join(["index.html"] + [p["slug"] + ".html" for p in PROPERTIES]))
 
 if __name__ == "__main__":
