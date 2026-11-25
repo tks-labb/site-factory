@@ -69,6 +69,12 @@ PROPERTIES = [
         "name": "485 N Lapeer Road",
         "city": "Oxford", "state": "MI", "zip": "48371",
         "kind": "Office", "art": "office", "owner": "485 Lapeer LLC", "building_sf": 11000,
+        "photos": [
+            ("lapeer485-front", "485 N Lapeer Road in Oxford: single-story brick office building with a landscaped lawn and parking"),
+            ("lapeer485-aerial", "Aerial view of the 485 N Lapeer Road area in Oxford, Michigan along M-24"),
+            ("lapeer485-map", "Satellite map of the 485 N Lapeer Road parcel on M-24 in Oxford"),
+        ],
+        "photo_credit": "Photos courtesy of the property listing. Map imagery: Google, Airbus, Maxar Technologies.",
         "summary": "An 11,000 SF office building on N Lapeer Road in Oxford, available in full.",
         "facts": [("Building size", "11,000 SF"), ("Property type", "Office"), ("Availability", "Entire building"), ("Location", "N Lapeer Rd, Oxford")],
         "spaces": [
@@ -560,13 +566,14 @@ def gallery_html(p):
     hl = p.get("highlights") or []
     if not photos and not hl: return ""
     tiles = "".join(
-        f'<button class="g-tile{" wide" if n == 0 else ""}" type="button" data-full="assets/photos/{name}.webp" data-alt="{e(alt)}" aria-label="View larger: {e(alt)}"><img src="assets/photos/{name}-sm.webp" alt="{e(alt)}" loading="lazy" width="800" height="450"></button>'
+        f'<button class="g-tile{" wide" if n == 0 else ""}{" g-map" if "map" in name else ""}" type="button" data-full="assets/photos/{name}.webp" data-alt="{e(alt)}" aria-label="View larger: {e(alt)}"><img src="assets/photos/{name}-sm.webp" alt="{e(alt)}" loading="lazy" width="800" height="450"></button>'
         for n, (name, alt) in enumerate(photos))
     items = "".join(f"<li>{e(h)}</li>" for h in hl)
+    credit = f'<p class="g-credit">{e(p["photo_credit"])}</p>' if p.get("photo_credit") else ""
     return f'''<section class="gallery-sec">
     <div class="wrap grid-gal">
-      <div class="rv"><p class="eyebrow">The property</p><h2>Location highlights</h2><ul class="ticks light">{items}</ul></div>
-      <div class="gallery rv d1">{tiles}</div>
+      <div class="rv"><p class="eyebrow">The property</p><h2>{"Location highlights" if hl else "Photos"}</h2>{f'<ul class="ticks light">{items}</ul>' if hl else f'<p class="muted">{e(p["summary"])}</p>'}</div>
+      <div class="gallery rv d1">{tiles}{credit}</div>
     </div>
   </section>
   <dialog class="lightbox" id="lightbox" aria-label="Photo"><img alt=""><button class="lb-x" type="button" aria-label="Close">✕</button><button class="lb-prev" type="button" aria-label="Previous photo">‹</button><button class="lb-next" type="button" aria-label="Next photo">›</button></dialog>'''
