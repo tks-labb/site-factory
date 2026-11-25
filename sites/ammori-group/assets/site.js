@@ -115,12 +115,21 @@
 
   // Filter available spaces by type
   var grid = $('space-grid');
-  document.querySelectorAll('.chip').forEach(function (c) {
+  document.querySelectorAll('.chip:not(.pchip)').forEach(function (c) {
     c.addEventListener('click', function () {
-      document.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+      document.querySelectorAll('.chip:not(.pchip)').forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
       var f = c.dataset.f, shown = 0;
       grid.querySelectorAll('.space').forEach(function (s) { var ok = f === 'all' || s.dataset.type === f; s.classList.toggle('out', !ok); if (ok) shown++; });
       $('empty').hidden = shown > 0;
+    });
+  });
+
+  // Portfolio filter: all / with space available / fully leased
+  var pgrid = $('prop-grid');
+  document.querySelectorAll('.pchip').forEach(function (c) {
+    c.addEventListener('click', function () {
+      document.querySelectorAll('.pchip').forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+      pgrid.querySelectorAll('.prop').forEach(function (p) { p.classList.toggle('out', c.dataset.p !== 'all' && p.dataset.avail !== c.dataset.p); });
     });
   });
 

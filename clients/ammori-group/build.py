@@ -25,15 +25,15 @@ COMPANY = {
     "total_sf": "",         # e.g. "110,000+ SF"
 }
 
-# status: "available" or "leased". sf: number or None. type is used for the filter.
+# Portfolio data, from Ammori Group's property list (Nov 2026).
+# status: "available" or "leased". sf: number or None ("size" overrides the size text, e.g. "9 acres").
+# tenant: shown for leased spaces. type is used for the filter on the homepage.
 PROPERTIES = [
     {
         "slug": "5600-crooks-road-troy-mi",
         "name": "5600 Crooks Road",
-        "nickname": "Northfield Plaza",
         "city": "Troy", "state": "MI", "zip": "48098",
-        "kind": "Office", "art": "office",
-        "photo": "",
+        "kind": "Office", "art": "office", "owner": "5600 Crooks LLC", "building_sf": 115000,
         "photos": [
             ("crooks-front", "Front of 5600 Crooks Road: brick and glass two-story office building with landscaping"),
             ("crooks-aerial-clean", "Drone view of 5600 Crooks Road in Troy: the office building, Loccino restaurant, parking lots and I-75 beyond"),
@@ -42,49 +42,169 @@ PROPERTIES = [
             ("crooks-location-map", "Location map of 5600 Crooks Road in Troy near I-75, Aptiv, Gallagher Kaiser, Panera, Starbucks and Embassy Suites"),
         ],
         "highlights": [
-            "Up to 35,838 SF available in one building",
+            "115,000 SF office building with over 31,000 SF of suites available, plus storage units and a café",
             "Frontage on Crooks Road, about 24,981 cars per day",
             "Next to I-75, about 89,578 cars per day, with a nearby interchange",
             "Neighbors include Aptiv (about 1,300 employees) and Gallagher Kaiser (about 1,379 employees)",
             "Walk to Panera, Starbucks and Embassy Suites, with a future hotel and planned commercial development nearby",
             "Loccino Italian Grill on site, plus large surface parking lots on two sides",
         ],
-        "summary": "A two-story office building on Crooks Road in Troy with suites from about 2,800 to 16,000 SF, office and medical-ready space, lower-level storage and a café with equipment in place.",
-        "facts": [("Property type", "Office / medical office"), ("Available", "Up to 35,838 SF"), ("Parking", "Large lots on two sides"), ("Access", "Crooks Road and I-75")],
+        "summary": "A 115,000 SF office building on Crooks Road in Troy with suites from about 2,800 to 16,000 SF, office and medical-ready space, lower-level storage and a café with equipment in place.",
+        "facts": [("Building size", "115,000 SF"), ("Property type", "Office / medical office"), ("Parking", "Large lots on two sides"), ("Access", "Crooks Road and I-75")],
         "spaces": [
             {"suite": "Suite 105", "sf": 8334, "type": "Office", "note": "Build-to-suit. Can combine with Suite 103.", "status": "available"},
             {"suite": "Suite 103", "sf": 2858, "type": "Medical", "label": "Office / Medical", "note": "Can combine with Suite 105.", "status": "available"},
             {"suite": "Suite 210", "sf": 4083, "type": "Office", "note": "Second floor.", "status": "available"},
             {"suite": "Suite 220", "sf": 16068, "type": "Office", "note": "Second floor.", "status": "available"},
-            {"suite": "LL1–LL7", "sf": None, "type": "Storage", "label": "Office storage", "note": "Seven lower-level storage units. Ask for sizes.", "status": "available"},
+            {"suite": "LL1–LL7", "sf": None, "type": "Storage", "label": "Office storage", "note": "Seven lower-level storage units. Call for sizes.", "status": "available"},
             {"suite": "Café", "sf": None, "type": "Restaurant", "label": "Restaurant / café", "note": "Café with equipment in place.", "status": "available"},
-            {"suite": "Suite 104", "sf": None, "type": "Office", "note": "", "status": "leased"},
-            {"suite": "Suite 200", "sf": None, "type": "Office", "note": "", "status": "leased"},
+            {"suite": "Suite 101", "type": "Office", "status": "leased", "tenant": "Fiserv Solutions"},
+            {"suite": "Suite 102", "type": "Office", "status": "leased", "tenant": "Commercial Alliance"},
+            {"suite": "Suite 104", "type": "Office", "status": "leased"},
+            {"suite": "Suite 200", "type": "Office", "status": "leased"},
+        ],
+    },
+    {
+        "slug": "485-n-lapeer-road-oxford-mi",
+        "name": "485 N Lapeer Road",
+        "city": "Oxford", "state": "MI", "zip": "48371",
+        "kind": "Office", "art": "office", "owner": "485 Lapeer LLC", "building_sf": 11000,
+        "summary": "An 11,000 SF office building on N Lapeer Road in Oxford, available in full.",
+        "facts": [("Building size", "11,000 SF"), ("Property type", "Office"), ("Availability", "Entire building"), ("Location", "N Lapeer Rd, Oxford")],
+        "spaces": [
+            {"suite": "Entire building", "sf": 11000, "type": "Office", "note": "Full 11,000 SF office building, available now.", "status": "available"},
         ],
     },
     {
         "slug": "2151-w-liberty-street-ann-arbor-mi",
         "name": "2151 W Liberty Street",
-        "nickname": "West Ann Arbor",
         "city": "Ann Arbor", "state": "MI", "zip": "48103",
-        "kind": "Retail", "art": "retail",
-        "photo": "",
-        "summary": "A freestanding commercial building on W Liberty Street in West Ann Arbor, near W Stadium Blvd. About 14,990 SF that can be divided for smaller users.",
-        "facts": [("Property type", "Freestanding retail / commercial"), ("Building size", "About 14,990 SF"), ("Divisible", "To about 4,000 SF"), ("Location", "W Liberty St near W Stadium Blvd")],
+        "kind": "Retail", "art": "retail", "owner": "Ammori Liberty Holdings LLC", "building_sf": 14990,
+        "summary": "A freestanding 14,990 SF retail and office building on W Liberty Street in West Ann Arbor, near W Stadium Blvd.",
+        "facts": [("Building size", "14,990 SF"), ("Property type", "Retail / office"), ("Availability", "Entire building"), ("Location", "W Liberty St near W Stadium Blvd")],
         "spaces": [
-            {"suite": "Entire building", "sf": 14990, "type": "Retail", "label": "Retail / commercial", "note": "Freestanding. Divisible to about 4,000 SF.", "status": "available"},
+            {"suite": "Entire building", "sf": 14990, "type": "Retail", "label": "Retail / office", "note": "Freestanding building, available now.", "status": "available"},
         ],
+    },
+    {
+        "slug": "832-s-main-street-lapeer-mi",
+        "name": "832 S Main Street",
+        "city": "Lapeer", "state": "MI", "zip": "",
+        "kind": "Medical", "art": "office", "owner": "LHA Investments",
+        "summary": "A medical and office property on South Main Street in Lapeer, available now.",
+        "facts": [("Property type", "Medical / office"), ("Availability", "Available now"), ("Size", "Call for information"), ("Location", "S Main St, Lapeer")],
+        "spaces": [
+            {"suite": "Medical / office space", "sf": None, "type": "Medical", "label": "Medical / office", "note": "Call for size and details.", "status": "available"},
+        ],
+    },
+    {
+        "slug": "1855-n-saginaw-road-lapeer-mi",
+        "name": "1855 N Saginaw Road",
+        "city": "Lapeer", "state": "MI", "zip": "",
+        "kind": "Commercial", "art": "retail", "owner": "Ammori Realty",
+        "summary": "A commercial property on N Saginaw Road in Lapeer, available now.",
+        "facts": [("Property type", "Commercial"), ("Availability", "Available now"), ("Size", "Call for information"), ("Location", "N Saginaw Rd, Lapeer")],
+        "spaces": [
+            {"suite": "Entire property", "sf": None, "type": "Commercial", "label": "Commercial", "note": "Call for size, use and details.", "status": "available"},
+        ],
+    },
+    {
+        "slug": "northwestern-highway-southfield-mi",
+        "name": "29229–29233 Northwestern Hwy",
+        "city": "Southfield", "state": "MI", "zip": "",
+        "kind": "Land", "art": "land", "owner": "MIVAN Holdings LLC",
+        "summary": "Three parcels on Northwestern Highway in Southfield: two vacant general-business parcels ready for a build-to-suit, next to the Orchard Lake Pet Resort.",
+        "facts": [("Property type", "General business land and retail"), ("Available", "Two build-to-suit parcels"), ("Zoning", "General business"), ("Location", "Northwestern Hwy, Southfield")],
+        "spaces": [
+            {"suite": "29229 Northwestern Hwy", "sf": None, "size": "Call for size", "type": "Land", "label": "Vacant land, general business", "note": "Build to suit.", "status": "available"},
+            {"suite": "29231 Northwestern Hwy", "sf": None, "size": "Call for size", "type": "Land", "label": "Vacant land, general business", "note": "Build to suit.", "status": "available"},
+            {"suite": "29233 Northwestern Hwy", "type": "Retail", "status": "leased", "tenant": "Orchard Lake Pet Resort"},
+        ],
+    },
+    {
+        "slug": "n-cedar-street-imlay-city-mi",
+        "name": "572 & 632 N Cedar Street",
+        "city": "Imlay City", "state": "MI", "zip": "",
+        "kind": "Land", "art": "land", "owner": "RSAA Property LLC",
+        "summary": "Nine acres of vacant land at 572 N Cedar Street in Imlay City, available for a build-to-suit or land lease, next to Maryland Chicken at 632 N Cedar.",
+        "facts": [("Land", "9 acres"), ("Available for", "Build to suit or land lease"), ("Neighbor", "Maryland Chicken"), ("Location", "N Cedar St, Imlay City")],
+        "spaces": [
+            {"suite": "572 N Cedar St", "sf": None, "size": "9 acres", "type": "Land", "label": "Vacant land", "note": "Build to suit or land lease.", "status": "available"},
+            {"suite": "632 N Cedar St", "type": "Retail", "status": "leased", "tenant": "Maryland Chicken"},
+        ],
+    },
+    {
+        "slug": "1645-s-telegraph-road-bloomfield-township-mi",
+        "name": "1645 S Telegraph Road",
+        "city": "Bloomfield Township", "state": "MI", "zip": "",
+        "kind": "Retail", "art": "retail", "owner": "1645 S Telegraph LLC", "building_sf": 34000,
+        "summary": "A 34,000 SF retail building on S Telegraph Road in Bloomfield Township, home to Motor City Powersports.",
+        "facts": [("Building size", "34,000 SF"), ("Property type", "Retail"), ("Status", "Fully leased"), ("Location", "S Telegraph Rd, Bloomfield Township")],
+        "spaces": [{"suite": "1645 S Telegraph Rd", "type": "Retail", "status": "leased", "tenant": "Motor City Powersports"}],
+    },
+    {
+        "slug": "1993-1995-s-cedar-street-imlay-city-mi",
+        "name": "1993–1995 S Cedar Street",
+        "city": "Imlay City", "state": "MI", "zip": "",
+        "kind": "Retail", "art": "retail", "owner": "1995 Cedar St LLC", "building_sf": 45032,
+        "summary": "A 45,032 SF retail center on S Cedar Street in Imlay City, anchored by Family Farm and Home and Planet Fitness.",
+        "facts": [("Building size", "45,032 SF"), ("Property type", "Retail"), ("Status", "Fully leased"), ("Location", "S Cedar St, Imlay City")],
+        "spaces": [
+            {"suite": "1993 S Cedar St", "type": "Retail", "status": "leased", "tenant": "Family Farm and Home"},
+            {"suite": "1995 S Cedar St", "type": "Retail", "status": "leased", "tenant": "Planet Fitness"},
+        ],
+    },
+    {
+        "slug": "45290-utica-park-blvd-utica-mi",
+        "name": "45290 Utica Park Blvd",
+        "city": "Utica", "state": "MI", "zip": "",
+        "kind": "Retail", "art": "retail", "owner": "45290 Utica LLC", "building_sf": 30000,
+        "summary": "A 30,000 SF retail building on Utica Park Boulevard in Utica, home to 2nd & Charles.",
+        "facts": [("Building size", "30,000 SF"), ("Property type", "Retail"), ("Status", "Fully leased"), ("Location", "Utica Park Blvd, Utica")],
+        "spaces": [{"suite": "45290 Utica Park Blvd", "type": "Retail", "status": "leased", "tenant": "2nd & Charles"}],
+    },
+    {
+        "slug": "22550-hall-road-clinton-township-mi",
+        "name": "22550 Hall Road",
+        "city": "Clinton Township", "state": "MI", "zip": "",
+        "kind": "Office", "art": "office", "owner": "Ava and Layla LLC", "building_sf": 22300,
+        "summary": "A 22,300 SF office building on Hall Road in Clinton Township, home to Star Behavior Consultants.",
+        "facts": [("Building size", "22,300 SF"), ("Property type", "Office"), ("Status", "Fully leased"), ("Location", "Hall Rd, Clinton Township")],
+        "spaces": [{"suite": "22550 Hall Rd", "type": "Office", "status": "leased", "tenant": "Star Behavior Consultants"}],
+    },
+    {
+        "slug": "woodward-avenue-royal-oak-mi",
+        "name": "29732 & 29764 Woodward Ave",
+        "city": "Royal Oak", "state": "MI", "zip": "",
+        "kind": "Retail", "art": "retail", "owner": "8130 Constitution", "building_sf": None,
+        "summary": "Two buildings on Woodward Avenue in Royal Oak: an office leased to OMPT Specialist Physical Therapy and a 4,000 SF retail building home to Bricks and Minifigs.",
+        "facts": [("Property type", "Office and retail"), ("Retail building", "4,000 SF"), ("Status", "Fully leased"), ("Location", "Woodward Ave, Royal Oak")],
+        "spaces": [
+            {"suite": "29732 Woodward Ave", "type": "Office", "status": "leased", "tenant": "OMPT Specialist Physical Therapy"},
+            {"suite": "29764 Woodward Ave", "sf": 4000, "type": "Retail", "status": "leased", "tenant": "Bricks and Minifigs"},
+        ],
+    },
+    {
+        "slug": "2765-metamora-road-oxford-mi",
+        "name": "2765 Metamora Road",
+        "city": "Oxford", "state": "MI", "zip": "",
+        "kind": "Retail", "art": "retail", "owner": "I Invest LLC",
+        "summary": "A retail property on Metamora Road in Oxford, home to Casemer Tools and Machinery.",
+        "facts": [("Property type", "Retail"), ("Status", "Fully leased"), ("Tenant", "Casemer Tools and Machinery"), ("Location", "Metamora Rd, Oxford")],
+        "spaces": [{"suite": "2765 Metamora Rd", "type": "Retail", "status": "leased", "tenant": "Casemer Tools and Machinery"}],
     },
 ]
 
-TYPES = ["Office", "Medical", "Retail", "Restaurant", "Storage"]
+TYPES = ["Office", "Medical", "Retail", "Restaurant", "Storage", "Land", "Commercial"]
 
 e = html.escape
-def sf(n): return f"{n:,} SF" if n else "Ask for size"
+def sf(n): return f"{n:,} SF" if n else "Call for size"
+def size_text(s): return s.get("size") or sf(s.get("sf"))
 
 ART = {
 "office": '''<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="art"><defs><linearGradient id="g{i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1a17"/><stop offset="1" stop-color="#0d0d0c"/></linearGradient></defs><rect width="400" height="260" fill="url(#g{i})"/><g fill="none" stroke="#C9A35C" stroke-width="1.4"><path d="M60 214h280"/><rect x="70" y="112" width="260" height="102"/><path d="M70 146h260M70 180h260"/>{win}<path d="M184 214v-26h32v26"/><path d="M58 112h284"/><path d="M70 214v8M330 214v8" stroke-opacity=".5"/></g><g stroke="#C9A35C" stroke-opacity=".35"><path d="M40 222h320"/></g></svg>''',
 "retail": '''<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="art"><defs><linearGradient id="g{i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1a17"/><stop offset="1" stop-color="#0d0d0c"/></linearGradient></defs><rect width="400" height="260" fill="url(#g{i})"/><g fill="none" stroke="#C9A35C" stroke-width="1.4"><path d="M50 214h300"/><rect x="74" y="98" width="252" height="116"/><path d="M66 98h268l-10-22H76z"/><rect x="96" y="132" width="78" height="60"/><rect x="226" y="132" width="78" height="60"/><path d="M186 214v-82h28v82"/><path d="M135 132v60M265 132v60"/><path d="M120 116h160" stroke-opacity=".6"/></g><g stroke="#C9A35C" stroke-opacity=".35"><path d="M30 222h340"/></g></svg>''',
+"land": '''<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="art"><defs><linearGradient id="g{i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1a17"/><stop offset="1" stop-color="#0d0d0c"/></linearGradient></defs><rect width="400" height="260" fill="url(#g{i})"/><g fill="none" stroke="#C9A35C" stroke-width="1.4"><path d="M90 196 150 132H322L262 196Z"/><path d="M90 196v8M262 196v8M322 132v8M150 132v8" stroke-opacity=".6"/><path d="M120 164h172M135 148h172M105 180h172" stroke-opacity=".28" stroke-dasharray="4 6"/><path d="M206 160v-46l26 9-26 9" /><circle cx="206" cy="160" r="2.4" fill="#C9A35C"/></g><g stroke="#C9A35C" stroke-opacity=".35"><path d="M40 222h320"/></g></svg>''',
 }
 def art(kind, i):
     win = "".join(f'<path d="M{x} 120v18M{x} 154v18" stroke-opacity=".55"/>' for x in range(86, 320, 20))
@@ -153,7 +273,7 @@ def space_card(p, s, i, show_building=True):
           <div class="sp-body">
             <div class="sp-top"><h3>{e(s["suite"])}</h3><span class="tag"><i></i>Available</span></div>
             {building}
-            <dl class="sp-meta"><div><dt>Size</dt><dd>{sf(s["sf"])}</dd></div><div><dt>Use</dt><dd>{e(label)}</dd></div></dl>
+            <dl class="sp-meta"><div><dt>Size</dt><dd>{e(size_text(s))}</dd></div><div><dt>Use</dt><dd>{e(label)}</dd></div></dl>
             <p class="note">{e(s["note"])}</p>
             <a class="btn btn-line inquire" href="index.html#contact" data-space="{e(p["name"])} – {e(s["suite"])}">Inquire about this space</a>
           </div>
@@ -162,14 +282,22 @@ def space_card(p, s, i, show_building=True):
 def available(p): return [s for s in p["spaces"] if s["status"] == "available"]
 
 def property_card(p, i):
-    av = available(p); total = sum(s["sf"] or 0 for s in av)
-    return f'''<article class="prop rv">
+    av = available(p); total = sum(s.get("sf") or 0 for s in av)
+    tenants = [s["tenant"] for s in p["spaces"] if s.get("tenant")]
+    if av:
+        stats = f'<span class="ok"><b>{len(av)}</b> available</span>' + (f'<span><b>{total:,}</b> SF listed</span>' if total else "")
+    else:
+        stats = '<span>Fully leased</span>'
+    if p.get("building_sf"): stats += f'<span><b>{p["building_sf"]:,}</b> SF building</span>'
+    tline = f'<p class="tenants"><span>Tenants:</span> {e(", ".join(tenants))}</p>' if tenants else ""
+    return f'''<article class="prop rv" data-avail="{"yes" if av else "no"}">
           <a class="prop-link" href="{p["slug"]}.html" aria-label="{e(p["name"])}, {e(p["city"])}">{media(p, 100 + i, "ph tall")}</a>
           <div class="prop-body">
             <p class="eyebrow">{e(p["kind"])} · {e(p["city"])}, {e(p["state"])}</p>
             <h3><a href="{p["slug"]}.html">{e(p["name"])}</a></h3>
             <p>{e(p["summary"])}</p>
-            <div class="prop-stats"><span><b>{len(av)}</b> available</span><span><b>{total:,}</b> SF listed</span></div>
+            {tline}
+            <div class="prop-stats">{stats}</div>
             <a class="arrow-link" href="{p["slug"]}.html">View property <span aria-hidden="true">→</span></a>
           </div>
         </article>'''
@@ -229,7 +357,7 @@ def footer():
 
 def place_ld(p):
     return {"@context": "https://schema.org", "@type": "Place", "name": f'{p["name"]}, {p["city"]}',
-            "address": {"@type": "PostalAddress", "streetAddress": p["name"], "addressLocality": p["city"], "addressRegion": p["state"], "postalCode": p["zip"], "addressCountry": "US"},
+            "address": {"@type": "PostalAddress", "streetAddress": p["name"], "addressLocality": p["city"], "addressRegion": p["state"], **({"postalCode": p["zip"]} if p.get("zip") else {}), "addressCountry": "US"},
             "description": p["summary"]}
 
 def intro_html():
@@ -292,9 +420,10 @@ def chat_function():
         for h in p.get("highlights", []):
             lines.append(f'  - Highlight: {h}')
         for sp in available(p):
-            size = f'{sp["sf"]:,} SF' if sp["sf"] else "size on request"
+            size = size_text(sp).replace("Call for size", "size on request")
             lines.append(f'  - AVAILABLE: {sp["suite"]}: {size}, {sp.get("label", sp["type"])}. {sp["note"]}'.rstrip())
-        leased = [sp["suite"] for sp in p["spaces"] if sp["status"] != "available"]
+        leased = [sp["suite"] + (f' (leased to {sp["tenant"]})' if sp.get("tenant") else "") for sp in p["spaces"] if sp["status"] != "available"]
+        if p.get("building_sf"): lines.append(f'  - Building size: {p["building_sf"]:,} SF')
         if leased:
             lines.append(f'  - Currently leased (not available): {", ".join(leased)}')
     phone = f'Phone: {COMPANY["phone"]}. ' if COMPANY["phone"] else ""
@@ -327,7 +456,10 @@ def chat_function():
 
 def index():
     all_av = [(p, s) for p in PROPERTIES for s in available(p)]
-    total = sum(s["sf"] or 0 for _, s in all_av)
+    total = sum(s.get("sf") or 0 for _, s in all_av)
+    owned_sf = sum(p.get("building_sf") or 0 for p in PROPERTIES)
+    tenant_count = sum(1 for p in PROPERTIES for s in p["spaces"] if s.get("tenant"))
+    with_av = sum(1 for p in PROPERTIES if available(p))
     cities = sorted({p["city"] for p in PROPERTIES})
     used = [t for t in TYPES if any(s["type"] == t for _, s in all_av)]
     chips = '<button type="button" class="chip" aria-pressed="true" data-f="all">All <span>' + str(len(all_av)) + '</span></button>' + "".join(
@@ -335,8 +467,8 @@ def index():
     cards = "\n        ".join(space_card(p, s, i) for i, (p, s) in enumerate(all_av))
     props = "\n        ".join(property_card(p, i) for i, p in enumerate(PROPERTIES))
     kinds = ", ".join(sorted({p["kind"] for p in PROPERTIES}))
-    snap = [("Properties owned", str(len(PROPERTIES))), ("Markets", " · ".join(cities)), ("Property types", "Office · Medical · Retail")]
-    if COMPANY["total_sf"]: snap.insert(1, ("Square feet owned", COMPANY["total_sf"]))
+    snap = [("Properties owned", str(len(PROPERTIES))), ("Square feet owned", f"{owned_sf // 1000 * 1000:,}+ SF"), ("Communities", f"{len(cities)} across Southeast Michigan"), ("Property types", "Office · Medical · Retail · Land")]
+    if COMPANY["total_sf"]: snap[1] = ("Square feet owned", COMPANY["total_sf"])
     if COMPANY["asset_value"]: snap.insert(0, ("Real estate asset value", COMPANY["asset_value"]))
     snap_html = "".join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in snap)
     body = intro_html() + f'''<main id="main">
@@ -351,7 +483,7 @@ def index():
       <div class="hero-panel rv d2">
         <div class="hero-art" aria-hidden="true">{art("office", 999)}</div>
         <video class="hero-video" muted loop playsinline preload="none" poster="assets/video/5600-crooks-drone-poster.webp" data-src="assets/video/5600-crooks-drone.mp4" data-src-sm="assets/video/5600-crooks-drone-480.mp4" aria-hidden="true"></video>
-        <p class="panel-tag"><span class="dot"></span>Leasing now in {" &amp; ".join(cities)}</p>
+        <p class="panel-tag"><span class="dot"></span>Leasing now across Southeast Michigan</p>
         <dl class="stats">
           <div><dd data-count="{len(all_av)}">{len(all_av)}</dd><dt>Spaces available</dt></div>
           <div><dd data-count="{total}">{total:,}</dd><dt>Square feet listed</dt></div>
@@ -384,8 +516,9 @@ def index():
 
   <section id="portfolio" class="portfolio light2">
     <div class="wrap">
-      <div class="sec-head rv"><p class="eyebrow">Portfolio</p><h2>Our properties</h2><p>Every building below is owned and managed by Ammori Group.</p></div>
-      <div class="grid2 props">
+      <div class="sec-head rv"><p class="eyebrow">Portfolio</p><h2>Our properties</h2><p>{len(PROPERTIES)} properties in {len(cities)} Southeast Michigan communities, home to {tenant_count} businesses. Every one is owned and managed by Ammori Group.</p></div>
+      <div class="chips rv" role="group" aria-label="Filter properties"><button type="button" class="chip pchip" aria-pressed="true" data-p="all">All <span>{len(PROPERTIES)}</span></button><button type="button" class="chip pchip" aria-pressed="false" data-p="yes">Space available <span>{with_av}</span></button><button type="button" class="chip pchip" aria-pressed="false" data-p="no">Fully leased <span>{len(PROPERTIES) - with_av}</span></button></div>
+      <div class="grid3 props" id="prop-grid">
         {props}
       </div>
     </div>
@@ -439,20 +572,45 @@ def gallery_html(p):
   <dialog class="lightbox" id="lightbox" aria-label="Photo"><img alt=""><button class="lb-x" type="button" aria-label="Close">✕</button><button class="lb-prev" type="button" aria-label="Previous photo">‹</button><button class="lb-next" type="button" aria-label="Next photo">›</button></dialog>'''
 
 def property_page(p, i):
-    av = available(p); leased = len(p["spaces"]) - len(av)
+    av = available(p)
+    occupied = [s for s in p["spaces"] if s["status"] != "available"]
     cards = "\n        ".join(space_card(p, s, 200 + j, show_building=False) for j, s in enumerate(av))
     facts = "".join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in p["facts"])
-    others = "".join(property_card(o, 300 + k) for k, o in enumerate(PROPERTIES) if o is not p)
-    leased_note = f'<p class="muted small">{leased} other suite{"s" if leased != 1 else ""} in this building {"are" if leased != 1 else "is"} currently leased.</p>' if leased else ""
+    pool = [o for o in PROPERTIES if o is not p]
+    pool.sort(key=lambda o: (not available(o), PROPERTIES.index(o)))
+    others = "".join(property_card(o, 300 + k) for k, o in enumerate(pool[:3]))
+    tenant_rows = "".join(f'<li><b>{e(s.get("tenant") or "Leased")}</b><span>{e(s["suite"])}</span></li>' for s in occupied)
+    tenants_html = f'''<section class="tenants-sec">
+    <div class="wrap">
+      <div class="sec-head rv"><p class="eyebrow">Occupancy</p><h2>{"Current tenants" if any(s.get("tenant") for s in occupied) else "Leased spaces"}</h2></div>
+      <ul class="tenant-list rv">{tenant_rows}</ul>
+    </div>
+  </section>''' if occupied else ""
+    if av:
+        avail_html = f'''<section id="avail" class="spaces">
+    <div class="wrap">
+      <div class="sec-head rv"><p class="eyebrow">Availability</p><h2>Available at {e(p["name"])}</h2></div>
+      <div class="grid3">
+        {cards}
+      </div>
+    </div>
+  </section>'''
+        cta = f'<a class="btn btn-gold" href="#avail">See {len(av)} available space{"s" if len(av) != 1 else ""}</a>'
+    else:
+        avail_html = f'''<section id="avail" class="spaces">
+    <div class="wrap"><div class="full-note rv"><p class="eyebrow">Availability</p><h2>Fully leased</h2><p>{e(p["name"])} is fully leased right now. Tell us what you're looking for and we'll let you know when space opens up here or elsewhere in our portfolio.</p><a class="btn btn-gold" href="#contact" data-space="{e(p["name"])}">Get notified</a></div></div>
+  </section>'''
+        cta = '<a class="btn btn-gold" href="index.html#spaces">See available spaces</a>'
     body = f'''<main id="main">
   <section class="phero">
     <div class="wrap grid2">
       <div>
         <p class="crumbs rv"><a href="index.html">Home</a> / <a href="index.html#portfolio">Portfolio</a> / {e(p["name"])}</p>
-        <p class="eyebrow rv">{e(p["kind"])} · {e(p["city"])}, {e(p["state"])} {e(p["zip"])}</p>
+        <p class="eyebrow rv">{e(p["kind"])} · {e(p["city"])}, {e(p["state"])}{(" " + e(p["zip"])) if p.get("zip") else ""}</p>
         <h1 class="rv d1">{e(p["name"])}</h1>
         <p class="lede rv d2">{e(p["summary"])}</p>
-        <div class="ctas rv d3"><a class="btn btn-gold" href="#avail">See {len(av)} available space{"s" if len(av) != 1 else ""}</a><a class="btn btn-ghost" href="#contact" data-space="{e(p["name"])}">Inquire about this building</a></div>
+        <div class="ctas rv d3">{cta}<a class="btn btn-ghost" href="#contact" data-space="{e(p["name"])}">Inquire about this property</a></div>
+        <p class="owner-line rv d3">Owned by {e(p.get("owner", "Ammori Group"))}, an Ammori Group company</p>
       </div>
       <div class="rv d2">{media(p, 400 + i, "ph tall framed", big=True)}</div>
     </div>
@@ -461,25 +619,24 @@ def property_page(p, i):
     <div class="wrap"><dl class="facts rv">{facts}</dl></div>
   </section>
   {gallery_html(p)}
-  <section id="avail" class="spaces">
-    <div class="wrap">
-      <div class="sec-head rv"><p class="eyebrow">Availability</p><h2>Available at {e(p["name"])}</h2>{leased_note}</div>
-      <div class="grid3">
-        {cards}
-      </div>
-    </div>
-  </section>
+  {avail_html}
+  {tenants_html}
   <section class="portfolio light2">
     <div class="wrap">
       <div class="sec-head rv"><p class="eyebrow">More from our portfolio</p><h2>Other properties</h2></div>
-      <div class="grid2 props">{others}</div>
+      <div class="grid3 props">{others}</div>
     </div>
   </section>
   {contact_section(f"Interested in {p['name']}?", "Tell us the size and type of space you need and when you'd like to move in. We'll follow up with availability, floor plans and a time to tour.")}
 </main>
 '''
-    title = f'{p["name"]}, {p["city"]}, {p["state"]} | {p["kind"]} Space for Lease | Ammori Group'
-    desc = f'{p["kind"]} space for lease at {p["name"]}, {p["city"]}, {p["state"]}. {len(av)} space{"s" if len(av) != 1 else ""} available, leased directly by owner Ammori Group.'
+    if av:
+        title = f'{p["name"]}, {p["city"]}, {p["state"]} | {p["kind"]} Space for Lease | Ammori Group'
+        desc = f'{p["kind"]} space for lease at {p["name"]}, {p["city"]}, {p["state"]}. {len(av)} space{"s" if len(av) != 1 else ""} available, leased directly by owner Ammori Group.'
+    else:
+        title = f'{p["name"]}, {p["city"]}, {p["state"]} | Ammori Group Property'
+        tn = ", ".join(s["tenant"] for s in p["spaces"] if s.get("tenant"))
+        desc = f'{p["name"]} in {p["city"]}, {p["state"]} is owned and managed by Ammori Group' + (f', home to {tn}.' if tn else '.')
     return head(title, desc, p["slug"] + ".html", [place_ld(p)]) + body + footer()
 
 def build():
