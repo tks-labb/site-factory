@@ -4,17 +4,54 @@
 
   var d = document.documentElement;
 
-  // Opening motion graphic (homepage, first visit in a session). Skippable.
+  // Opening: drone video of 5600 Crooks Road (first visit in a session). Falls back to the
+  // gold line drawing when motion is reduced, data saver is on, or the video can't start quickly.
+  var pickSrc = function (v) {
+    var src = window.innerWidth <= 700 ? v.dataset.srcSm : v.dataset.src;
+    var mp4 = v.canPlayType('video/mp4; codecs="avc1.640028"'), webm = v.canPlayType('video/webm; codecs="vp9"');
+    return (!mp4 && webm) ? src.replace(/\.mp4$/, '.webm') : src;
+  };
   if (d.classList.contains('intro')) {
-    var done = false, ev = ['click', 'keydown', 'wheel', 'touchmove'];
+    var done = false, ev = ['click', 'keydown', 'wheel', 'touchmove'], t1, guard;
+    var vid = document.querySelector('.ix-video'), conn = navigator.connection;
+    var slow = conn && (conn.saveData || /(^|-)2g/.test(conn.effectiveType || ''));
     var out = function () {
-      if (done) return; done = true; clearTimeout(t1);
+      if (done) return; done = true; clearTimeout(t1); clearTimeout(guard);
       ev.forEach(function (n) { window.removeEventListener(n, out); });
       d.classList.add('intro-out');
-      setTimeout(function () { d.classList.remove('intro', 'intro-out'); }, reduce ? 450 : 1050);
+      setTimeout(function () { d.classList.remove('intro', 'intro-out', 'ix-vid', 'ix-draw', 'ix-land'); if (vid) vid.pause(); }, reduce ? 450 : 1050);
     };
-    var t1 = setTimeout(out, reduce ? 1200 : 3900);
+    var drawMode = function () {
+      if (done || d.classList.contains('ix-draw')) return;
+      clearTimeout(t1); clearTimeout(guard); if (vid) vid.pause();
+      d.classList.remove('ix-vid'); d.classList.add('ix-draw');
+      t1 = setTimeout(out, reduce ? 1200 : 3900);
+    };
+    if (vid && !reduce && !slow) {
+      d.classList.add('ix-vid');
+      var started = false;
+      vid.addEventListener('playing', function () { started = true; clearTimeout(guard); });
+      vid.addEventListener('timeupdate', function () { if (vid.currentTime > 6.3) d.classList.add('ix-land'); });
+      vid.addEventListener('ended', function () { t1 = setTimeout(out, 1100); });
+      vid.addEventListener('error', drawMode);
+      vid.src = pickSrc(vid);
+      var pr = vid.play(); if (pr && pr.catch) pr.catch(drawMode);
+      guard = setTimeout(function () { if (!started) drawMode(); }, 3000);
+      t1 = setTimeout(out, 13000);
+    } else drawMode();
     setTimeout(function () { if (!done) ev.forEach(function (n) { window.addEventListener(n, out, { passive: true }); }); }, 300);
+  }
+
+  // Hero panel: the drone video loops quietly behind the stats (not with reduced motion or data saver)
+  var hv = document.querySelector('.hero-video');
+  if (hv && !reduce && !(navigator.connection && navigator.connection.saveData) && 'IntersectionObserver' in window) {
+    var hio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { if (!hv.src) { hv.src = pickSrc(hv); hv.addEventListener('playing', function () { hv.classList.add('on'); }, { once: true }); } var p = hv.play(); if (p && p.catch) p.catch(function () {}); }
+        else hv.pause();
+      });
+    }, { threshold: .2 });
+    hio.observe(hv);
   }
 
   // Light / dark mode (remembers the visitor's choice; otherwise follows their device)

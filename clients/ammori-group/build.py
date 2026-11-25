@@ -262,6 +262,14 @@ def intro_html():
         '</g><g fill="#C9A35C">' + "".join(wins) + '</g></svg>')
     return (
         '<div class="intro-ov" id="intro" aria-hidden="true">\n'
+        '  <video class="ix-video" muted playsinline preload="auto" poster="assets/video/5600-crooks-drone-poster.webp" data-src="assets/video/5600-crooks-drone.mp4" data-src-sm="assets/video/5600-crooks-drone-480.mp4"></video>\n'
+        '  <div class="ix-scrim"></div>\n'
+        '  <div class="ix-vcopy">\n'
+        '    <img class="ix-vlogo" src="assets/logo-light.webp" alt="" width="520" height="412">\n'
+        '    <p class="ix-vk">Presents</p>\n'
+        f'    <p class="ix-vt">{e(p["name"])}</p>\n'
+        f'    <p class="ix-vs">{e(p["city"])}, Michigan &middot; {len(av)} spaces now leasing</p>\n'
+        '  </div>\n'
         '  <div class="ix-stage">\n    ' + svg + '\n'
         '    <div class="ix-copy">\n'
         '      <img class="ix-logo" src="assets/logo-light.webp" alt="" width="520" height="412">\n'
@@ -342,6 +350,7 @@ def index():
       </div>
       <div class="hero-panel rv d2">
         <div class="hero-art" aria-hidden="true">{art("office", 999)}</div>
+        <video class="hero-video" muted loop playsinline preload="none" poster="assets/video/5600-crooks-drone-poster.webp" data-src="assets/video/5600-crooks-drone.mp4" data-src-sm="assets/video/5600-crooks-drone-480.mp4" aria-hidden="true"></video>
         <p class="panel-tag"><span class="dot"></span>Leasing now in {" &amp; ".join(cities)}</p>
         <dl class="stats">
           <div><dd data-count="{len(all_av)}">{len(all_av)}</dd><dt>Spaces available</dt></div>
