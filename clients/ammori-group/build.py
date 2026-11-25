@@ -80,7 +80,7 @@ def media(p, i, cls="ph"):
         return f'<div class="{cls}"><img src="assets/{e(p["photo"])}" alt="{e(p["name"])}, {e(p["city"])}, {e(p["state"])}" loading="lazy" width="1200" height="780"></div>'
     return f'<div class="{cls}">{art(p["art"], i)}</div>'
 
-LOGO = '<svg class="logo" viewBox="0 0 40 32" aria-hidden="true"><g fill="#C9A35C"><rect x="4" y="14" width="5" height="16"/><rect x="11" y="6" width="5" height="24"/><rect x="18" y="0" width="5" height="30"/><rect x="25" y="9" width="5" height="21"/><rect x="32" y="17" width="4" height="13"/></g><rect x="0" y="30" width="40" height="2" fill="#C9A35C"/></svg>'
+LOGO = '<svg class="logo" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="9" fill="#C9A35C"/><path d="M10 27 18 9l8 18M13.2 20.6h9.6" fill="none" stroke="#0E0E0D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 
 def head(title, desc, path, extra_ld=None):
     ld = {
@@ -101,11 +101,11 @@ def head(title, desc, path, extra_ld=None):
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{url}">
-<meta name="theme-color" content="#0E0E0D">
+<meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website"><meta property="og:url" content="{url}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 {"".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in lds)}
 <script>document.documentElement.classList.add('js')</script>
@@ -114,7 +114,7 @@ def head(title, desc, path, extra_ld=None):
 <a class="skip" href="#main">Skip to content</a>
 <header class="top" id="top-bar">
   <div class="wrap">
-    <a class="brand" href="index.html">{LOGO}<span>Ammori Group</span></a>
+    <a class="brand" href="index.html">{LOGO}<span class="wm">Ammori <b>Group</b></span></a>
     <nav class="nav" id="nav" aria-label="Main"><a href="index.html#spaces">Available spaces</a><a href="index.html#portfolio">Portfolio</a><a href="index.html#about">About</a><a href="index.html#acquisitions">Acquisitions</a><a class="btn btn-gold" href="index.html#contact">Contact</a></nav>
     <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span></button>
   </div>
@@ -127,7 +127,7 @@ def space_card(p, s, i, show_building=True):
     return f'''<article class="space rv" data-type="{e(s["type"])}">
           {media(p, i)}
           <div class="sp-body">
-            <div class="sp-top"><h3>{e(s["suite"])}</h3><span class="tag">Available</span></div>
+            <div class="sp-top"><h3>{e(s["suite"])}</h3><span class="tag"><i></i>Available</span></div>
             {building}
             <dl class="sp-meta"><div><dt>Size</dt><dd>{sf(s["sf"])}</dd></div><div><dt>Use</dt><dd>{e(label)}</dd></div></dl>
             <p class="note">{e(s["note"])}</p>
@@ -190,7 +190,7 @@ def footer():
     links = "".join(f'<a href="{p["slug"]}.html">{e(p["name"])}, {e(p["city"])}</a>' for p in PROPERTIES)
     return f'''<footer>
   <div class="wrap fgrid">
-    <div><a class="brand" href="index.html">{LOGO}<span>Ammori Group</span></a><p class="muted">Owner-operated commercial real estate in Metro Detroit and Ann Arbor.</p></div>
+    <div><a class="brand" href="index.html">{LOGO}<span class="wm">Ammori <b>Group</b></span></a><p class="muted">Owner-operated commercial real estate in Metro Detroit and Ann Arbor.</p></div>
     <div><p class="k">Properties</p>{links}</div>
     <div><p class="k">Company</p><a href="index.html#about">About</a><a href="index.html#acquisitions">Acquisitions</a><a href="index.html#contact">Contact</a></div>
     <div><p class="k">Office</p><p class="muted">{e(COMPANY["street"])}<br>{e(COMPANY["city"])}, {COMPANY["state"]} {COMPANY["zip"]}<br><a href="mailto:{COMPANY["email"]}">{COMPANY["email"]}</a></p></div>
@@ -222,19 +222,23 @@ def index():
     if COMPANY["asset_value"]: snap.insert(0, ("Real estate asset value", COMPANY["asset_value"]))
     snap_html = "".join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in snap)
     body = f'''<main id="main">
-  <section class="hero dark">
-    <div class="hero-lines" aria-hidden="true"></div>
-    <div class="hero-art" aria-hidden="true">{art("office", 999)}</div>
-    <div class="wrap">
-      <p class="eyebrow rv">Owner-operated commercial real estate · Metro Detroit</p>
-      <h1 class="rv d1">Space to grow, in buildings <em>we own.</em></h1>
-      <p class="lede rv d2">Ammori Group owns and manages its own office, medical and retail properties. Lease directly from ownership, with straightforward terms and space that can be built around your business.</p>
-      <div class="ctas rv d3"><a class="btn btn-gold" href="#spaces">View available spaces</a><a class="btn btn-ghost" href="#contact">Talk to our team</a></div>
-      <dl class="stats rv d3">
-        <div><dt>Available now</dt><dd data-count="{len(all_av)}">{len(all_av)}</dd><span>spaces</span></div>
-        <div><dt>Square feet listed</dt><dd data-count="{total}">{total:,}</dd><span>SF</span></div>
-        <div><dt>Properties</dt><dd data-count="{len(PROPERTIES)}">{len(PROPERTIES)}</dd><span>{" · ".join(cities)}</span></div>
-      </dl>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow rv">Owner-operated commercial real estate · Metro Detroit</p>
+        <h1 class="rv d1">Space to grow, in buildings <em>we own.</em></h1>
+        <p class="lede rv d2">Ammori Group owns and manages its own office, medical and retail properties. Lease directly from ownership, with straightforward terms and space that can be built around your business.</p>
+        <div class="ctas rv d3"><a class="btn btn-gold" href="#spaces">View available spaces <span aria-hidden="true">→</span></a><a class="btn btn-ghost" href="#contact">Talk to our team</a></div>
+      </div>
+      <div class="hero-panel rv d2">
+        <div class="hero-art" aria-hidden="true">{art("office", 999)}</div>
+        <p class="panel-tag"><span class="dot"></span>Leasing now in {" &amp; ".join(cities)}</p>
+        <dl class="stats">
+          <div><dd data-count="{len(all_av)}">{len(all_av)}</dd><dt>Spaces available</dt></div>
+          <div><dd data-count="{total}">{total:,}</dd><dt>Square feet listed</dt></div>
+          <div><dd data-count="{len(PROPERTIES)}">{len(PROPERTIES)}</dd><dt>Owned properties</dt></div>
+        </dl>
+      </div>
     </div>
   </section>
 
@@ -306,7 +310,7 @@ def property_page(p, i):
     others = "".join(property_card(o, 300 + k) for k, o in enumerate(PROPERTIES) if o is not p)
     leased_note = f'<p class="muted small">{leased} other suite{"s" if leased != 1 else ""} in this building {"are" if leased != 1 else "is"} currently leased.</p>' if leased else ""
     body = f'''<main id="main">
-  <section class="phero dark">
+  <section class="phero">
     <div class="wrap grid2">
       <div>
         <p class="crumbs rv"><a href="index.html">Home</a> / <a href="index.html#portfolio">Portfolio</a> / {e(p["name"])}</p>

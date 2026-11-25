@@ -20,6 +20,10 @@
     }, 500);
   });
 
+  // Header hairline once the page scrolls
+  var bar = $('top-bar'); var onS = function () { bar.classList.toggle('scrolled', window.scrollY > 8); };
+  window.addEventListener('scroll', onS, { passive: true }); onS();
+
   // Mobile menu
   var btn = $('menu-btn'), nav = $('nav');
   btn.addEventListener('click', function () { var o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); });
