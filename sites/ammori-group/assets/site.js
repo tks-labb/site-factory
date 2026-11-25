@@ -63,6 +63,19 @@
     links.forEach(function (l) { var s = document.querySelector(l.hash); if (s) nio.observe(s); });
   }
 
+  // Property photo gallery: click a photo to see it larger
+  var lb = $('lightbox'), tiles = Array.prototype.slice.call(document.querySelectorAll('.g-tile')), cur = 0;
+  if (lb && lb.showModal && tiles.length) {
+    var img = lb.querySelector('img');
+    var show = function (n) { cur = (n + tiles.length) % tiles.length; img.src = tiles[cur].dataset.full; img.alt = tiles[cur].dataset.alt; };
+    tiles.forEach(function (t, n) { t.addEventListener('click', function () { show(n); lb.showModal(); }); });
+    lb.querySelector('.lb-x').addEventListener('click', function () { lb.close(); });
+    lb.querySelector('.lb-prev').addEventListener('click', function () { show(cur - 1); });
+    lb.querySelector('.lb-next').addEventListener('click', function () { show(cur + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
+    lb.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+  }
+
   // Filter available spaces by type
   var grid = $('space-grid');
   document.querySelectorAll('.chip').forEach(function (c) {

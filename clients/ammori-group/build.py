@@ -34,8 +34,23 @@ PROPERTIES = [
         "city": "Troy", "state": "MI", "zip": "48098",
         "kind": "Office", "art": "office",
         "photo": "",
+        "photos": [
+            ("crooks-front", "Front of 5600 Crooks Road: brick and glass two-story office building with landscaping"),
+            ("crooks-aerial-entrance", "Aerial view of 5600 Crooks Road with the Loccino restaurant entrance and parking"),
+            ("crooks-aerial-site", "Aerial view of the 5600 Crooks Road site between Crooks Road and I-75, with parking on two sides"),
+            ("crooks-aerial-parking", "Aerial view of 5600 Crooks Road showing the building, parking lots and surrounding office campus"),
+            ("crooks-location-map", "Location map of 5600 Crooks Road in Troy near I-75, Aptiv, Gallagher Kaiser, Panera, Starbucks and Embassy Suites"),
+        ],
+        "highlights": [
+            "Up to 35,838 SF available in one building",
+            "Frontage on Crooks Road, about 24,981 cars per day",
+            "Next to I-75, about 89,578 cars per day, with a nearby interchange",
+            "Neighbors include Aptiv (about 1,300 employees) and Gallagher Kaiser (about 1,379 employees)",
+            "Walk to Panera, Starbucks and Embassy Suites, with a future hotel and planned commercial development nearby",
+            "Loccino Italian Grill on site, plus large surface parking lots on two sides",
+        ],
         "summary": "A two-story office building on Crooks Road in Troy with suites from about 2,800 to 16,000 SF, office and medical-ready space, lower-level storage and a café with equipment in place.",
-        "facts": [("Property type", "Office / medical office"), ("Floors", "Two, plus lower level"), ("Parking", "Large surface lot"), ("Location", "Crooks Road, Troy")],
+        "facts": [("Property type", "Office / medical office"), ("Available", "Up to 35,838 SF"), ("Parking", "Large lots on two sides"), ("Access", "Crooks Road and I-75")],
         "spaces": [
             {"suite": "Suite 105", "sf": 8334, "type": "Office", "note": "Build-to-suit. Can combine with Suite 103.", "status": "available"},
             {"suite": "Suite 103", "sf": 2858, "type": "Medical", "label": "Office / Medical", "note": "Can combine with Suite 105.", "status": "available"},
@@ -75,7 +90,12 @@ def art(kind, i):
     win = "".join(f'<path d="M{x} 120v18M{x} 154v18" stroke-opacity=".55"/>' for x in range(86, 320, 20))
     return ART[kind].replace("{i}", str(i)).replace("{win}", win)
 
-def media(p, i, cls="ph"):
+def media(p, i, cls="ph", k=0, big=False):
+    if p.get("photos"):
+        name, alt = p["photos"][k % len(p["photos"])]
+        src = f"assets/photos/{name}{'' if big else '-sm'}.webp"
+        w, h = (1600, 900) if big else (800, 450)
+        return f'<div class="{cls}"><img src="{src}" alt="{e(alt)}" loading="{"eager" if big else "lazy"}" width="{w}" height="{h}"></div>'
     if p.get("photo"):
         return f'<div class="{cls}"><img src="assets/{e(p["photo"])}" alt="{e(p["name"])}, {e(p["city"])}, {e(p["state"])}" loading="lazy" width="1200" height="780"></div>'
     return f'<div class="{cls}">{art(p["art"], i)}</div>'
@@ -125,10 +145,11 @@ def head(title, desc, path, extra_ld=None):
 '''
 
 def space_card(p, s, i, show_building=True):
+    k = available(p).index(s) if s in available(p) else 0
     label = s.get("label", s["type"])
     building = f'<p class="bld"><a href="{p["slug"]}.html">{e(p["name"])}</a> · {e(p["city"])}, {e(p["state"])}</p>' if show_building else ""
     return f'''<article class="space rv" data-type="{e(s["type"])}">
-          {media(p, i)}
+          {media(p, i, k=k % max(1, len([x for x in p.get('photos', []) if 'map' not in x[0]]) or 1))}
           <div class="sp-body">
             <div class="sp-top"><h3>{e(s["suite"])}</h3><span class="tag"><i></i>Available</span></div>
             {building}
@@ -260,6 +281,8 @@ def chat_function():
         lines.append(f'- {p["name"]}, {p["city"]}, {p["state"]} {p["zip"]} ({p["kind"]}). {p["summary"]} Page: {BASE}/{p["slug"]}.html')
         for k, v in p["facts"]:
             lines.append(f'  - {k}: {v}')
+        for h in p.get("highlights", []):
+            lines.append(f'  - Highlight: {h}')
         for sp in available(p):
             size = f'{sp["sf"]:,} SF' if sp["sf"] else "size on request"
             lines.append(f'  - AVAILABLE: {sp["suite"]}: {size}, {sp.get("label", sp["type"])}. {sp["note"]}'.rstrip())
@@ -390,6 +413,22 @@ def index():
     desc = f"Ammori Group owns and manages commercial real estate in {' and '.join(cities)}, Michigan. Lease office, medical and retail space directly from ownership. {len(all_av)} spaces available now."
     return head("Ammori Group | Office, Medical & Retail Space for Lease in Metro Detroit", desc, "index.html", [place_ld(p) for p in PROPERTIES]) + body + footer()
 
+def gallery_html(p):
+    photos = p.get("photos") or []
+    hl = p.get("highlights") or []
+    if not photos and not hl: return ""
+    tiles = "".join(
+        f'<button class="g-tile{" wide" if n == 0 else ""}" type="button" data-full="assets/photos/{name}.webp" data-alt="{e(alt)}" aria-label="View larger: {e(alt)}"><img src="assets/photos/{name}-sm.webp" alt="{e(alt)}" loading="lazy" width="800" height="450"></button>'
+        for n, (name, alt) in enumerate(photos))
+    items = "".join(f"<li>{e(h)}</li>" for h in hl)
+    return f'''<section class="gallery-sec">
+    <div class="wrap grid-gal">
+      <div class="rv"><p class="eyebrow">The property</p><h2>Location highlights</h2><ul class="ticks light">{items}</ul></div>
+      <div class="gallery rv d1">{tiles}</div>
+    </div>
+  </section>
+  <dialog class="lightbox" id="lightbox" aria-label="Photo"><img alt=""><button class="lb-x" type="button" aria-label="Close">✕</button><button class="lb-prev" type="button" aria-label="Previous photo">‹</button><button class="lb-next" type="button" aria-label="Next photo">›</button></dialog>'''
+
 def property_page(p, i):
     av = available(p); leased = len(p["spaces"]) - len(av)
     cards = "\n        ".join(space_card(p, s, 200 + j, show_building=False) for j, s in enumerate(av))
@@ -406,12 +445,13 @@ def property_page(p, i):
         <p class="lede rv d2">{e(p["summary"])}</p>
         <div class="ctas rv d3"><a class="btn btn-gold" href="#avail">See {len(av)} available space{"s" if len(av) != 1 else ""}</a><a class="btn btn-ghost" href="#contact" data-space="{e(p["name"])}">Inquire about this building</a></div>
       </div>
-      <div class="rv d2">{media(p, 400 + i, "ph tall framed")}</div>
+      <div class="rv d2">{media(p, 400 + i, "ph tall framed", big=True)}</div>
     </div>
   </section>
   <section class="facts-sec">
     <div class="wrap"><dl class="facts rv">{facts}</dl></div>
   </section>
+  {gallery_html(p)}
   <section id="avail" class="spaces">
     <div class="wrap">
       <div class="sec-head rv"><p class="eyebrow">Availability</p><h2>Available at {e(p["name"])}</h2>{leased_note}</div>

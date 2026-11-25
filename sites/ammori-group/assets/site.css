@@ -330,3 +330,22 @@ html.intro .intro-ov { overflow: hidden; }
 @media (max-width: 520px) { .ac-open span.lbl { display: none; } .ac-open span.lbl-s { display: inline; } .ac-open { padding: 0 16px; } .ac-panel { position: fixed; left: 10px; right: 10px; bottom: 80px; width: auto; height: min(600px, calc(100dvh - 100px)); } }
 @media (prefers-reduced-motion: reduce) { .ix-stage, .ix-art .ln, .ix-art .w, .ix-copy p, .ix-art .ix-glow { animation-duration: .01s !important; animation-delay: 0s !important; } }
 @media (prefers-reduced-motion: reduce) { .ix-art .ln { stroke-dashoffset: 0; } .ix-art .w { opacity: .78; } .ix-art .ix-glow, .ix-copy p { opacity: 1; transform: none; } }
+
+/* ---------- property gallery + lightbox ---------- */
+.gallery-sec { padding-block: 72px 24px; }
+.grid-gal { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }
+.grid-gal h2 { font-size: clamp(30px, 3.6vw, 44px); margin: 16px 0 22px; }
+.ticks.light li { color: var(--ink-2); }
+.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.g-tile { padding: 0; border: 0; border-radius: 16px; overflow: hidden; cursor: zoom-in; background: var(--paper); aspect-ratio: 16 / 10; }
+.g-tile.wide { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
+.g-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.g-tile:hover img { transform: scale(1.04); }
+.lightbox { padding: 0; border: 0; background: transparent; max-width: min(1200px, 94vw); overflow: visible; }
+.lightbox::backdrop { background: rgba(8,8,7,.86); backdrop-filter: blur(4px); }
+.lightbox[open] { animation: ac-in .35s var(--ease); }
+.lightbox img { display: block; max-width: 100%; max-height: 86vh; border-radius: 14px; }
+.lightbox button { position: absolute; width: 46px; height: 46px; border-radius: 50%; border: 0; background: #F4F1EA; color: #111; font-size: 22px; cursor: pointer; display: grid; place-items: center; }
+.lb-x { top: -14px; right: -14px; font-size: 15px !important; }
+.lb-prev { left: -23px; top: 50%; margin-top: -23px; } .lb-next { right: -23px; top: 50%; margin-top: -23px; }
+@media (max-width: 860px) { .grid-gal { grid-template-columns: 1fr; gap: 28px; } .lb-prev { left: 6px; } .lb-next { right: 6px; } .lb-x { right: 6px; top: 6px; } }
