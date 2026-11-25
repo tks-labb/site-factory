@@ -36,9 +36,9 @@ PROPERTIES = [
         "photo": "",
         "photos": [
             ("crooks-front", "Front of 5600 Crooks Road: brick and glass two-story office building with landscaping"),
+            ("crooks-aerial-clean", "Drone view of 5600 Crooks Road in Troy: the office building, Loccino restaurant, parking lots and I-75 beyond"),
             ("crooks-aerial-entrance", "Aerial view of 5600 Crooks Road with the Loccino restaurant entrance and parking"),
             ("crooks-aerial-site", "Aerial view of the 5600 Crooks Road site between Crooks Road and I-75, with parking on two sides"),
-            ("crooks-aerial-parking", "Aerial view of 5600 Crooks Road showing the building, parking lots and surrounding office campus"),
             ("crooks-location-map", "Location map of 5600 Crooks Road in Troy near I-75, Aptiv, Gallagher Kaiser, Panera, Starbucks and Embassy Suites"),
         ],
         "highlights": [
