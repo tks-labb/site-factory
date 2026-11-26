@@ -246,14 +246,9 @@
       if (!ok) return f.email.focus();
       var b = f.querySelector('button'); b.disabled = true; b.textContent = 'Saving…';
       var fd = new FormData(f);
-      var mail = fetch('https://formsubmit.co/ajax/info@ammorigroup.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ _subject: 'Space alert sign-up: ' + fd.get('property'), _template: 'table', _captcha: 'false', _replyto: fd.get('email'), Email: fd.get('email'), 'Looking for': fd.get('need') || 'Not given', Property: fd.get('property'), Page: location.href }) })
-        .then(function (r) { if (!r.ok) throw 0; });
       var keep = fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() }).then(function (r) { if (!r.ok) throw 0; });
-      Promise.allSettled([mail, keep]).then(function (res) {
-        if (res.some(function (x) { return x.status === 'fulfilled'; })) { f.hidden = true; var s = f.parentNode.querySelector('.al-sent'); s.hidden = false; s.focus(); }
-        else { b.disabled = false; b.textContent = 'Notify me'; var er = f.querySelector('.al-err'); er.textContent = "That didn't go through. Please try again or email info@ammorigroup.com."; er.hidden = false; }
-      });
+      keep.then(function () { f.hidden = true; var s = f.parentNode.querySelector('.al-sent'); s.hidden = false; s.focus(); })
+        .catch(function () { b.disabled = false; b.textContent = 'Notify me'; var er = f.querySelector('.al-err'); er.textContent = "That didn't go through. Please try again or email info@ammorigroup.com."; er.hidden = false; });
     });
   });
 })();

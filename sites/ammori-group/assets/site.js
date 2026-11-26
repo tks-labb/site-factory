@@ -133,7 +133,7 @@
     setTimeout(function () { (form.name.value ? form.message : form.name).focus({ preventScroll: true }); }, reduce ? 0 : 600);
   });
 
-  // Inquiry form: email to Ammori Group (FormSubmit) and a backup copy in Netlify Forms
+  // Inquiry form: sent to Netlify Forms, which emails info@ammorigroup.com (Forms → Form submission notifications)
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();
     var okN = !!form.name.value.trim(), okE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.value.trim()), okM = !!form.message.value.trim();
@@ -141,16 +141,9 @@
     if (!okN) return form.name.focus(); if (!okE) return form.email.focus(); if (!okM) return form.message.focus();
     var b = form.querySelector('button[type=submit]'); b.disabled = true; b.textContent = 'Sending…'; $('e-send').hidden = true;
     var fd = new FormData(form);
-    var emailIt = fetch('https://formsubmit.co/ajax/info@ammorigroup.com', {
-      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ _subject: 'New website inquiry: ' + fd.get('topic') + ' from ' + fd.get('name'), _template: 'table', _captcha: 'false', _replyto: fd.get('email'),
-        Name: fd.get('name'), Email: fd.get('email'), Phone: fd.get('phone') || 'Not given', 'Interested in': fd.get('topic'), Message: fd.get('message'), 'Tour requested': fd.get('tour') ? 'Yes: ' + (fd.get('tour_date') || 'date open') + ', ' + (fd.get('tour_time') || '') : 'No', Page: location.href })
-    }).then(function (r) { if (!r.ok) throw 0; });
     var saveIt = fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() })
       .then(function (r) { if (!r.ok) throw 0; });
-    Promise.allSettled([emailIt, saveIt]).then(function (res) {
-      if (res.some(function (x) { return x.status === 'fulfilled'; })) { form.hidden = true; var s = $('sent'); s.hidden = false; s.focus(); }
-      else { b.disabled = false; b.textContent = 'Send message'; $('e-send').hidden = false; }
-    });
+    saveIt.then(function () { form.hidden = true; var s = $('sent'); s.hidden = false; s.focus(); })
+      .catch(function () { b.disabled = false; b.textContent = 'Send message'; $('e-send').hidden = false; });
   });
 })();
