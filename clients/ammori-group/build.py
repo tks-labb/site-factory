@@ -37,6 +37,7 @@ PROPERTIES = [
         "photos": [
             ("crooks-front", "Front of 5600 Crooks Road: brick and glass two-story office building with landscaping"),
             ("crooks-aerial-clean", "Drone view of 5600 Crooks Road in Troy: the office building, Loccino restaurant, parking lots and I-75 beyond"),
+            ("crooks-aerial-closeup", "Close aerial view of 5600 Crooks Road: the office building, Loccino restaurant and landscaped parking"),
             ("crooks-aerial-entrance", "Aerial view of 5600 Crooks Road with the Loccino restaurant entrance and parking"),
             ("crooks-aerial-site", "Aerial view of the 5600 Crooks Road site between Crooks Road and I-75, with parking on two sides"),
             ("crooks-location-map", "Location map of 5600 Crooks Road in Troy near I-75, Aptiv, Gallagher Kaiser, Panera, Starbucks and Embassy Suites"),
@@ -54,7 +55,7 @@ PROPERTIES = [
         "spaces": [
             {"suite": "Suite 105", "sf": 8334, "type": "Office", "note": "Build-to-suit. Can combine with Suite 103.", "status": "available"},
             {"suite": "Suite 103", "sf": 2858, "type": "Medical", "label": "Office / Medical", "note": "Can combine with Suite 105.", "status": "available"},
-            {"suite": "Suite 210", "sf": 4083, "type": "Office", "note": "Second floor.", "status": "available"},
+            {"suite": "Suite 210", "sf": 4083, "type": "Office", "note": "Second floor.", "status": "available", "photo": "crooks-aerial-closeup"},
             {"suite": "Suite 220", "sf": 16068, "type": "Office", "note": "Second floor.", "status": "available", "photo": "crooks-aerial-clean"},
             {"suite": "LL1–LL7", "sf": None, "type": "Storage", "label": "Office storage", "note": "Seven lower-level storage units. Call for sizes.", "status": "available"},
             {"suite": "Café", "sf": None, "type": "Restaurant", "label": "Restaurant / café", "note": "Café with equipment in place.", "status": "available"},
