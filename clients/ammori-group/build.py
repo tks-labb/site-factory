@@ -8,7 +8,7 @@ It writes sites/ammori-group/: index.html, one page per property, sitemap.xml, r
 Photos: put images in sites/ammori-group/assets/photos/ and set "photo" on a property
 (e.g. "photos/crooks-1.jpg"). Without a photo, a gold line drawing of the building type is shown.
 """
-import html, json
+import html, json, urllib.parse
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parents[2] / "sites" / "ammori-group"
@@ -172,7 +172,7 @@ PROPERTIES = [
         ],
         "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "1645 S Telegraph Road",
-        "city": "Bloomfield Township", "state": "MI", "zip": "",
+        "city": "Bloomfield Township", "state": "MI", "zip": "48302",
         "kind": "Retail", "art": "retail", "owner": "1645 S Telegraph LLC", "building_sf": 34000,
         "summary": "A 34,000 SF retail building on S Telegraph Road in Bloomfield Township, home to Motor City Powersports.",
         "facts": [("Building size", "34,000 SF"), ("Property type", "Retail"), ("Status", "Fully leased"), ("Location", "S Telegraph Rd, Bloomfield Township")],
@@ -202,7 +202,7 @@ PROPERTIES = [
         ],
         "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "45290 Utica Park Blvd",
-        "city": "Utica", "state": "MI", "zip": "",
+        "city": "Utica", "state": "MI", "zip": "48315",
         "kind": "Retail", "art": "retail", "owner": "45290 Utica LLC", "building_sf": 30000,
         "summary": "A 30,000 SF retail building on Utica Park Boulevard in Utica, home to 2nd & Charles.",
         "facts": [("Building size", "30,000 SF"), ("Property type", "Retail"), ("Status", "Fully leased"), ("Location", "Utica Park Blvd, Utica")],
@@ -228,7 +228,7 @@ PROPERTIES = [
         ],
         "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "29732 & 29764 Woodward Ave",
-        "city": "Royal Oak", "state": "MI", "zip": "",
+        "city": "Royal Oak", "state": "MI", "zip": "48073",
         "kind": "Retail", "art": "retail", "owner": "8130 Constitution", "building_sf": None,
         "summary": "Two buildings on Woodward Avenue in Royal Oak: an office leased to OMPT Specialist Physical Therapy and a 4,000 SF retail building home to Bricks and Minifigs.",
         "facts": [("Property type", "Office and retail"), ("Retail building", "4,000 SF"), ("Status", "Fully leased"), ("Location", "Woodward Ave, Royal Oak")],
@@ -253,6 +253,40 @@ PROPERTIES = [
 ]
 
 TYPES = ["Office", "Medical", "Retail", "Restaurant", "Storage", "Land", "Commercial"]
+
+# Map pins (lat, lng) from the US Census geocoder. Northwestern Hwy is approximate (29200 Northwestern, across the road).
+GEO = {
+    "5600-crooks-road-troy-mi": (42.59855, -83.16875),
+    "485-n-lapeer-road-oxford-mi": (42.83173, -83.27008),
+    "2151-w-liberty-street-ann-arbor-mi": (42.27445, -83.77507),
+    "832-s-main-street-lapeer-mi": (43.03956, -83.32153),
+    "1855-n-saginaw-street-lapeer-mi": (43.08246, -83.30723),
+    "northwestern-highway-southfield-mi": (42.50257, -83.31119),
+    "n-cedar-street-imlay-city-mi": (43.03257, -83.07153),
+    "1645-s-telegraph-road-bloomfield-township-mi": (42.61691, -83.31505),
+    "1993-1995-s-cedar-street-imlay-city-mi": (43.00709, -83.07139),
+    "45290-utica-park-blvd-utica-mi": (42.63028, -83.00916),
+    "22550-hall-road-clinton-township-mi": (42.62886, -82.88335),
+    "woodward-avenue-royal-oak-mi": (42.50909, -83.17744),
+    "2765-metamora-road-oxford-mi": (42.86582, -83.28971),
+}
+
+def full_address(p):
+    first = p["spaces"][0]["suite"] if p["spaces"] and p["spaces"][0]["suite"][:1].isdigit() else p["name"].split(" & ")[0].split("–")[0]
+    if not first[:1].isdigit(): first = p["name"]
+    city = "Bloomfield Hills" if p["city"] == "Bloomfield Township" else p["city"]
+    return f'{first}, {city}, {p["state"]} {p.get("zip") or ""}'.strip()
+
+def site_data():
+    props = []
+    for p in PROPERTIES:
+        av = available(p)
+        ph = p.get("photos") or []
+        props.append({"slug": p["slug"], "name": p["name"], "city": p["city"], "kind": p["kind"],
+            "ll": GEO.get(p["slug"]), "avail": len(av), "sf": sum(s.get("sf") or 0 for s in av),
+            "bsf": p.get("building_sf"), "photo": f"assets/photos/{ph[0][0]}-sm.webp" if ph else "",
+            "tenants": [s["tenant"] for s in p["spaces"] if s.get("tenant")], "addr": full_address(p)})
+    return json.dumps({"props": props}, ensure_ascii=False).replace("</", "<\\/")
 
 e = html.escape
 def sf(n): return f"{n:,} SF" if n else "Call for size"
@@ -325,7 +359,9 @@ def space_card(p, s, i, show_building=True):
     k = available(p).index(s) if s in available(p) else 0
     label = s.get("label", s["type"])
     building = f'<p class="bld"><a href="{p["slug"]}.html">{e(p["name"])}</a> · {e(p["city"])}, {e(p["state"])}</p>' if show_building else ""
-    return f'''<article class="space rv" data-type="{e(s["type"])}">
+    sid = f'{p["slug"]}::{s["suite"]}'
+    return f'''<article class="space rv" data-type="{e(s["type"])}" data-city="{e(p["city"])}" data-sf="{s.get("sf") or 0}" data-id="{e(sid)}" data-label="{e(p["name"])} – {e(s["suite"])}" data-url="{p["slug"]}.html" data-size="{e(size_text(s))}" data-text="{e((s["suite"] + " " + p["name"] + " " + p["city"] + " " + s.get("label", s["type"]) + " " + s["type"] + " " + s.get("note", "")).lower())}">
+          <button class="save" type="button" aria-pressed="false" aria-label="Save {e(p["name"])} – {e(s["suite"])} to your shortlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg></button>
           {media(p, i, k=k % max(1, len([x for x in p.get('photos', []) if 'map' not in x[0]]) or 1))}
           <div class="sp-body">
             <div class="sp-top"><h3>{e(s["suite"])}</h3><span class="tag"><i></i>Available</span></div>
@@ -347,7 +383,7 @@ def property_card(p, i):
         stats = '<span>Fully leased</span>'
     if p.get("building_sf"): stats += f'<span><b>{p["building_sf"]:,}</b> SF building</span>'
     tline = f'<p class="tenants"><span>Tenants:</span> {e(", ".join(tenants))}</p>' if tenants else ""
-    return f'''<article class="prop rv" data-avail="{"yes" if av else "no"}">
+    return f'''<article class="prop rv" data-avail="{"yes" if av else "no"}" data-slug="{p["slug"]}">
           <a class="prop-link" href="{p["slug"]}.html" aria-label="{e(p["name"])}, {e(p["city"])}">{media(p, 100 + i, "ph tall")}</a>
           <div class="prop-body">
             <p class="eyebrow">{e(p["kind"])} · {e(p["city"])}, {e(p["state"])}</p>
@@ -387,6 +423,11 @@ def contact_section(heading="Tell us what you're looking for", lede="Share a few
             <div class="field"><label for="f-topic">I'm interested in</label><select id="f-topic" name="topic"><option>Leasing space</option><option>Selling a property to Ammori Group</option><option>Selling a business to Ammori Group</option><option>Something else</option></select></div>
           </div>
           <div class="field"><label for="f-msg">What are you looking for?</label><textarea id="f-msg" name="message" placeholder="Type of space, approximate size, timing, preferred area…" required></textarea><span class="err" id="e-msg" hidden>Tell us a little about what you need.</span></div>
+          <label class="tour-check"><input type="checkbox" name="tour" value="Yes" id="f-tour"> <span>I'd like to schedule a tour</span></label>
+          <div class="row tour-fields" id="tour-fields" hidden>
+            <div class="field"><label for="f-tdate">Preferred date</label><input id="f-tdate" name="tour_date" type="date"></div>
+            <div class="field"><label for="f-ttime">Preferred time</label><select id="f-ttime" name="tour_time"><option>Morning</option><option>Midday</option><option>Afternoon</option><option>Flexible</option></select></div>
+          </div>
           <button class="btn btn-gold" type="submit">Send message</button>
           <p class="err" id="e-send" hidden>Your message didn't send. Please try again or email {COMPANY["email"]}.</p>
         </form>
@@ -408,6 +449,8 @@ def footer():
 </footer>
 <script src="assets/site.js" defer></script>
 <script src="assets/chat.js" defer></script>
+<script type="application/json" id="am-data">{site_data()}</script>
+<script src="assets/interact.js" defer></script>
 </body>
 </html>
 '''
@@ -522,6 +565,9 @@ def index():
     chips = '<button type="button" class="chip" aria-pressed="true" data-f="all">All <span>' + str(len(all_av)) + '</span></button>' + "".join(
         f'<button type="button" class="chip" aria-pressed="false" data-f="{t}">{t} <span>{sum(1 for _, s in all_av if s["type"] == t)}</span></button>' for t in used)
     cards = "\n        ".join(space_card(p, s, i) for i, (p, s) in enumerate(all_av))
+    city_opts = "".join(f'<option>{e(c)}</option>' for c in sorted({p["city"] for p, _ in all_av}))
+    size_max = max(s.get("sf") or 0 for _, s in all_av)
+    size_max = ((size_max + 999) // 1000) * 1000
     props = "\n        ".join(property_card(p, i) for i, p in enumerate(PROPERTIES))
     kinds = ", ".join(sorted({p["kind"] for p in PROPERTIES}))
     snap = [("Properties owned", str(len(PROPERTIES))), ("Square feet owned", f"{owned_sf // 1000 * 1000:,}+ SF"), ("Communities", f"{len(cities)} across Southeast Michigan"), ("Property types", "Office · Medical · Retail · Land")]
@@ -563,7 +609,29 @@ def index():
   <section id="spaces" class="spaces">
     <div class="wrap">
       <div class="sec-head rv"><p class="eyebrow">Availability</p><h2>Available spaces</h2><p>Office, medical, retail and specialty space ready to lease. Pick a space to send an inquiry, or contact us for something that isn't listed.</p></div>
+      <div class="finder rv">
+        <label class="f-search"><span class="sr">Search spaces</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="q" type="search" placeholder="Try “about 4,000 SF of office in Troy”" autocomplete="off"></label>
+        <label class="f-sel"><span>City</span><select id="f-city"><option value="">All cities</option>{city_opts}</select></label>
+        <div class="f-size"><span>Size <b id="size-out">Any size</b></span><div class="dual"><input id="s-min" type="range" min="0" max="{size_max}" step="500" value="0" aria-label="Minimum size in square feet"><input id="s-max" type="range" min="0" max="{size_max}" step="500" value="{size_max}" aria-label="Maximum size in square feet"></div></div>
+        <label class="f-sel"><span>Sort</span><select id="f-sort"><option value="">Featured</option><option value="asc">Size: small to large</option><option value="desc">Size: large to small</option></select></label>
+      </div>
       <div class="chips rv" role="group" aria-label="Filter by type">{chips}</div>
+      <div class="finder-meta rv"><p id="f-count" aria-live="polite"></p><button class="link-btn" id="f-reset" type="button" hidden>Clear filters</button><button class="link-btn calc-toggle" id="calc-toggle" type="button" aria-expanded="false" aria-controls="calc">Not sure how much space you need?</button></div>
+      <div class="calc" id="calc" hidden>
+        <div><p class="eyebrow">Space calculator</p><h3>How much space do I need?</h3><p class="muted">A quick estimate based on common planning ratios. We'll fine-tune it with you.</p></div>
+        <div class="calc-form">
+          <label class="field"><span>People in the space</span><input id="c-people" type="number" min="1" max="2000" inputmode="numeric" value="12"></label>
+          <label class="field"><span>Type of business</span><select id="c-type">
+            <option value="office-private" data-r="250" data-t="Office">Office, mostly private offices</option>
+            <option value="office-open" data-r="175" data-t="Office" selected>Office, open plan</option>
+            <option value="office-dense" data-r="125" data-t="Office">Call center or tech, dense seating</option>
+            <option value="medical" data-r="300" data-t="Medical">Medical or dental practice</option>
+            <option value="retail" data-r="400" data-t="Retail">Retail or showroom</option>
+          </select></label>
+          <div class="calc-out"><span>Estimated space</span><b id="c-out">1,800 – 2,400 SF</b></div>
+          <button class="btn btn-gold" id="c-go" type="button">Show spaces that fit</button>
+        </div>
+      </div>
       <div class="grid3" id="space-grid">
         {cards}
       </div>
@@ -575,6 +643,7 @@ def index():
     <div class="wrap">
       <div class="sec-head rv"><p class="eyebrow">Portfolio</p><h2>Our properties</h2><p>{len(PROPERTIES)} properties in {len(cities)} Southeast Michigan communities, home to {tenant_count} businesses. Every one is owned and managed by Ammori Group.</p></div>
       <div class="chips rv" role="group" aria-label="Filter properties"><button type="button" class="chip pchip" aria-pressed="true" data-p="all">All <span>{len(PROPERTIES)}</span></button><button type="button" class="chip pchip" aria-pressed="false" data-p="yes">Space available <span>{with_av}</span></button><button type="button" class="chip pchip" aria-pressed="false" data-p="no">Fully leased <span>{len(PROPERTIES) - with_av}</span></button></div>
+      <div class="pmap-wrap rv"><div class="pmap" id="pmap" role="region" aria-label="Map of Ammori Group properties"><p class="map-fallback">Loading map…</p></div><div class="pmap-key"><span><i class="k-av"></i>Space available</span><span><i class="k-full"></i>Fully leased</span></div></div>
       <div class="grid3 props" id="prop-grid">
         {props}
       </div>
@@ -629,6 +698,31 @@ def gallery_html(p):
   </section>
   <dialog class="lightbox" id="lightbox" aria-label="Photo"><img alt=""><button class="lb-x" type="button" aria-label="Close">✕</button><button class="lb-prev" type="button" aria-label="Previous photo">‹</button><button class="lb-next" type="button" aria-label="Next photo">›</button></dialog>'''
 
+def location_html(p):
+    ll = GEO.get(p["slug"])
+    if not ll: return ""
+    q = urllib.parse.quote(full_address(p))
+    return f'''<section class="loc-sec">
+    <div class="wrap grid-gal">
+      <div class="rv"><p class="eyebrow">Location</p><h2>Find {e(p["name"])}</h2><p class="muted">{e(full_address(p))}</p>
+        <div class="loc-actions"><a class="btn btn-gold" href="https://www.google.com/maps/dir/?api=1&amp;destination={q}" target="_blank" rel="noopener">Get directions</a><a class="btn btn-ghost" href="https://www.google.com/maps/@?api=1&amp;map_action=pano&amp;viewpoint={ll[0]},{ll[1]}" target="_blank" rel="noopener">Open Street View</a></div>
+        {"<p class='small muted' style='margin-top:12px'>Map pin is approximate.</p>" if p["slug"] == "northwestern-highway-southfield-mi" else ""}
+      </div>
+      <div class="rv d1"><div class="mini-map" id="mini-map" data-ll="{ll[0]},{ll[1]}" data-name="{e(p["name"])}" role="region" aria-label="Map of {e(p["name"])}"><p class="map-fallback">Loading map…</p></div></div>
+    </div>
+  </section>'''
+
+def alert_form(p):
+    return f'''<form class="alert-form" name="space-alerts" method="POST" data-netlify="true" netlify-honeypot="company_site" novalidate>
+          <input type="hidden" name="form-name" value="space-alerts"><input type="hidden" name="property" value="{e(p["name"])}, {e(p["city"])}">
+          <p hidden><label>Leave this empty <input name="company_site"></label></p>
+          <label class="sr" for="al-email">Email</label><input id="al-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required>
+          <label class="sr" for="al-need">What you need</label><input id="al-need" name="need" placeholder="What you need (optional), e.g. 3,000 SF office">
+          <button class="btn btn-gold" type="submit">Notify me</button>
+          <p class="err al-err" hidden>Enter an email like name@company.com.</p>
+        </form>
+        <p class="al-sent" hidden tabindex="-1"><b>You're on the list.</b> We'll email you when space opens up.</p>'''
+
 def property_page(p, i):
     av = available(p)
     occupied = [s for s in p["spaces"] if s["status"] != "available"]
@@ -656,7 +750,7 @@ def property_page(p, i):
         cta = f'<a class="btn btn-gold" href="#avail">See {len(av)} available space{"s" if len(av) != 1 else ""}</a>'
     else:
         avail_html = f'''<section id="avail" class="spaces">
-    <div class="wrap"><div class="full-note rv"><p class="eyebrow">Availability</p><h2>Fully leased</h2><p>{e(p["name"])} is fully leased right now. Tell us what you're looking for and we'll let you know when space opens up here or elsewhere in our portfolio.</p><a class="btn btn-gold" href="#contact" data-space="{e(p["name"])}">Get notified</a></div></div>
+    <div class="wrap"><div class="full-note rv"><p class="eyebrow">Availability</p><h2>Fully leased</h2><p>{e(p["name"])} is fully leased right now. Tell us what you're looking for and we'll let you know when space opens up here or elsewhere in our portfolio.</p>{alert_form(p)}</div></div>
   </section>'''
         cta = '<a class="btn btn-gold" href="index.html#spaces">See available spaces</a>'
     body = f'''<main id="main">
@@ -679,6 +773,7 @@ def property_page(p, i):
   {gallery_html(p)}
   {avail_html}
   {tenants_html}
+  {location_html(p)}
   <section class="portfolio light2">
     <div class="wrap">
       <div class="sec-head rv"><p class="eyebrow">More from our portfolio</p><h2>Other properties</h2></div>

@@ -113,17 +113,6 @@
     lb.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
   }
 
-  // Filter available spaces by type
-  var grid = $('space-grid');
-  document.querySelectorAll('.chip:not(.pchip)').forEach(function (c) {
-    c.addEventListener('click', function () {
-      document.querySelectorAll('.chip:not(.pchip)').forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
-      var f = c.dataset.f, shown = 0;
-      grid.querySelectorAll('.space').forEach(function (s) { var ok = f === 'all' || s.dataset.type === f; s.classList.toggle('out', !ok); if (ok) shown++; });
-      $('empty').hidden = shown > 0;
-    });
-  });
-
   // Portfolio filter: all / with space available / fully leased
   var pgrid = $('prop-grid');
   document.querySelectorAll('.pchip').forEach(function (c) {
@@ -155,7 +144,7 @@
     var emailIt = fetch('https://formsubmit.co/ajax/info@ammorigroup.com', {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ _subject: 'New website inquiry: ' + fd.get('topic') + ' from ' + fd.get('name'), _template: 'table', _captcha: 'false', _replyto: fd.get('email'),
-        Name: fd.get('name'), Email: fd.get('email'), Phone: fd.get('phone') || 'Not given', 'Interested in': fd.get('topic'), Message: fd.get('message'), Page: location.href })
+        Name: fd.get('name'), Email: fd.get('email'), Phone: fd.get('phone') || 'Not given', 'Interested in': fd.get('topic'), Message: fd.get('message'), 'Tour requested': fd.get('tour') ? 'Yes: ' + (fd.get('tour_date') || 'date open') + ', ' + (fd.get('tour_time') || '') : 'No', Page: location.href })
     }).then(function (r) { if (!r.ok) throw 0; });
     var saveIt = fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() })
       .then(function (r) { if (!r.ok) throw 0; });
