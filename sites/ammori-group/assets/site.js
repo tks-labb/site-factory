@@ -137,8 +137,9 @@
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();
     var okN = !!form.name.value.trim(), okE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.value.trim()), okM = !!form.message.value.trim();
-    $('e-name').hidden = okN; $('e-email').hidden = okE; $('e-msg').hidden = okM;
-    if (!okN) return form.name.focus(); if (!okE) return form.email.focus(); if (!okM) return form.message.focus();
+    var okP = form.phone.value.replace(/\D/g, '').length >= 10;
+    $('e-name').hidden = okN; $('e-email').hidden = okE; $('e-phone').hidden = okP; $('e-msg').hidden = okM;
+    if (!okN) return form.name.focus(); if (!okE) return form.email.focus(); if (!okP) return form.phone.focus(); if (!okM) return form.message.focus();
     var b = form.querySelector('button[type=submit]'); b.disabled = true; b.textContent = 'Sending…'; $('e-send').hidden = true;
     var fd = new FormData(form);
     var saveIt = fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() })
