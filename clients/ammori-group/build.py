@@ -70,7 +70,8 @@ PROPERTIES = [
         "city": "Oxford", "state": "MI", "zip": "48371",
         "kind": "Office", "art": "office", "owner": "485 Lapeer LLC", "building_sf": 11000,
         "photos": [
-            ("lapeer485-front", "485 N Lapeer Road in Oxford: single-story brick office building with a landscaped lawn and parking"),
+            ("lapeer485-front2", "485 N Lapeer Road in Oxford: single-story brick office building with a pitched roof and a wide lawn"),
+            ("lapeer485-front", "485 N Lapeer Road in Oxford: the office building and parking lot from the drive"),
             ("lapeer485-aerial", "Aerial view of the 485 N Lapeer Road area in Oxford, Michigan along M-24"),
             ("lapeer485-map", "Satellite map of the 485 N Lapeer Road parcel on M-24 in Oxford"),
         ],
@@ -83,6 +84,12 @@ PROPERTIES = [
     },
     {
         "slug": "2151-w-liberty-street-ann-arbor-mi",
+        "photos": [
+            ("liberty2151-front", "Front of 2151 W Liberty Street in Ann Arbor: freestanding retail building with a red awning and a large parking lot"),
+            ("liberty2151-3", "Aerial view of 2151 W Liberty Street in Ann Arbor with its parking lot and neighboring retail"),
+            ("liberty2151-side", "Side and rear of 2151 W Liberty Street showing the loading dock and landscaped drive"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "2151 W Liberty Street",
         "city": "Ann Arbor", "state": "MI", "zip": "48103",
         "kind": "Retail", "art": "retail", "owner": "Ammori Liberty Holdings LLC", "building_sf": 14990,
@@ -94,8 +101,12 @@ PROPERTIES = [
     },
     {
         "slug": "832-s-main-street-lapeer-mi",
+        "photos": [
+            ("smain832-front", "832 S Main Street in Lapeer: small freestanding building with a gabled roof, drive-through canopy and parking"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "832 S Main Street",
-        "city": "Lapeer", "state": "MI", "zip": "",
+        "city": "Lapeer", "state": "MI", "zip": "48446",
         "kind": "Medical", "art": "office", "owner": "LHA Investments",
         "summary": "A medical and office property on South Main Street in Lapeer, available now.",
         "facts": [("Property type", "Medical / office"), ("Availability", "Available now"), ("Size", "Call for information"), ("Location", "S Main St, Lapeer")],
@@ -104,20 +115,30 @@ PROPERTIES = [
         ],
     },
     {
-        "slug": "1855-n-saginaw-road-lapeer-mi",
-        "name": "1855 N Saginaw Road",
-        "city": "Lapeer", "state": "MI", "zip": "",
+        "slug": "1855-n-saginaw-street-lapeer-mi",
+        "photos": [
+            ("saginaw1855-street", "1855 N Saginaw Street in Lapeer: open commercial frontage along the road"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
+        "name": "1855 N Saginaw Street",
+        "city": "Lapeer", "state": "MI", "zip": "48446",
         "kind": "Commercial", "art": "retail", "owner": "Ammori Realty",
-        "summary": "A commercial property on N Saginaw Road in Lapeer, available now.",
-        "facts": [("Property type", "Commercial"), ("Availability", "Available now"), ("Size", "Call for information"), ("Location", "N Saginaw Rd, Lapeer")],
+        "summary": "A commercial property on N Saginaw Street in Lapeer, available now.",
+        "facts": [("Property type", "Commercial"), ("Availability", "Available now"), ("Size", "Call for information"), ("Location", "N Saginaw St, Lapeer")],
         "spaces": [
             {"suite": "Entire property", "sf": None, "type": "Commercial", "label": "Commercial", "note": "Call for size, use and details.", "status": "available"},
         ],
     },
     {
         "slug": "northwestern-highway-southfield-mi",
+        "photos": [
+            ("nw29229", "Northwestern Highway frontage in Southfield next to the Orchard Lake Pet Resort building"),
+            ("nw29231", "Northwestern Highway site in Southfield with landscaping and parking"),
+            ("nw29233-front", "29233 Northwestern Highway in Southfield: the Orchard Lake Pet Resort building with red awnings and a stone chimney"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "29229–29233 Northwestern Hwy",
-        "city": "Southfield", "state": "MI", "zip": "",
+        "city": "Southfield", "state": "MI", "zip": "48034",
         "kind": "Land", "art": "land", "owner": "MIVAN Holdings LLC",
         "summary": "Three parcels on Northwestern Highway in Southfield: two vacant general-business parcels ready for a build-to-suit, next to the Orchard Lake Pet Resort.",
         "facts": [("Property type", "General business land and retail"), ("Available", "Two build-to-suit parcels"), ("Zoning", "General business"), ("Location", "Northwestern Hwy, Southfield")],
@@ -129,8 +150,13 @@ PROPERTIES = [
     },
     {
         "slug": "n-cedar-street-imlay-city-mi",
+        "photos": [
+            ("ncedar572-street", "572 N Cedar Street in Imlay City: frontage along M-53 with existing buildings and open lot"),
+            ("ncedar632-front", "632 N Cedar Street in Imlay City: Maryland Chicken restaurant building and sign"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "572 & 632 N Cedar Street",
-        "city": "Imlay City", "state": "MI", "zip": "",
+        "city": "Imlay City", "state": "MI", "zip": "48444",
         "kind": "Land", "art": "land", "owner": "RSAA Property LLC",
         "summary": "Nine acres of vacant land at 572 N Cedar Street in Imlay City, available for a build-to-suit or land lease, next to Maryland Chicken at 632 N Cedar.",
         "facts": [("Land", "9 acres"), ("Available for", "Build to suit or land lease"), ("Neighbor", "Maryland Chicken"), ("Location", "N Cedar St, Imlay City")],
@@ -141,6 +167,10 @@ PROPERTIES = [
     },
     {
         "slug": "1645-s-telegraph-road-bloomfield-township-mi",
+        "photos": [
+            ("telegraph1645-front", "1645 S Telegraph Road: Motor City Powersports showroom with a red facade, large windows and parking"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "1645 S Telegraph Road",
         "city": "Bloomfield Township", "state": "MI", "zip": "",
         "kind": "Retail", "art": "retail", "owner": "1645 S Telegraph LLC", "building_sf": 34000,
@@ -150,8 +180,13 @@ PROPERTIES = [
     },
     {
         "slug": "1993-1995-s-cedar-street-imlay-city-mi",
+        "photos": [
+            ("scedar1995-aerial", "Aerial view of 1995 S Cedar Street in Imlay City: large retail building and parking lot"),
+            ("scedar1993-front", "1993 S Cedar Street in Imlay City: Planet Fitness storefront"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "1993–1995 S Cedar Street",
-        "city": "Imlay City", "state": "MI", "zip": "",
+        "city": "Imlay City", "state": "MI", "zip": "48444",
         "kind": "Retail", "art": "retail", "owner": "1995 Cedar St LLC", "building_sf": 45032,
         "summary": "A 45,032 SF retail center on S Cedar Street in Imlay City, anchored by Family Farm and Home and Planet Fitness.",
         "facts": [("Building size", "45,032 SF"), ("Property type", "Retail"), ("Status", "Fully leased"), ("Location", "S Cedar St, Imlay City")],
@@ -162,6 +197,10 @@ PROPERTIES = [
     },
     {
         "slug": "45290-utica-park-blvd-utica-mi",
+        "photos": [
+            ("utica45290-front", "45290 Utica Park Blvd in Utica: brick retail building home to 2nd & Charles, with a large parking lot"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "45290 Utica Park Blvd",
         "city": "Utica", "state": "MI", "zip": "",
         "kind": "Retail", "art": "retail", "owner": "45290 Utica LLC", "building_sf": 30000,
@@ -171,8 +210,12 @@ PROPERTIES = [
     },
     {
         "slug": "22550-hall-road-clinton-township-mi",
+        "photos": [
+            ("hall22550-front", "Aerial view of 22550 Hall Road in Clinton Township: single-story office building with parking and mature trees"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "22550 Hall Road",
-        "city": "Clinton Township", "state": "MI", "zip": "",
+        "city": "Clinton Township", "state": "MI", "zip": "48036",
         "kind": "Office", "art": "office", "owner": "Ava and Layla LLC", "building_sf": 22300,
         "summary": "A 22,300 SF office building on Hall Road in Clinton Township, home to Star Behavior Consultants.",
         "facts": [("Building size", "22,300 SF"), ("Property type", "Office"), ("Status", "Fully leased"), ("Location", "Hall Rd, Clinton Township")],
@@ -180,6 +223,10 @@ PROPERTIES = [
     },
     {
         "slug": "woodward-avenue-royal-oak-mi",
+        "photos": [
+            ("woodward29732-front", "29732 Woodward Avenue in Royal Oak: storefront building with parking"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "29732 & 29764 Woodward Ave",
         "city": "Royal Oak", "state": "MI", "zip": "",
         "kind": "Retail", "art": "retail", "owner": "8130 Constitution", "building_sf": None,
@@ -192,8 +239,12 @@ PROPERTIES = [
     },
     {
         "slug": "2765-metamora-road-oxford-mi",
+        "photos": [
+            ("metamora2765-front", "2765 Metamora Road in Oxford: two-story office front with a large industrial building and parking"),
+        ],
+        "photo_credit": "Photos courtesy of property listings and Google Street View.",
         "name": "2765 Metamora Road",
-        "city": "Oxford", "state": "MI", "zip": "",
+        "city": "Oxford", "state": "MI", "zip": "48371",
         "kind": "Retail", "art": "retail", "owner": "I Invest LLC",
         "summary": "A retail property on Metamora Road in Oxford, home to Casemer Tools and Machinery.",
         "facts": [("Property type", "Retail"), ("Status", "Fully leased"), ("Tenant", "Casemer Tools and Machinery"), ("Location", "Metamora Rd, Oxford")],
