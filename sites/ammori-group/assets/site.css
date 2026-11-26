@@ -502,3 +502,7 @@ html.intro:not(.ix-vid):not(.ix-draw) .ix-stage { visibility: hidden; }
 .f-sel select, .calc select { background-color: var(--white); background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 40px; }
 .leaflet-container .am-pop a, .leaflet-container .am-pop a:hover { color: inherit; }
 .am-pop .pp-go { color: var(--gold-deep); }
+/* map tiles: soft gray in light mode, dark in dark mode */
+.am-tiles { filter: grayscale(.9) contrast(.92) brightness(1.04) sepia(.08); }
+:root[data-theme="dark"] .am-tiles { filter: grayscale(1) invert(1) brightness(.88) contrast(.9) sepia(.12); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .am-tiles { filter: grayscale(1) invert(1) brightness(.88) contrast(.9) sepia(.12); } }

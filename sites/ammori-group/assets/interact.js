@@ -28,13 +28,12 @@
     document.head.appendChild(js);
   }
   function isDark() { var t = d.getAttribute('data-theme'); return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
-  function tileUrl() { return 'https://{s}.basemaps.cartocdn.com/' + (isDark() ? 'dark_all' : 'light_all') + '/{z}/{x}/{y}{r}.png'; }
+  // OpenStreetMap tiles (no API key). The site's colors come from CSS filters on .am-tiles,
+  // which also follow light and dark mode automatically.
   function addTiles(map) {
-    var layer = L.tileLayer(tileUrl(), { subdomains: 'abcd', maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>' }).addTo(map);
+    var layer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, className: 'am-tiles', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
     maps.push(layer);
   }
-  var tb = $('theme-btn');
-  if (tb) tb.addEventListener('click', function () { setTimeout(function () { maps.forEach(function (l) { l.setUrl(tileUrl()); }); }, 30); });
   function pinIcon(avail) { return L.divIcon({ className: 'am-pin ' + (avail ? 'av' : 'full'), html: '<span></span>', iconSize: [24, 24], iconAnchor: [12, 12], popupAnchor: [0, -14] }); }
   function whenVisible(el, fn) {
     if (!('IntersectionObserver' in window)) return fn();
@@ -61,7 +60,8 @@
         markers[p.slug] = { m: m, avail: p.avail };
         bounds.push(p.ll);
       });
-      map.fitBounds(bounds, { padding: [36, 36] });
+      map.fitBounds(bounds, { padding: [28, 28] });
+      if (map.getZoom() < 9) map.setZoom(9);
       map.once('focus click', function () { map.scrollWheelZoom.enable(); });
       // keep the map in step with the "Space available / Fully leased" filter
       document.querySelectorAll('.pchip').forEach(function (c) {
