@@ -8,7 +8,7 @@ It writes sites/ammori-group/: index.html, one page per property, sitemap.xml, r
 Photos: put images in sites/ammori-group/assets/photos/ and set "photo" on a property
 (e.g. "photos/crooks-1.jpg"). Without a photo, a gold line drawing of the building type is shown.
 """
-import html, json, urllib.parse
+import html, json, re, unicodedata, urllib.parse
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parents[2] / "sites" / "ammori-group"
@@ -55,7 +55,7 @@ PROPERTIES = [
             {"suite": "Suite 105", "sf": 8334, "type": "Office", "note": "Build-to-suit. Can combine with Suite 103.", "status": "available"},
             {"suite": "Suite 103", "sf": 2858, "type": "Medical", "label": "Office / Medical", "note": "Can combine with Suite 105.", "status": "available"},
             {"suite": "Suite 210", "sf": 4083, "type": "Office", "note": "Second floor.", "status": "available"},
-            {"suite": "Suite 220", "sf": 16068, "type": "Office", "note": "Second floor.", "status": "available"},
+            {"suite": "Suite 220", "sf": 16068, "type": "Office", "note": "Second floor.", "status": "available", "photo": "crooks-aerial-clean"},
             {"suite": "LL1–LL7", "sf": None, "type": "Storage", "label": "Office storage", "note": "Seven lower-level storage units. Call for sizes.", "status": "available"},
             {"suite": "Café", "sf": None, "type": "Restaurant", "label": "Restaurant / café", "note": "Café with equipment in place.", "status": "available"},
             {"suite": "Suite 101", "type": "Office", "status": "leased", "tenant": "Fiserv Solutions"},
@@ -360,9 +360,12 @@ def space_card(p, s, i, show_building=True):
     label = s.get("label", s["type"])
     building = f'<p class="bld"><a href="{p["slug"]}.html">{e(p["name"])}</a> · {e(p["city"])}, {e(p["state"])}</p>' if show_building else ""
     sid = f'{p["slug"]}::{s["suite"]}'
-    return f'''<article class="space rv" data-type="{e(s["type"])}" data-city="{e(p["city"])}" data-sf="{s.get("sf") or 0}" data-id="{e(sid)}" data-label="{e(p["name"])} – {e(s["suite"])}" data-url="{p["slug"]}.html" data-size="{e(size_text(s))}" data-text="{e((s["suite"] + " " + p["name"] + " " + p["city"] + " " + s.get("label", s["type"]) + " " + s["type"] + " " + s.get("note", "")).lower())}">
+    anchor = "space-" + re.sub(r"[^a-z0-9]+", "-", unicodedata.normalize("NFKD", s["suite"]).encode("ascii", "ignore").decode().lower()).strip("-")
+    cover = f'<a class="card-link" href="{p["slug"]}.html#{anchor}" aria-label="View {e(s["suite"])} at {e(p["name"])}, {e(p["city"])}"></a>' if show_building else ""
+    return f'''<article class="space rv" data-type="{e(s["type"])}" data-city="{e(p["city"])}" data-sf="{s.get("sf") or 0}" data-id="{e(sid)}" data-label="{e(p["name"])} – {e(s["suite"])}" data-url="{p["slug"]}.html" data-size="{e(size_text(s))}" data-text="{e((s["suite"] + " " + p["name"] + " " + p["city"] + " " + s.get("label", s["type"]) + " " + s["type"] + " " + s.get("note", "")).lower())}"{"" if show_building else f' id="{anchor}"'}>
+          {cover}
           <button class="save" type="button" aria-pressed="false" aria-label="Save {e(p["name"])} – {e(s["suite"])} to your shortlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg></button>
-          {media(p, i, k=k % max(1, len([x for x in p.get('photos', []) if 'map' not in x[0]]) or 1))}
+          {media(p, i, k=next((n for n, ph in enumerate(p.get("photos", [])) if ph[0] == s["photo"]), 0) if s.get("photo") else k % max(1, len([x for x in p.get('photos', []) if 'map' not in x[0]]) or 1))}
           <div class="sp-body">
             <div class="sp-top"><h3>{e(s["suite"])}</h3><span class="tag"><i></i>Available</span></div>
             {building}

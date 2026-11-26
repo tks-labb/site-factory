@@ -231,6 +231,16 @@
   });
   render();
 
+  // ---------- Arriving from a space card: show that suite ----------
+  if (/^#space-/.test(location.hash)) {
+    var tgt = document.getElementById(location.hash.slice(1));
+    if (tgt) {
+      tgt.classList.add('in', 'hl');
+      setTimeout(function () { tgt.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); }, 150);
+      setTimeout(function () { tgt.classList.remove('hl'); }, 4000);
+    }
+  }
+
   // ---------- Tour request fields ----------
   var tour = $('f-tour'), tf = $('tour-fields'), td = $('f-tdate');
   if (tour && tf) {

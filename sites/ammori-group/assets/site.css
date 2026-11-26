@@ -524,3 +524,17 @@ section { scroll-margin-top: 96px; }
 .flogo { width: 250px; }
 .about-brand { display: grid; gap: 16px; justify-items: start; }
 .about-logo { width: min(300px, 70%); height: auto; margin-bottom: 18px; }
+
+/* whole space card clickable (homepage) -> suite on its property page */
+.card-link { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.card-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.space:has(.card-link) { cursor: pointer; }
+.space .save, .space .inquire, .space .bld a { position: relative; z-index: 3; }
+.space .save { position: absolute; }
+.space:has(.card-link):hover h3 { color: var(--gold-deep); }
+.space h3 { transition: color .2s; }
+/* arriving at a suite: scroll clear of the header and highlight it */
+.space[id] { scroll-margin-top: 120px; }
+.space:target, .space.hl { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,163,92,.45), 0 30px 60px -30px rgba(17,17,16,.45); }
+.space:target .tag, .space.hl .tag { background: var(--gold); color: #111; }
+.space:target .tag i, .space.hl .tag i { background: #111; }
