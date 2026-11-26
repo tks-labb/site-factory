@@ -334,7 +334,7 @@ def head(title, desc, path, extra_ld=None):
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{url}">
 <meta name="theme-color" content="#FFFFFF">
-<meta property="og:type" content="website"><meta property="og:url" content="{url}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{BASE}/assets/logo.png">
+<meta property="og:type" content="website"><meta property="og:url" content="{url}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{BASE}/assets/logo.png"><meta property="og:image:alt" content="Ammori Group logo">
 <link rel="icon" href="assets/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -347,7 +347,7 @@ def head(title, desc, path, extra_ld=None):
 <a class="skip" href="#main">Skip to content</a>
 <header class="top" id="top-bar">
   <div class="wrap">
-    <a class="brand" href="index.html">{LOGO}<span class="wm">Ammori <b>Group</b></span></a>
+    <a class="brand" href="index.html" aria-label="Ammori Group home"><img class="lockup lk-d" src="assets/lockup.webp" alt="Ammori Group" width="618" height="133"><img class="lockup lk-l" src="assets/lockup-light.webp" alt="" aria-hidden="true" width="618" height="133"></a>
     <nav class="nav" id="nav" aria-label="Main"><a href="index.html#spaces">Available spaces</a><a href="index.html#portfolio">Portfolio</a><a href="index.html#about">About</a><a href="index.html#acquisitions">Acquisitions</a><a class="btn btn-gold" href="index.html#contact">Contact</a></nav>
     <button class="theme-btn" id="theme-btn" type="button" aria-label="Switch to dark mode"><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button>
     <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span></button>
@@ -440,7 +440,7 @@ def footer():
     links = "".join(f'<a href="{p["slug"]}.html">{e(p["name"])}, {e(p["city"])}</a>' for p in PROPERTIES)
     return f'''<footer>
   <div class="wrap fgrid">
-    <div><a class="flogo" href="index.html" aria-label="Ammori Group home"><img src="assets/logo-light.webp" alt="Ammori Group, Real Estate and Property Management" width="520" height="412" loading="lazy"></a><p class="muted">Owner-operated commercial real estate in Metro Detroit and Ann Arbor.</p></div>
+    <div><a class="flogo" href="index.html" aria-label="Ammori Group home"><img src="assets/logo-light.webp" alt="Ammori Group, Real Estate and Property Management" width="520" height="375" loading="lazy"></a><p class="muted">Owner-operated commercial real estate in Metro Detroit and Ann Arbor.</p></div>
     <div><p class="k">Properties</p>{links}</div>
     <div><p class="k">Company</p><a href="index.html#about">About</a><a href="index.html#acquisitions">Acquisitions</a><a href="index.html#contact">Contact</a></div>
     <div><p class="k">Office</p><p class="muted">{e(COMPANY["street"])}<br>{e(COMPANY["city"])}, {COMPANY["state"]} {COMPANY["zip"]}<br><a href="mailto:{COMPANY["email"]}">{COMPANY["email"]}</a></p></div>
@@ -493,14 +493,14 @@ def intro_html():
         '  <video class="ix-video" muted playsinline preload="auto" poster="assets/video/5600-crooks-drone-poster.webp" data-src="assets/video/5600-crooks-drone.mp4" data-src-sm="assets/video/5600-crooks-drone-480.mp4"></video>\n'
         '  <div class="ix-scrim"></div>\n'
         '  <div class="ix-vcopy">\n'
-        '    <img class="ix-vlogo" src="assets/logo-light.webp" alt="" width="520" height="412">\n'
+        '    <img class="ix-vlogo" src="assets/logo-light.webp" alt="" width="520" height="375">\n'
         '    <p class="ix-vk">Presents</p>\n'
         f'    <p class="ix-vt">{e(p["name"])}</p>\n'
         f'    <p class="ix-vs">{e(p["city"])}, Michigan &middot; {len(av)} spaces now leasing</p>\n'
         '  </div>\n'
         '  <div class="ix-stage">\n    ' + svg + '\n'
         '    <div class="ix-copy">\n'
-        '      <img class="ix-logo" src="assets/logo-light.webp" alt="" width="520" height="412">\n'
+        '      <img class="ix-logo" src="assets/logo-light.webp" alt="" width="520" height="375">\n'
         '      <p class="ix-k">Presents</p>\n'
         f'      <p class="ix-t">{e(p["name"])}</p>\n'
         f'      <p class="ix-s">{e(p["city"])}, Michigan &middot; {len(av)} spaces now leasing</p>\n'
@@ -652,7 +652,7 @@ def index():
 
   <section id="about" class="about">
     <div class="wrap grid2">
-      <div class="rv"><p class="eyebrow">About</p><h2>Owners, not middlemen.</h2></div>
+      <div class="rv about-brand"><img class="about-logo lk-d" src="assets/logo.webp" alt="Ammori Group, Real Estate and Property Management" width="520" height="375" loading="lazy"><img class="about-logo lk-l" src="assets/logo-light.webp" alt="" aria-hidden="true" width="520" height="375" loading="lazy"><p class="eyebrow">About</p><h2>Owners, not middlemen.</h2></div>
       <div class="rv d1 prose">
         <p>Ammori Group is a Bloomfield Hills real estate company that owns and operates commercial property across Metro Detroit and Ann Arbor. We don't manage buildings for other owners. Every property in our portfolio is our own, which means decisions about leasing, improvements and service are made by the people who own the building.</p>
         <p>For tenants, that means direct conversations, flexible layouts and a landlord who is invested in the property for the long term.</p>

@@ -506,3 +506,21 @@ html.intro:not(.ix-vid):not(.ix-draw) .ix-stage { visibility: hidden; }
 .am-tiles { filter: grayscale(.9) contrast(.92) brightness(1.04) sepia(.08); }
 :root[data-theme="dark"] .am-tiles { filter: grayscale(1) invert(1) brightness(.88) contrast(.9) sepia(.12); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .am-tiles { filter: grayscale(1) invert(1) brightness(.88) contrast(.9) sepia(.12); } }
+
+/* ---------- Ammori logo, prominent ---------- */
+.top .wrap { min-height: 96px; }
+.top.scrolled .wrap { min-height: 76px; }
+.top .wrap { transition: min-height .35s var(--ease); }
+.brand { gap: 0; }
+.lockup { display: block; height: 62px; width: auto; transition: height .35s var(--ease); }
+.top.scrolled .lockup { height: 50px; }
+.lk-l { display: none !important; }
+:root[data-theme="dark"] .lk-d { display: none !important; } :root[data-theme="dark"] .lk-l { display: block !important; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lk-d { display: none !important; } :root:not([data-theme="light"]) .lk-l { display: block !important; } }
+@media (max-width: 1100px) { .lockup { height: 52px; } .nav { gap: 2px; } .nav a:not(.btn) { padding: 9px 10px; } }
+@media (max-width: 920px) { .top .wrap { min-height: 80px; } .lockup, .top.scrolled .lockup { height: 46px; } .nav { top: calc(80px + env(safe-area-inset-top)); } }
+@media (max-width: 400px) { .lockup, .top.scrolled .lockup { height: 40px; } }
+section { scroll-margin-top: 96px; }
+.flogo { width: 250px; }
+.about-brand { display: grid; gap: 16px; justify-items: start; }
+.about-logo { width: min(300px, 70%); height: auto; margin-bottom: 18px; }
