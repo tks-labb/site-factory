@@ -538,3 +538,17 @@ section { scroll-margin-top: 96px; }
 .space:target, .space.hl { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,163,92,.45), 0 30px 60px -30px rgba(17,17,16,.45); }
 .space:target .tag, .space.hl .tag { background: var(--gold); color: #111; }
 .space:target .tag i, .space.hl .tag i { background: #111; }
+
+/* privacy page + form note */
+.legal { max-width: 780px; }
+.legal-sec { padding-block: 8px 96px; }
+.legal h1 { font-size: clamp(40px, 5vw, 64px); margin: 14px 0 10px; }
+.legal h2 { font-size: 24px; margin: 36px 0 10px; }
+.legal p, .legal li { color: var(--ink-2); }
+.legal p + p { margin-top: 12px; }
+.legal ul { padding-left: 20px; display: grid; gap: 8px; margin: 10px 0 0; }
+.legal a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset: 3px; }
+.note-box { margin-top: 32px !important; padding: 16px 18px; border-radius: 14px; background: var(--paper); font-size: 14px; }
+.form-note { font-size: 13px; color: var(--on-dark-2); margin: 0; }
+.form-note a { color: var(--on-dark); }
+.fine a { color: inherit; }

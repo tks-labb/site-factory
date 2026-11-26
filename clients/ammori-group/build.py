@@ -432,6 +432,7 @@ def contact_section(heading="Tell us what you're looking for", lede="Share a few
             <div class="field"><label for="f-tdate">Preferred date</label><input id="f-tdate" name="tour_date" type="date"></div>
             <div class="field"><label for="f-ttime">Preferred time</label><select id="f-ttime" name="tour_time"><option>Morning</option><option>Midday</option><option>Afternoon</option><option>Flexible</option></select></div>
           </div>
+          <p class="form-note">By sending this form you agree that we can contact you about your inquiry. See our <a href="privacy.html">privacy policy</a>.</p>
           <button class="btn btn-gold" type="submit">Send message</button>
           <p class="err" id="e-send" hidden>Your message didn't send. Please try again or email {COMPANY["email"]}.</p>
         </form>
@@ -446,10 +447,10 @@ def footer():
   <div class="wrap fgrid">
     <div><a class="flogo" href="index.html" aria-label="Ammori Group home"><img src="assets/logo-light.webp" alt="Ammori Group, Real Estate and Property Management" width="520" height="375" loading="lazy"></a><p class="muted">Owner-operated commercial real estate in Metro Detroit and Ann Arbor.</p></div>
     <div><p class="k">Properties</p>{links}</div>
-    <div><p class="k">Company</p><a href="index.html#about">About</a><a href="index.html#acquisitions">Acquisitions</a><a href="index.html#contact">Contact</a></div>
+    <div><p class="k">Company</p><a href="index.html#about">About</a><a href="index.html#acquisitions">Acquisitions</a><a href="index.html#contact">Contact</a><a href="privacy.html">Privacy policy</a></div>
     <div><p class="k">Office</p><p class="muted">{e(COMPANY["street"])}<br>{e(COMPANY["city"])}, {COMPANY["state"]} {COMPANY["zip"]}<br><a href="mailto:{COMPANY["email"]}">{COMPANY["email"]}</a></p></div>
   </div>
-  <div class="wrap fine"><span>© 2026 Ammori Group. All rights reserved.</span><span>Availability and sizes are approximate and subject to change.</span></div>
+  <div class="wrap fine"><span>© 2026 Ammori Group. All rights reserved.</span><span>Availability and sizes are approximate and subject to change. <a href="privacy.html">Privacy</a></span></div>
 </footer>
 <script src="assets/site.js" defer></script>
 <script src="assets/chat.js" defer></script>
@@ -796,12 +797,73 @@ def property_page(p, i):
         desc = f'{p["name"]} in {p["city"]}, {p["state"]} is owned and managed by Ammori Group' + (f', home to {tn}.' if tn else '.')
     return head(title, desc, p["slug"] + ".html", [place_ld(p)]) + body + footer()
 
+def privacy_page():
+    updated = "November 26, 2026"
+    email = COMPANY["email"]
+    addr = f'{COMPANY["street"]}, {COMPANY["city"]}, {COMPANY["state"]} {COMPANY["zip"]}'
+    body = f"""<main id="main">
+  <section class="phero">
+    <div class="wrap legal">
+      <p class="crumbs rv"><a href="index.html">Home</a> / Privacy policy</p>
+      <p class="eyebrow rv">Legal</p>
+      <h1 class="rv d1">Privacy policy</h1>
+      <p class="muted rv d1">Last updated: {updated}</p>
+    </div>
+  </section>
+  <section class="legal-sec">
+    <div class="wrap legal">
+      <p>This policy explains what information Ammori Group ("we", "us") collects through ammorigroup.com, how we use it, and the choices you have.</p>
+      <h2>Information we collect</h2>
+      <ul>
+        <li><b>Information you send us:</b> your name, email, phone number, what you're interested in, your message, and any tour date or time you request when you use our inquiry form.</li>
+        <li><b>Space alert sign-ups:</b> your email, the property you asked about, and what you're looking for, if you tell us.</li>
+        <li><b>Chat messages:</b> the messages you type into our AI assistant, so it can reply.</li>
+        <li><b>Saved in your browser only:</b> your light or dark mode choice and your space shortlist are stored on your own device. We don't receive them unless you send us an inquiry that lists them.</li>
+        <li><b>Basic technical data:</b> our hosting provider may log standard information such as IP address, browser type and pages visited, for security and reliability.</li>
+      </ul>
+      <h2>How we use it</h2>
+      <ul>
+        <li>To answer your inquiry, arrange tours, and tell you about space that fits what you asked for.</li>
+        <li>To email you when space opens up, if you signed up for alerts.</li>
+        <li>To discuss buying your property or business, if you contacted us about selling.</li>
+        <li>To keep the website secure and working.</li>
+      </ul>
+      <p>We do not sell your personal information, and we do not use it for unrelated marketing.</p>
+      <h2>Service providers</h2>
+      <p>We use trusted providers to run the website. They process information on our behalf only to provide their service:</p>
+      <ul>
+        <li><b>Netlify</b>: hosting and form handling. Form submissions are stored by Netlify and emailed to us.</li>
+        <li><b>Anthropic</b>: the AI model behind our chat assistant. Chat messages are sent to Anthropic to generate replies.</li>
+        <li><b>OpenStreetMap</b> and <b>Cloudflare (cdnjs)</b>: map images and the map software. Your browser contacts them when a map loads, which shares your IP address with them.</li>
+        <li><b>Google Fonts</b>: the typefaces on the site. Your browser contacts Google when pages load.</li>
+        <li><b>Google Maps</b>: only if you click "Get directions" or "Open Street View", which opens Google Maps under Google's own privacy policy.</li>
+      </ul>
+      <h2>AI chat assistant</h2>
+      <p>Our chat assistant is automated and may make mistakes. It does not make offers, quotes or commitments on our behalf; lease terms and pricing are agreed only in writing. Please don't share sensitive personal information, such as financial or health details, in the chat.</p>
+      <h2>How long we keep information</h2>
+      <p>We keep inquiries and alert sign-ups as long as needed to respond and to manage our leasing and acquisitions, and then delete them. You can ask us to delete your information at any time.</p>
+      <h2>Your choices</h2>
+      <p>You can ask us to access, correct or delete the information you've sent us, or to stop sending space alerts, by emailing <a href="mailto:{email}">{email}</a>.</p>
+      <h2>Children</h2>
+      <p>This website is for businesses and adults looking for commercial space. It is not directed to children under 13, and we don't knowingly collect their information.</p>
+      <h2>Changes</h2>
+      <p>We may update this policy. The date at the top shows when it last changed.</p>
+      <h2>Contact</h2>
+      <p>Ammori Group, {e(addr)}. Email <a href="mailto:{email}">{email}</a>.</p>
+      <p class="note-box">This policy is a starting point written for this website. Have it reviewed by your attorney for your business and location.</p>
+    </div>
+  </section>
+</main>
+"""
+    return head("Privacy Policy | Ammori Group", "How Ammori Group collects and uses information submitted through ammorigroup.com.", "privacy.html") + body + footer()
+
 def build():
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "index.html").write_text(index())
     for i, p in enumerate(PROPERTIES):
         (OUT / f'{p["slug"]}.html').write_text(property_page(p, i))
-    urls = [""] + [p["slug"] + ".html" for p in PROPERTIES]
+    (OUT / "privacy.html").write_text(privacy_page())
+    urls = [""] + [p["slug"] + ".html" for p in PROPERTIES] + ["privacy.html"]
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{BASE}/{u}</loc></url>\n" for u in urls) + "</urlset>\n")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {BASE}/sitemap.xml\n")
     fn = OUT / "netlify" / "functions"; fn.mkdir(parents=True, exist_ok=True)
